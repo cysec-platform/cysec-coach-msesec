@@ -1,0 +1,263 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-asset-management" readableName="Next steps in Asset Management (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach outlines the next steps in asset management for micro and small enterprises.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q1900" type="info" hidden="false">
+            <introduction>Next steps in Asset Management</introduction>
+            <text>Intro</text>
+            <infotext>&lt;strong&gt;This coach is not yet finished!&lt;/strong&gt;</infotext>
+        </question>
+
+        <question id="q1902" type="A" hidden="false" extRef="AM-14">
+            <text>Is operation and maintenance of assets logged?</text>
+            <options>
+                <option id="q1902o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1902o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1905" type="A" hidden="false" extRef="AM-14">
+            <text>Is operation and maintenance only conducted with approved and tested means?</text>
+            <options>
+                <option id="q1905o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1905o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1910" type="A" hidden="false" extRef="AM-4">
+            <text>Are unauthorised assets either removed from the network or is the inventory updated in a timely manner?</text>
+            <options>
+                <option id="q1910o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1910o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1915" type="A" hidden="false" extRef="AM-6">
+            <text>Is unauthorised software either removed or is the inventory updated in a timely manner?</text>
+            <options>
+                <option id="q1915o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1915o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1920" type="A" hidden="false" extRef="AM-7">
+            <text>Is unsupported software (e.g., when not receiving updates anymore) tagged accordingly in the inventory?</text>
+            <options>
+                <option id="q1920o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1920o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1925" type="A" hidden="false" extRef="AM-15">
+            <text>Do you protect removable media?</text>
+            <options>
+                <option id="q1925o1">
+                    <text>No</text>
+                </option>
+                <option id="q1925o2">
+                    <text>Yes, removable media protected but we don't have a policy</text>
+                </option>
+                <option id="q1925o3">
+                    <text>Yes, removable media protected and only used in accordance with the set out policy</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1930" type="A" hidden="false" extRef="AM-17">
+            <text>Do all assets have an assigned asset owner?</text>
+            <options>
+                <option id="q1930o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1930o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1935" type="A" hidden="false" extRef="AM-11">
+            <text>Do you maintain a baseline configuration for ITC assets and infrastructure?</text>
+            <options>
+                <option id="q1935o1">
+                    <text>No</text>
+                </option>
+                <option id="q1935o2">
+                    <text>Yes, we have such a baseline</text>
+                </option>
+                <option id="q1935o3">
+                    <text>Yes, we have a baseline which follows basic security principles</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1940" type="A" hidden="false" extRef="AM-12">
+            <text>Are there lifecycle procedures for ITC assets is in place? (and classification based on lifecycle)</text>
+            <options>
+                <option id="q1940o1">
+                    <text>Yes, we have such procedures in place</text>
+                </option>
+                <option id="q1940o2">
+                    <text>No, we just classify assets based on their lifecycle but have no procedures</text>
+                </option>
+                <option id="q1940o3">
+                    <text>No, we don't classify assets based on their lifecycle</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1945" type="A" hidden="false" extRef="AM-13">
+            <text>Is there a procedure to monitor configuration changes?</text>
+            <options>
+                <option id="q1945o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1945o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1950" type="A" hidden="false" extRef="AM-8">
+            <text>Is your inventory is based on status, connectivity, classification and proximity?</text>
+            <options>
+                <option id="q1950o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1950o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1955" type="A" hidden="false" extRef="AM-9">
+            <text>Are the internal communication and data flows of your organisation catalogued?</text>
+            <options>
+                <option id="q1955o1">
+                    <text>Yes, completely</text>
+                </option>
+                <option id="q1955o2">
+                    <text>Yes, but only partially</text>
+                </option>
+                <option id="q1955o3">
+                    <text>No, not at all</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1960" type="A" hidden="false" extRef="AM-1">
+            <text>Is there a formal asset management procedure or policy in place?</text>
+            <options>
+                <option id="q1960o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1960o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1965" type="A" hidden="false" extRef="AM-1">
+            <text>Is the asset management procedure of the organisation known by all stakeholders?</text>
+            <options>
+                <option id="q1965o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1965o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1970" type="A" hidden="false" extRef="AM-1">
+            <text>Is the asset management procedure of the organisation continuously updated and reviewed?</text>
+            <options>
+                <option id="q1970o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1970o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1975" type="A" hidden="false" extRef="AM-16">
+            <text>Are systems configured in a way that a minimum level of functionality is guaranteed at all times?</text>
+            <options>
+                <option id="q1975o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1975o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1980" type="A" hidden="false" extRef="AM-18">
+            <text>Do you protect data when ICT assets are removed, transferred, stored or replaced?</text>
+            <options>
+                <option id="q1980o1">
+                    <text>Yes, we have a formal procedure in place</text>
+                </option>
+                <option id="q1980o2">
+                    <text>Yes, we have informal guidelines</text>
+                </option>
+                <option id="q1980o3">
+                    <text>No, we don't protect data in such scenarios</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1985" type="A" hidden="false" extRef="AM-2">
+            <text>Is there an established procedure to check the integrity of hardware?</text>
+            <options>
+                <option id="q1985o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1985o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1998" type="info" hidden="false">
+            <introduction>Next steps in Asset Management</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have finished this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.assetmgmt.MseAssetMgmtLib"/>
+
+</questionnaire>

@@ -1,0 +1,2356 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-first-steps-in-cybersecurity" readableName="First Steps in Cybersecurity (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach for micro and small businesses outlines some of the first steps in cybersecurity for your company.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q2" type="info" hidden="false">
+            <introduction>First Steps in Cybersecurity</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;This first coach will guide you and your company through the first steps in cybersecurity and touches upon various
+                topics. After completing this coach, we will give you more options to dive deeper into some topic areas of your choice.&lt;/p&gt;
+                &lt;p&gt;Some questions have instructions or further information on the right side that are meant to help you in this
+                journey. It is important that you answer the questions honestly in order to get the best results.&lt;/p&gt;
+                &lt;p&gt;&lt;em&gt;Here is a list of all the topics that the coaches will cover:&lt;/em&gt;
+                &lt;ul&gt;
+                &lt;li&gt;Access Management&lt;/li&gt;
+                &lt;li&gt;Asset Management&lt;/li&gt;
+                &lt;li&gt;Backup&lt;/li&gt;
+                &lt;li&gt;Business Continuity Management&lt;/li&gt;
+                &lt;li&gt;Change Management&lt;/li&gt;
+                &lt;li&gt;Data Protection/Security&lt;/li&gt;
+                &lt;li&gt;Human Resources Security&lt;/li&gt;
+                &lt;li&gt;Incident Management&lt;/li&gt;
+                &lt;li&gt;Network Security&lt;/li&gt;
+                &lt;li&gt;Organisational and Governance&lt;/li&gt;
+                &lt;li&gt;Physical and Environmental&lt;/li&gt;
+                &lt;li&gt;Risk Management&lt;/li&gt;
+                &lt;li&gt;Software Security&lt;/li&gt;
+                &lt;li&gt;Supply Chain&lt;/li&gt;
+                &lt;/ul&gt;
+            </infotext>
+        </question>
+        <question id="q5" type="A" hidden="false">
+            <text>How many employees does your company have?</text>
+            <options>
+                <option id="q5o1">
+                    <text>I am the only employee</text>
+                    <comment>
+                        Please note that several questions and answers might be worded in a generic way. Think of how to adapt the scenarios
+                        to your specific business. Try not to leave out certain questions as they most likely apply to your business as well
+                        just in a different way. Note that you are an employee of your own business.
+                    </comment>
+                </option>
+                <option id="q5o2">
+                    <text>1 - 3 employees</text>
+                    <comment>
+                        Please note that several questions and answers might be worded in a generic way. Think of how to adapt the scenarios
+                        to your specific business.
+                    </comment>
+                </option>
+                <option id="q5o3">
+                    <text>4 - 9 employees</text>
+                </option>
+                <option id="q5o4">
+                    <text>10 - 19 employees</text>
+                </option>
+                <option id="q5o5">
+                    <text>20 - 50 employees</text>
+                </option>
+            </options>
+        </question>
+        <question id="q10" type="A" hidden="false" extRef="OG-1">
+            <introduction>
+                If you want to improve cybersecurity within your company, it is important that someone takes the responsibility for this journey.
+                This person needs to analyse the current state and implement recommended measures.
+            </introduction>
+            <text>Is someone within your company responsible for cybersecurity?</text>
+            <options>
+                <option id="q10o1">
+                    <text>Yes</text>
+                    <comment>
+                        Very good, you seem to be aware that cybersecurity is important for your company
+                        and that someone should be responsible for this.
+                    </comment>
+                </option>
+                <option id="q10o2">
+                    <text>No</text>
+                    <comment>
+                        Without someone responsible for cybersecurity, it is very difficult for your
+                        company to get started and constantly improve in this domain. If you are an employee, talk with
+                        your manager or superior about this. If you are in a position where you can assign
+                        this responsibility to someone, it is highly suggested that you do this immediately.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q10o1") : q10 : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q10o2") : recResponsiblePerson : {
+                        addRecommendation("recResponsiblePerson", 10, "", "", tn("recResponsiblePerson-title"),
+                        tn("recResponsiblePerson-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q10");
+                        };
+                        TRUE : recResponsiblePerson : {
+                        revokeRecommendation("recResponsiblePerson");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q15" type="A" hidden="false" extRef="OG-6">
+            <introduction>
+                Whoever is in charge of cybersecurity in your company must have the required power, approval
+                and resources to implement recommended measures. Your company can only improve if concrete
+                steps are taken and are supported by the management team and/or the owners of your company.
+            </introduction>
+            <text>Does the person responsible for cybersecurity have the power and resources to implement cybersecurity measures?</text>
+            <options>
+                <option id="q15o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q15o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q15o1") : q15 : {
+                        addScore("strength", 2);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q15o2") : recEmpowerResponsiblePerson : {
+                        addRecommendation("recEmpowerResponsiblePerson", 15, "", "", tn("recEmpowerResponsiblePerson-title"),
+                        tn("recEmpowerResponsiblePerson-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q15");
+                        };
+                        TRUE : recEmpowerResponsiblePerson : {
+                        revokeRecommendation("recEmpowerResponsiblePerson");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    Without an effort, it is not possible to improve cybersecurity in your company. First and foremost, it is crucial that
+                    someone in your company is responsible for actively attending this matter. Second, it would be ideal to allocate
+                    resources in a way to consistently and regularly work on the necessary tasks like analysing the current state and
+                    implementing recommended measures. At last, the responsible person will need time to deepen, update and extend their cybersecurity
+                    knowledge in order to understand recommendations and how to implement them in your company. Depending on your goals, it is best
+                    to schedule 2-4 hours per week.
+                </text>
+            </instruction>
+        </question>
+        <question id="q18" type="A" hidden="false" extRef="OG-12">
+            <introduction>
+                Raising awareness for cybersecurity among your employees is an important factor for preventing cyber incidents.
+                In case an incident occurs nonetheless, trained personnel can act more quickly and adequately to limit the damage as much as possible.
+            </introduction>
+            <text>When did you last conduct a cybersecurity training for your employees?</text>
+            <options>
+                <option id="q18o1">
+                    <text>Never</text>
+                </option>
+                <option id="q18o2">
+                    <text>More than one year ago</text>
+                    <comment>Consider doing training regularly (e.g. once per year) to ensure everyone is up-to-date.</comment>
+                </option>
+                <option id="q18o3">
+                    <text>Less than one year ago</text>
+                    <comment>Very good, keep doing regular training once per year to ensure everyone is up-to-date.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q18o2") : q18 : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q18o3") : q18 : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q18o1") : recEmployeeTraining : {
+                        addRecommendation("recEmployeeTraining", 20, "", "", tn("recEmployeeTraining-title"),
+                        tn("recEmployeeTraining-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q18");
+                        };
+                        TRUE : recEmployeeTraining : {
+                        revokeRecommendation("recEmployeeTraining");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;You can include cybersecurity training as part of the onboarding process to ensure that everyone has received training at least once.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Some topics to include:&lt;/em&gt;&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Cybersecurity threats to your company and in general&lt;/li&gt;
+                    &lt;li&gt;How to identify/recognise security threats (e.g. phishing mails)&lt;/li&gt;
+                    &lt;li&gt;Importance of using secure passwords and storing them securely&lt;/li&gt;
+                    &lt;li&gt;How and where to report incidents&lt;/li&gt;
+                    &lt;li&gt;How to react correctly in case of an incident&lt;/li&gt;
+                    &lt;li&gt;Policies of your company and how assets are protected (when applicable)&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;A basic online training can be found
+                    &lt;a target="_blank" href="https://www.ncsc.gov.uk/training/top-tips-for-staff-scorm-v3/scormcontent/index.html"&gt;here&lt;/a&gt;.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Access Management -->
+        <question id="q20" type="A" hidden="false" extRef="ACS-1">
+            <text>Does your company define any requirements or rules for handling passwords?</text>
+            <options>
+                <option id="q20o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q20o2">
+                    <text>No</text>
+                    <comment>Start by making a short checklist for password security based on the next questions.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q20o1") : q20 : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q20o2") : recPasswordChecklist : {
+                        addRecommendation("recPasswordChecklist", 13, "", "", tn("recPasswordChecklist-title"),
+                        tn("recPasswordChecklist-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q20");
+                        };
+                        TRUE : recPasswordChecklist : {
+                        revokeRecommendation("recPasswordChecklist");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Passwords are widely used to authenticate a user with a system or application. Therefore, everyone in your
+                    company needs to know how to handle passwords in a secure manner.&lt;/p&gt;
+                    &lt;p&gt;If you don't have any requirements or rules, you can start by making a simple checklist for password security
+                    based on the next questions. Here are some points to consider which will be touched upon later:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Use strong passwords&lt;/li&gt;
+                    &lt;li&gt;Do not reuse passwords for different accounts&lt;/li&gt;
+                    &lt;li&gt;Avoid password/account sharing among employees&lt;/li&gt;
+                    &lt;li&gt;Change shared credentials in off-boarding process&lt;/li&gt;
+                    &lt;li&gt;Store passwords safely (e.g. use a password manager to store and generate passwords)&lt;/li&gt;
+                    &lt;li&gt;Use two-factor authentication (2FA) or multifactor authentication (MFA) whenever possible&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q30" type="A" hidden="false" extRef="ACS-1">
+            <introduction>
+                Defining strong passwords is crucial to secure your accounts and systems.
+                Have a look at the characteristics of a strong password.
+            </introduction>
+            <text>Do you encourage your employees and yourself to use strong passwords and do you enforce these rules?</text>
+            <options>
+                <option id="q30o1">
+                    <text>Our rules require strong passwords and we enforce these requirements.</text>
+                    <comment>This is commendable and very good practice.</comment>
+                </option>
+                <option id="q30o2">
+                    <text>Our rules require strong passwords but we don't enforce these rules.</text>
+                    <comment>This is good already – as a next step you can start enforcing these rules.</comment>
+                </option>
+                <option id="q30o3">
+                    <text>Users were informed once but we don't have specific rules for strong passwords.</text>
+                    <comment>Make sure that everyone knows the importance of using secure passwords by informing all your employees. It is time to update your password security checklist to implement the proposed best practices.</comment>
+                </option>
+                <option id="q30o4">
+                    <text>We did not ask users to set strong passwords.</text>
+                    <comment>Make sure that everyone knows the importance of using secure passwords by informing all your employees.
+                        It is time to update your password security checklist to implement the proposed best practices.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 3);
+                        };
+                        isSelected("q30o1") : q30 : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 3);
+                        };
+                        isSelected("q30o2") : q30 : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q30o3") : q30 : {
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q30o3"), isSelected("q30o4")) : recRequireSecurePasswords : {
+                        addRecommendation("recRequireSecurePasswords", 20, "", "", tn("recRequireSecurePasswords-title"),
+                        tn("recRequireSecurePasswords-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q30");
+                        };
+                        TRUE : recRequireSecurePasswords : {
+                        revokeRecommendation("recRequireSecurePasswords");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Using strong password for all your accounts is important. Here are characteristics of a strong password:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;has a minimal length of 12 characters&lt;/li&gt;
+                    &lt;li&gt;includes upper-case and lower-case characters as well as numbers and symbols&lt;/li&gt;
+                    &lt;li&gt;contains no data or names of your company or employees&lt;/li&gt;
+                    &lt;li&gt;doesn't use easy guessable phrases or words available in a dictionary (e.g. admin, password, abc123)&lt;/li&gt;
+                    &lt;li&gt;avoids simple transformations of words like D00RB377, mypass$&lt;/li&gt;
+                    &lt;li&gt;doesn't use keyboard paths like asdfghj, uiopjkl&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;em&gt;Make sure that this element is on your password security checklist.&lt;/em&gt;&lt;/p&gt;
+                    &lt;p&gt;Please note that it is better to use strong passwords than to change them regularly.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q40" type="A" hidden="false" extRef="ACS-1">
+            <introduction>
+                If one of your passwords get compromised, all the accounts using the same password are at risk.
+                Therefore, every account or system should have its own password.
+            </introduction>
+            <text>Are you using the same passwords for different accounts?</text>
+            <options>
+                <option id="q40o1">
+                    <text>No, we never reuse passwords.</text>
+                    <comment>
+                        That's very good. Please note that a password manager can help you store all these credentials in a safe way.
+                        This topic will be addressed later when we talk specifically about password managers.
+                    </comment>
+                </option>
+                <option id="q40o2">
+                    <text>Yes, there are some passwords that are reused.</text>
+                    <comment>
+                        It is only a matter of time until one of your credentials gets compromised.
+                        To limit the extent of the damage in such a case, every account should have its own credentials (username and password).
+                        A password manager can help you store all these credentials in a safe way. This will be addressed later.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q40o1") : q40 : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q40o2") : recNoPasswordReuse : {
+                        addRecommendation("recNoPasswordReuse", 25, "", "", tn("recNoPasswordReuse-title"),
+                        tn("recNoPasswordReuse-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q40");
+                        };
+                        TRUE : recNoPasswordReuse : {
+                        revokeRecommendation("recNoPasswordReuse");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Every account or system should have its own password to limit damage in case credentials are compromised.&lt;/p&gt;
+                    &lt;br&gt;
+                    &lt;p&gt;&lt;strong&gt;Example of password reuse (not secure):&lt;/strong&gt;&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;E-Mail Account:&lt;/em&gt;&lt;br&gt;jdoe@your-company.com | C5Dw-8xZJ-SdkT&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Supplier webshop:&lt;/em&gt;&lt;br&gt;jdoe | C5Dw-8xZJ-SdkT&lt;/p&gt;
+                    &lt;br&gt;
+                    &lt;p&gt;&lt;strong&gt;Example with different password for each account (secure):&lt;/strong&gt;&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;E-Mail Account:&lt;/em&gt;&lt;br&gt;jdoe@your-company.com | zUnb-BLa8-v5nm&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Supplier webshop:&lt;/em&gt;&lt;br&gt;jdoe | kXZS-VjPn9-JuC&lt;/p&gt;
+                    &lt;br&gt;
+                    &lt;p&gt;&lt;em&gt;Make sure that this element is on your password security checklist.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q50" type="A" hidden="false" extRef="ACS-7">
+            <introduction>
+                Sharing credentials for an account among several employees comes with risks (e.g. loss of account ownership).
+                It is best to have a personal account (i.e. one per employee) whenever possible.
+            </introduction>
+            <text>Do several employees use the same credentials (usernames and passwords) to access some accounts or systems?</text>
+            <options>
+                <option id="q50o1">
+                    <text>Yes</text>
+                    <comment>
+                        Include a step in the off-boarding process, so you don't forget to change all shared
+                        passwords the employee has knowledge of.
+                    </comment>
+                </option>
+                <option id="q50o2">
+                    <text>No</text>
+                    <comment>This is very good practice, keep this up.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q50o2") : q50 : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        setHidden("q55", TRUE);
+                        };
+                        isSelected("q50o1") : q50 : {
+                        setHidden("q55", FALSE);
+                        };
+                        TRUE : q50 : {
+                        setHidden("q55", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It should be avoided that employees use the same accounts. In case this is not possible, you need to change
+                    such passwords whenever someone should not have access to the protected resource anymore. To this end, you could,
+                    for example, add a step in the off-boarding process that reminds you to set new passwords for reused accounts.
+                    &lt;strong&gt;To be able to do this, you need a list of all shared accounts.&lt;/strong&gt;&lt;/p&gt;
+                    &lt;br&gt;
+                    &lt;p&gt;&lt;strong&gt;Example with account sharing for supplier webshop (potentially not secure):&lt;/strong&gt;&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Employee A:&lt;/em&gt;&lt;br&gt;your-company | pLwG-M2dc-22c6&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Employee B:&lt;/em&gt;&lt;br&gt;your-company | pLwG-M2dc-22c6&lt;/p&gt;
+                    &lt;br&gt;
+                    &lt;p&gt;&lt;strong&gt;Example with different accounts per employee for supplier webshop (secure):&lt;/strong&gt;&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Employee A:&lt;/em&gt;&lt;br&gt;employee-a | 4RkH-7kyJ-FvJP&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Employee B:&lt;/em&gt;&lt;br&gt;employee-b | ZBKP-x9VJ-9uu4&lt;/p&gt;
+                    &lt;br&gt;
+                    &lt;p&gt;&lt;em&gt;Make sure that this element is on your password security checklist.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q55" type="A" hidden="true" extRef="ACS-7">
+            <introduction>
+                For some systems like portals of suppliers or service providers it is not possible to have one account per employee.
+            </introduction>
+            <text>
+                Do you consequently change the passwords for shared accounts as soon as access for one person should be revoked (e.g.
+                when an employee leaves your company)?</text>
+            <options>
+                <option id="q55o1">
+                    <text>Yes, we change these passwords in these situations or this step just got added to the list of things to do while off-boarding an employee.</text>
+                </option>
+                <option id="q55o2">
+                    <text>No, we don't change these passwords in such a case.</text>
+                    <comment>
+                        Include the step in the off-boarding process so you don't forget to change all shared passwords the employee has knowledge of.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q55o1") : q55 : {
+                        addScore("strength", 2); // adds to score of q50
+                        addScore("uu", 2); // adds to score of q50
+                        };
+                        isSelected("q55o2") : recChangeSharedPasswords : {
+                        addRecommendation("recChangeSharedPasswords", 25, "", "", tn("recChangeSharedPasswords-title"),
+                        tn("recChangeSharedPasswords-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q55");
+                        };
+                        TRUE : recChangeSharedPasswords : {
+                        revokeRecommendation("recChangeSharedPasswords");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;To limit the risks associated with account shared among multiple employees, it is important to change
+                    the password of such accounts as soon as one of the users is no longer authorized to use this account.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Make sure that this element is on your password security checklist.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q65" type="Astar" hidden="false" extRef="ACS-14">
+            <introduction>
+                In today's world, you have a lot of different accounts for various (online) services and purposes.
+            </introduction>
+            <text>How are you keeping track of your credentials?</text>
+            <options>
+                <option id="q65o1">
+                    <text>We write passwords down on paper (or a different physical place).</text>
+                    <comment>
+                        While at first sight it might seem like a good solution to write your passwords down on paper, ask yourself the following questions:
+                        How easy is it for unauthorised persons to gain physical access to the paper?
+                        Is there a backup somewhere in case the paper gets lost, stolen or destroyed?
+                        Please consider using a password manager instead of paper.
+                    </comment>
+                </option>
+                <option id="q65o2">
+                    <text>We store passwords in a spreadsheet or textfile on a computer or mobile phone.</text>
+                    <comment>
+                        Spreadsheets or textfiles are not a secure medium to store credentials.
+                        If someone gains access and can read the content of such a file, all the contained passwords are compromised.
+                        Please start using a password manager.
+                    </comment>
+                </option>
+                <option id="q65o3">
+                    <text>We are using a password manager.</text>
+                    <comment>Great, a password manager used properly is a good way to store your credentials.</comment>
+                </option>
+                <option id="q65o4">
+                    <text>We don't keep track of our credentials at all.</text>
+                    <comment>Please consider using a password manager to store your credentials.</comment>
+                </option>
+                <option id="q65o5">
+                    <text>We use a different method than the ones mentioned above.</text>
+                    <comment>Consider using a password manager if possible.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q65o5")) : default : { // all except 'other method'
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q65o1") : q66q67visibility : {
+                        setHidden("q66", FALSE); // physical protection of medium
+                        setHidden("q67", FALSE); // backup of paper
+                        };
+                        TRUE : q66q67visibility : {
+                        setHidden("q66", TRUE); // physical protection of medium
+                        setHidden("q67", TRUE); // backup of paper
+                        };
+                        and(or(isSelected("q65o1"), isSelected("q65o5")), not(isSelected("q65o3"))) : q68visibility : {
+                        setHidden("q68", FALSE); // rule out password manager
+                        };
+                        TRUE : q68visibility : {
+                        setHidden("q68", TRUE); // do not rule out password manager
+                        };
+                        isSelected("q65o3") : q65o3 : { // password manager
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        setHidden("q69", FALSE); // safe use of password manager (A)
+                        setHidden("q70", FALSE); // safe use of password manager (B)
+                        };
+                        TRUE : q65o3 : {
+                        setHidden("q69", TRUE); // safe use of password manager (A)
+                        setHidden("q70", TRUE); // safe use of password manager (B)
+                        };
+                        // global logic: recPasswordManager (add recommendation)
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;When you follow best practices like using strong passwords and not reusing passwords, it becomes impossible for
+                    most people to remember all these different credentials. As a consequence, you need to start
+                    keeping track of credentials in a secure way.&lt;/p&gt;
+                    &lt;p&gt;The best way to do this is to use a password manager that stores your passwords in an encrypted container
+                    (for example a file). This way, you just need to remember one strong password which is used to access the securely
+                    stored passwords. Additionally, most password managers let you generate secure passwords which helps when you need to
+                    set up a new account.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Make sure that this element is on your password security checklist.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q66" type="A" hidden="true" extRef="ACS-14"><!-- paper: physical security ensured -->
+            <text>Is the paper (or other physical medium) containing the passwords protected from unauthorised access?</text>
+            <options>
+                <option id="q66o1">
+                    <text>Yes, it is locked away.</text>
+                </option>
+                <option id="q66o2">
+                    <text>No, it is not protected sufficiently.</text>
+                    <comment>Please ensure the protection of the medium from unauthorized access.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q66o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q67" type="A" hidden="true" extRef="ACS-14"><!-- paper: backup ensured -->
+            <introduction>
+                You should be prepared for when your passwords stored on a physical medium get lost, stolen or destroyed.
+            </introduction>
+            <text>Is there a regularly updated copy of the paper (or other physical medium) containing the passwords?</text>
+            <options>
+                <option id="q67o1">
+                    <text>Yes, in a different physical location and protected from unauthorised access.</text>
+                </option>
+                <option id="q67o2">
+                    <text>Yes, but in the same location and/or not sufficiently protected against unauthorised access.</text>
+                    <comment>Make sure to have a copy in a different physical location which is protected against access by unauthorised persons.</comment>
+                </option>
+                <option id="q67o3">
+                    <text>No, there is no regularly updated copy or backup.</text>
+                    <comment>Make sure to have a copy in a different physical location which is protected against access by unauthorised persons.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q67o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    It is important to have a copy of the paper or other physical medium containing your passwords in case
+                    the original gets lost, stolen or destroyed. This copy should also be protected against access by unauthorised persons.
+                    Additionally, the copy should not be in the same physical location as the original.
+                    Note that taking a photograph with your smartphone is not a good idea as it can potentially expose your passwords.
+                </text>
+            </instruction>
+        </question>
+        <question id="q68" type="A" hidden="true" extRef="ACS-14"><!-- make sure a password manager cannot be used -->
+            <text>Is there a solid reason why you cannot or do not want to use a password manager?</text>
+            <options>
+                <option id="q68o1">
+                    <text>Yes, I really cannot use a password manager and I am sure of this.</text>
+                </option>
+                <option id="q68o2">
+                    <text>Yes, I really do not want to use a password manager and I am sure of this.</text>
+                </option>
+                <option id="q68o3">
+                    <text>No, there is not really something stopping me from using a password manager.</text>
+                    <comment>Don't wait any longer and start using a password manager then.</comment>
+                </option>
+                <option id="q68o4">
+                    <text>I do not know.</text>
+                    <comment>Then there seems not to be a reason against starting to use a password manager.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q68o1") : scoring : {
+                        addScore("knowhowMax", 1);
+                        addScore("knowhow", 1);
+                        };
+                        // global logic: recPasswordManager (revoke recommendation)
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q69" type="A" hidden="true" extRef="ACS-14"><!-- safe use of password manager (A -> online storage) -->
+            <introduction>
+                It is much more secure to use a password management solution that does not store your passwords in the cloud or on
+                servers out of your control.
+            </introduction>
+            <text>Are you using a cloud-based password management software which stores your passwords online?</text>
+            <options>
+                <option id="q69o1">
+                    <text>No, we don't use a cloud-based solution.</text>
+                </option>
+                <option id="q69o2">
+                    <text>Yes, we are using a cloud-based solution.</text>
+                    <comment>
+                        Consider switching to an application where you know that the data is not stored in the cloud or on servers out of your control.
+                        Also, make sure that you can access your passwords in case the Internet or cloud service is not available or off-line.
+                    </comment>
+                </option>
+                <option id="q69o3">
+                    <text>I don't know.</text>
+                    <comment>
+                        Consult the documentation of your password management solution and consider switching to an application where you
+                        know that the data is not stored in the cloud or on servers out of your control. Also, make sure that you can access
+                        your passwords in case the Internet or cloud service is not available or off-line.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q69o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It is much more secure to use a password management solution that does not store your passwords in the cloud or on servers out of your control.
+                    On the one hand, the data might not be available to you in case the Internet is not working (if there is no offline-access feature).
+                    On the other hand, a data breach could expose your credentials – remember that such services are a worthwhile target for cyber criminals.
+                    Try to avoid password manager solutions that allow to manage and view your credentials in a browser (web application).
+                    &lt;/p&gt;
+                    &lt;p&gt;
+                    &lt;strong&gt;Example software that meets this criteria:&lt;/strong&gt;&lt;br&gt;
+                    &lt;a target="_blank" href="https://keepass.info"&gt;KeePass2&lt;/a&gt; (Windows),
+                    &lt;a target="_blank" href="https://strongboxsafe.com"&gt;Strongbox&lt;/a&gt; (iOS, macOS),
+                    &lt;a target="_blank" href="https://www.keepassx.org"&gt;KeePassX&lt;/a&gt; (macOS, Linux),
+                    &lt;a target="_blank" href="https://play.google.com/store/apps/details?id=keepass2android.keepass2android"&gt;KeePass2Android&lt;/a&gt; (Android)
+                    &lt;/p&gt;
+                    &lt;p&gt;
+                    You can synchronize the &lt;strong&gt;encrypted&lt;/strong&gt; archive of your password manager's data with a cloud service
+                    to keep everything updated on multiple devices. If you use synchronisation, don't forget to still keep backups which
+                    are separate and not automatically overwritten.
+                    &lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Backup -->
+        <question id="q72" type="A" hidden="false" extRef="BK-1">
+            <introduction>
+                A copy of important data which is stored elsewhere is called a backup.
+            </introduction>
+            <text>Did you ever make a backup of the data on the «important data» list (see instruction)?</text>
+            <options>
+                <option id="q72o1">
+                    <text>No, I never made a copy of any data.</text>
+                    <comment>Do not wait any longer and start doing regular backups of all your important data.</comment>
+                </option>
+                <option id="q72o2">
+                    <text>Yes, I did a copy of some of this data at least once already.</text>
+                    <comment>That's a good start. Look that you can do regular backups of all your important data.</comment>
+                </option>
+                <option id="q72o3">
+                    <text>Yes, I did a copy of all the important data multiple times already.</text>
+                    <comment>Great. Make sure you keep doing regular backups of all your important data.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q72o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q72o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q72o1") : recBackups : {
+                        addRecommendation("recBackups", 15, "", "", tn("recBackups-title"),
+                        tn("recBackups-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q72");
+                        };
+                        TRUE : recBackups : {
+                        revokeRecommendation("recBackups");
+                        };
+                        isSelected("q72o1") : q75visibility : {
+                        revokeRecommendation("recRegularBackups");
+                        setHidden("q75", TRUE); // no backup at all
+                        };
+                        TRUE : q75visibility : {
+                        setHidden("q75", FALSE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Backups can be used to restore the data if desired, for example in case of data loss, accidental deletion or
+                    corruption. In case of a ransomware attack, having a backup is essential to recover your data. It is important that
+                    you identify what data is important to your company in order to determine whether it
+                    is worth saving. This heavily depends on your business but here are some examples:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;list of customers and suppliers&lt;/li&gt;
+                    &lt;li&gt;personnel records&lt;/li&gt;
+                    &lt;li&gt;administration documents&lt;/li&gt;
+                    &lt;li&gt;contracts and insurance policies&lt;/li&gt;
+                    &lt;li&gt;business plans and marketing material&lt;/li&gt;
+                    &lt;li&gt;credentials (usernames and passwords)&lt;/li&gt;
+                    &lt;li&gt;software licenses&lt;/li&gt;
+                    &lt;li&gt;financial data&lt;/li&gt;
+                    &lt;li&gt;payment recipes and account statements&lt;/li&gt;
+                    &lt;li&gt;tax-related documents&lt;/li&gt;
+                    &lt;li&gt;inventory records&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;strong&gt;Make an accurate list of all important data your company has stored.
+                    Also write down precisely where this data is stored.&lt;/strong&gt;&lt;/p&gt;
+                    &lt;p&gt;Please note that &lt;em&gt;replication/synchronisation&lt;/em&gt; is not the same as a
+                    &lt;em&gt;backup&lt;/em&gt; because replicated/synchronised data is updated continuously. This means that most likely
+                    there is no history of the data. Consequently, it might not be possible to restore deleted files. In contrast, a backup
+                    is a basically the state of the data at a certain point in time and can be recovered.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q75" type="A" hidden="false" extRef="BK-1">
+            <introduction>
+                You should back up your data at least once every week. The more often you do this, the fewer data can get lost.
+            </introduction>
+            <text>How often do you back up your important data?</text>
+            <options>
+                <option id="q75o1">
+                    <text>Every day.</text>
+                </option>
+                <option id="q75o2">
+                    <text>Minimum once per week.</text>
+                    <comment>Ask yourself if you might want to do a backup every day.</comment>
+                </option>
+                <option id="q75o3">
+                    <text>Minimum once per month.</text>
+                    <comment>
+                        Try to increase the frequency in case you determine that you would lose too much data in case of an incident.
+                        It is recommended that you back up your data at the very least once every week.
+                    </comment>
+                </option>
+                <option id="q75o4">
+                    <text>Minimum once per year.</text>
+                    <comment>It is recommended that you back up your data at least once every week.</comment>
+                </option>
+                <option id="q75o5">
+                    <text>Less often than once per year.</text>
+                    <comment>It is recommended that you back up your data at least once every week.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        or(isSelected("q75o1"), isSelected("q75o2"), isSelected("q75o3")) : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q75o4") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q75o4"), isSelected("q75o5")) : recRegularBackups : {
+                        addRecommendation("recRegularBackups", 20, "", "", tn("recRegularBackups-title"),
+                        tn("recRegularBackups-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q75");
+                        };
+                        TRUE : recRegularBackups : {
+                        revokeRecommendation("recRegularBackups");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Depending on the type of your business, important data may change more or less frequently.
+                    It is essential that you ask yourself what amount of data are you willing to lose in case of an incident.
+                    The answer to this question will guide you towards the optimal frequency of your backup solution.&lt;/p&gt;
+                    &lt;p&gt;It is recommended that you back up your data at the very least once every week. Depending on your
+                    business and the type of data you are storing, you might want to back up more frequently.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Amend each item on your list of important data with the amount of time you are willing to lose
+                    the data for the respective item. Change your backup plans in order to satisfy your requirements.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q80" type="A" hidden="false" extRef="BK-1">
+            <text>Does your backup run automatically?</text>
+            <options>
+                <option id="q80o1">
+                    <text>No, we manually back up our data.</text>
+                    <comment>Consider automating your backup processes.</comment>
+                </option>
+                <option id="q80o2">
+                    <text>Yes, but there are some exceptions.</text>
+                </option>
+                <option id="q80o3">
+                    <text>Yes, all backup processes run automatically.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q80o2"), isSelected("q80o3")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Try to automate your backups, so you do not need to do it this manually. On the one hand, this saves you time
+                    that can be invested to further improve cybersecurity at your company. On the other hand, it assures that the backups
+                    are not accidentally forgotten.&lt;/p&gt;
+                    &lt;p&gt;It is important to check regularly if the backups are actually being made according to the set schedule.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q85" type="A" hidden="false" extRef="BK-4">
+            <introduction>Having one backup is not enough to protect you reliably from losing your data.</introduction>
+            <text>Do you have multiple copies of your backups?</text>
+            <options>
+                <option id="q85o1">
+                    <text>No</text>
+                </option>
+                <option id="q85o2">
+                    <text>Yes, but they are all in the same physical location.</text>
+                </option>
+                <option id="q85o3">
+                    <text>Yes, in different physical locations.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q85o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q85o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q85o1") : recMultipleBackups : {
+                        addRecommendation("recMultipleBackups", 25, "", "", tn("recMultipleBackups-title"),
+                        tn("recMultipleBackups-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q85");
+                        };
+                        TRUE : recMultipleBackups : {
+                        revokeRecommendation("recMultipleBackups");
+                        };
+                        isSelected("q85o2") : recBackupTwoLocations : {
+                        addRecommendation("recBackupTwoLocations", 30, "", "", tn("recBackupTwoLocations-title"),
+                        tn("recBackupTwoLocations-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q85");
+                        };
+                        TRUE : recBackupTwoLocations : {
+                        revokeRecommendation("recBackupTwoLocations");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt; It could be that your primary backup gets compromised and will no longer be usable. There could be many
+                    reasons for this, such as theft of both, the backup and the original data, environmental hazards affecting both
+                    systems or malicious activity.&lt;/p&gt;
+                    &lt;p&gt;Therefore, you should have at least two backups in different physical locations. For example, the second
+                    copy could be stored encrypted in a cloud-based service. For very small businesses, the second copy could just be
+                    taken home by the owner and rotated once per week.&lt;/p&gt;
+                    &lt;p&gt;Don't forget to properly secure external storage drives with encryption and by physically locking
+                    them away appropriately.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q70" type="A" hidden="true" extRef="ACS-14"><!-- safe use of password manager (B -> backup) -->
+            <text>Do you have at least one regularly updated copy of your password manager's data in a different physical location?</text>
+            <options>
+                <option id="q70o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q70o2">
+                    <text>No</text>
+                    <comment>
+                        Make sure that you can still access your passwords in case your computer does not work, gets stolen or lost.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q70o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 2);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Having a separate copy of your password manager's data is important in case your computer does not work,
+                    gets stolen or lost.&lt;/p&gt;
+                    &lt;p&gt;Please note that synchronisation with a cloud service might not offer sufficient protection from accidental or
+                    malicious updates to the data. In particular, a synced cloud drive does not protect against ransomware attacks.
+                    It is recommended that the copy of your data is preserved at regular intervals (e.g. snapshots) which can be
+                    restored if necessary.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Business Continuity Management -->
+        <question id="q200" type="A" hidden="false" extRef="BCM-1">
+            <introduction>
+                Your company should be able to still function to a certain extent in case a key system
+                (e.g. internet connection, computer, server, printer, production machine) fails.
+            </introduction>
+            <text>Do you have contingency plans for your key systems in case of failure?</text>
+            <options>
+                <option id="q200o1">
+                    <text>Yes, we have informal (thought out) contingency plans</text>
+                    <comment>Very good, you are better prepared with contingency plans and can act quicker. Try to write these plans down.</comment>
+                </option>
+                <option id="q200o2">
+                    <text>Yes, we have formal (written down) contingency plans</text>
+                    <comment>Very good, you are better prepared with contingency plans and can act quicker.</comment>
+                </option>
+                <option id="q200o3">
+                    <text>No, we don't have such plans</text>
+                    <comment>
+                        Being prepared in case a system fails is important for your company's continued operation.
+                        Make informal (thought out) or formal (written down) contingency plans.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q200o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q200o2") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q200o3") : recContingencyPlans : {
+                        addRecommendation("recContingencyPlans", 15, "", "", tn("recContingencyPlans-title"),
+                        tn("recContingencyPlans-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q200");
+                        };
+                        TRUE : recContingencyPlans : {
+                        revokeRecommendation("recContingencyPlans");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Ask yourself what you would do in case an important/vital system fails. Having a contingency plan
+                    which can be informally thought out or formally written down helps you to get a head start in such a situation.
+                    &lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Make a list of the key systems your company is relying upon for daily operation. For each system,
+                    try to find alternatives or plan what you are going to do in case of failure.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Asset Management -->
+        <question id="q300" type="A" hidden="false" extRef="AM-3">
+            <introduction>
+                One of the first steps in knowing your environment is to make a list of all Information and Communication Technology (ICT) assets in your company.
+            </introduction>
+            <text>Do you have an inventory of ICT assets (all hardware assets that store or process information whether connected to a network or not)?</text>
+            <options>
+                <option id="q300o1">
+                    <text>Yes, it is complete and detailed enough</text>
+                    <comment>That is very good, this will help you later to implement other measures.</comment>
+                </option>
+                <option id="q300o2">
+                    <text>Yes, but it is not complete or not detailed enough</text>
+                    <comment>Try to make the inventory of ICT assets complete and detailed since you will need it later.</comment>
+                </option>
+                <option id="q300o3">
+                    <text>No, we don't have such an inventory</text>
+                    <comment>Make a complete and detailed inventory of all ICT assets in your company.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q300o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q300o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q300o3") : recAssetList : {
+                        addRecommendation("recAssetList", 12, "", "", tn("recAssetList-title"),
+                        tn("recAssetList-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q300");
+                        };
+                        TRUE : recAssetList : {
+                        revokeRecommendation("recAssetList");
+                        };
+                        // global logic: q315visibility
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Make a list of all ICT assets that are owned by your company. If private devices are also used for your
+                    business (bring-your-own-device), include them as well.&lt;/p&gt;
+                    &lt;p&gt;Your list should entail all hardware that stores or processes information, for example:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;computers and laptops&lt;/li&gt;
+                    &lt;li&gt;mobile phones and tablets&lt;/li&gt;
+                    &lt;li&gt;switches, routers and modems&lt;/li&gt;
+                    &lt;li&gt;servers&lt;/li&gt;
+                    &lt;li&gt;printers&lt;/li&gt;
+                    &lt;li&gt;storage devices&lt;/li&gt;
+                    &lt;li&gt;...&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;strong&gt;You will need this list later to know where you should implement security measures for your ITC hardware.&lt;/strong&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q310" type="A" hidden="false" extRef="AM-5">
+            <introduction>
+                The software that runs on the devices is as important as the hardware itself.
+            </introduction>
+            <text>Do you have an inventory of all software platforms and applications in use as well as all your licenses?</text>
+            <options>
+                <option id="q310o1">
+                    <text>Yes, we have a complete inventory.</text>
+                    <comment>That is very good and will help you later.</comment>
+                </option>
+                <option id="q310o2">
+                    <text>Yes, but only partially complete.</text>
+                    <comment>Your next step is to make the software inventory complete and detailed since you need it later.</comment>
+                </option>
+                <option id="q310o3">
+                    <text>No, we don't have such an inventory.</text>
+                    <comment>Make a complete and detailed software inventory.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q310o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q310o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q310o3") : recSoftwareInventory : {
+                        addRecommendation("recSoftwareInventory", 14, "", "", tn("recSoftwareInventory-title"),
+                        tn("recSoftwareInventory-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q310");
+                        };
+                        TRUE : recSoftwareInventory : {
+                        revokeRecommendation("recSoftwareInventory");
+                        };
+                        // global logic: q315visibility
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Make a list of all the platforms, software and applications your business uses to operate or depends on.
+                    Also, include all licenses that you need for using these systems.&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;You will need this list later to know where you should implement security measures for your software assets.&lt;/strong&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q315" type="A" hidden="true" extRef="AM-10"><!-- toggled by global logic: q315visibility -->
+            <introduction>
+                Some ICT assets and software are more important to your business than others.
+            </introduction>
+            <text>Are your resources/assets in the inventories prioritized according to their criticality?</text>
+            <options>
+                <option id="q315o1">
+                    <text>Yes, we assigned a criticality to the items in our hardware and software inventories.</text>
+                </option>
+                <option id="q315o2">
+                    <text>No, we did not assign criticality to our assets.</text>
+                    <comment>Think about which resources/assets are important to your company and then assign criticality to your hardware and software inventories.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q315o1") : scoring : {
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Knowing what ICT assets and software are vital to your business is necessary to prioritise your cybersecurity
+                    efforts. Think about which resources/assets are important to your company and then assign criticality to your hardware
+                    and software inventories.&lt;/p&gt;
+                    &lt;p&gt;If you have limited resources to protect and secure your systems, start with the one that has a high priority.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q60" type="A" hidden="false" extRef="ACS-2"><!-- requires register of software and hardware -->
+            <introduction>
+                Most devices (e.g. routers, wireless access points, ...) and some software get shipped with default passwords.
+            </introduction>
+            <text>Did you change the default passwords of software and devices?</text>
+            <options>
+                <option id="q60o1">
+                    <text>Yes, all default passwords are changed</text>
+                    <comment>Very good. Remember to change the default passwords of devices that you will buy in the future.</comment>
+                </option>
+                <option id="q60o2">
+                    <text>Some are changed but others are not</text>
+                    <comment>Set up a task to change the remaining default passwords and then remember to do this when you buy new devices in the future.</comment>
+                </option>
+                <option id="q60o3">
+                    <text>I'm not sure</text>
+                    <comment>Just to be safe, set up a task to change all currently used default passwords and then remember to do this when you buy new devices in the future.</comment>
+                </option>
+                <option id="q60o4">
+                    <text>No, they are not changed</text>
+                    <comment>Set up a task to change all currently used default passwords and then remember to do this when you buy new devices in the future.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q60o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q60o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q60o2"), isSelected("q60o3"), isSelected("q60o4")) : recChangeDefaultPasswords : {
+                        addRecommendation("recChangeDefaultPasswords", 22, "", "", tn("recChangeDefaultPasswords-title"),
+                        tn("recChangeDefaultPasswords-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q60");
+                        };
+                        TRUE : recChangeDefaultPasswords : {
+                        revokeRecommendation("recChangeDefaultPasswords");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Most devices and some software get shipped with default passwords that are commonly known and well-documented.
+                    This poses a risk if you do not change them since a malicious actor could easily log in with these default credentials.&lt;/p&gt;
+                    &lt;p&gt;It is also possible that the vendor or the software generates a secure one-time password for the device or system.
+                    Such a randomly generated password does not necessarily need to be changed if you know that it is unique and
+                    specifically generated for your device or system.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q63" type="A" hidden="false" extRef="ACS-13"><!-- requires register of software and hardware -->
+            <text>Do you revoke user accounts and permissions to internal and external systems while off-boarding an employee?</text>
+            <options>
+                <option id="q63o1">
+                    <text>Yes, we immediately revoke all credentials</text>
+                    <comment>Great. Don't forget to keep the list of affected applications/systems up-to-date at all times.</comment>
+                </option>
+                <option id="q63o2">
+                    <text>Yes, we revoke the credentials within a month after an employee leaves</text>
+                    <comment>Try to revoke all credentials immediately while off-boarding an employee. Don't forget to keep the list of affected applications/systems up-to-date at all times.</comment>
+                </option>
+                <option id="q63o3">
+                    <text>I'm not sure what user accounts or credentials to revoke.</text>
+                    <comment>Make sure you have a list of applications/systems where your employees have accounts and keep this list up-to-date at all times. If an employee leaves, consult this list and revoke access to all applications/systems immediately during off-boarding.</comment>
+                </option>
+                <option id="q63o4">
+                    <text>No, we don't strictly revoke access while off-boarding</text>
+                    <comment>If an employee leaves revoke access to all applications/systems immediately during off-boarding. Make sure you have a list of applications/systems where your employees have accounts and keep this list up-to-date at all times.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q63o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q63o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q63o3"), isSelected("q63o4")) : recRevokeAccessWhileOffboarding : {
+                        addRecommendation("recRevokeAccessWhileOffboarding", 25, "", "", tn("recRevokeAccessWhileOffboarding-title"),
+                        tn("recRevokeAccessWhileOffboarding-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q63");
+                        };
+                        TRUE : recRevokeAccessWhileOffboarding : {
+                        revokeRecommendation("recRevokeAccessWhileOffboarding");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;When an employee is leaving your company, it is important that they no longer have access to systems and accounts
+                    of your company. Therefore, it is crucial to revoke all credentials while off-boarding the employee. This is even more
+                    important in case of an immediate dismissal.&lt;/p&gt;
+                    &lt;p&gt;An list of applications/systems that is up-to-date helps to keep track of internal and external accounts
+                    that your employees have access to.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Incident Management -->
+        <question id="q400" type="A" hidden="false" extRef="INC-8">
+            <introduction>
+                Should a cyber incident occur, you need to be able to take appropriate measures and know
+                who is responsible and can make decisions on how to respond.
+            </introduction>
+            <text>Are the responsible persons and contact persons in case of an IT incident defined and available?</text>
+            <options>
+                <option id="q400o1">
+                    <text>Yes</text>
+                    <comment>This is very good. Don't forget to periodically check if the contact information is up-to-date and whether the responsible persons are available.</comment>
+                </option>
+                <option id="q400o2">
+                    <text>No</text>
+                    <comment>Make sure that the responsible persons and contact persons in case of an IT incident are defined and available.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q400o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q400o2") : recIncidentPersons : {
+                        addRecommendation("recIncidentPersons", 20, "", "", tn("recIncidentPersons-title"),
+                        tn("recIncidentPersons-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q400");
+                        };
+                        TRUE : recIncidentPersons : {
+                        revokeRecommendation("recIncidentPersons");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;In case of a cybersecurity incident, you need to make decisions and respond with appropriate measures.
+                    Therefore, you need to define who is responsible to handle incidents like this and who needs to be contacted.&lt;/p&gt;
+                    &lt;p&gt;It is recommended that at least one of the responsible persons holds a managing position (or is a company owner)
+                    since the decisions to be made are of high importance and relevance to the company.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Print this list of persons including all contact information in order to have this always accessible.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q410" type="Astar" hidden="false" extRef="INC-2">
+            <introduction>
+                Apart from internal communication channels, you need the contact details of important third-parties as well.
+            </introduction>
+            <text>Do you have contact information of the following relevant third-parties assembled and maintained?</text>
+            <options>
+                <option id="q410o1">
+                    <text>Law enforcement</text>
+                </option>
+                <option id="q410o2">
+                    <text>Government departments</text>
+                </option>
+                <option id="q410o3">
+                    <text>Vendors</text>
+                </option>
+                <option id="q410o4">
+                    <text>Suppliers</text>
+                </option>
+                <option id="q410o5">
+                    <text>Others</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q410o1"), isSelected("q410o2"), isSelected("q410o3"), isSelected("q410o4"), isSelected("q410o5")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        not( or(isSelected("q410o1"), isSelected("q410o2"), isSelected("q410o3"), isSelected("q410o4"), isSelected("q410o5")) ) : recIncidentExternalContacts : {
+                        addRecommendation("recIncidentExternalContacts", 25, "", "", tn("recIncidentExternalContacts-title"),
+                        tn("recIncidentExternalContacts-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q410");
+                        };
+                        TRUE : recIncidentExternalContacts : {
+                        revokeRecommendation("recIncidentExternalContacts");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;In case of a cyber incident, a list of important external or third-party contacts comes in handy. This includes
+                    emergency numbers and otherwise relevant contacts. Here are some examples:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Law enforcement (e.g. police)&lt;/li&gt;
+                    &lt;li&gt;Government departments&lt;/li&gt;
+                    &lt;li&gt;Important vendors and suppliers&lt;/li&gt;
+                    &lt;li&gt;IT consultancy&lt;/li&gt;
+                    &lt;li&gt;Internet provider&lt;/li&gt;
+                    &lt;li&gt;...&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;em&gt;Print this list in order to have it always accessible.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Supply Chain -->
+        <question id="q900" type="Astar" hidden="false" extRef="SC-5">
+            <introduction>
+                Knowing on what external services your company depends on is important.
+            </introduction>
+            <text>Are external ICT systems which are relevant to your organisation or on which your organisation depends on catalogued?</text>
+            <options>
+                <option id="q900o1">
+                    <text>Yes, we know which external systems are relevant</text>
+                    <comment>Plan what you would do in case a system which is relevant to your company fails.</comment>
+                </option>
+                <option id="q900o2">
+                    <text>No, we don't know this</text>
+                    <comment>Make a list of all external ICT services that your business depends on or relies on. You need to plan ahead what to do in case such a system fails.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q900o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q900o2") : recListExternalItcDependencies : {
+                        addRecommendation("recListExternalItcDependencies", 30, "", "", tn("recListExternalItcDependencies-title"),
+                        tn("recListExternalItcDependencies-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q900");
+                        };
+                        TRUE : recListExternalItcDependencies : {
+                        revokeRecommendation("recListExternalItcDependencies");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;You need to be ready if an essential external system that you rely or depend on is not available or compromised.
+                    To know how you can be prepared for such a scenario, the relevant external services need to be known.&lt;/p&gt;
+                    &lt;p&gt;Make a list of all external ICT systems (e.g. Microsoft 365, Dropbox, hosting provider, e-mail service) that
+                    your business depends on or relies on. Then plan what you would do in case such a system fails.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Network Security -->
+        <question id="q505" type="A" hidden="false" extRef="NET-4"><!-- used to toggle visibility of upcoming questions -->
+            <text>Does your business have a wireless network (WLAN)?</text>
+            <options>
+                <option id="q505o1">
+                    <text>Yes, we have a wireless network</text>
+                </option>
+                <option id="q505o2">
+                    <text>No, we don't have a wireless network</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q505o1") : q510visibility : {
+                        setHidden("q510", FALSE); // encrypted WLAN
+                        };
+                        TRUE : q510visibility : {
+                        setHidden("q510", TRUE); // encrypted WLAN
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q510" type="A" hidden="true" extRef="NET-4"><!-- show only if there is a WLAN -->
+            <introduction>
+                Using an unencrypted wireless network with no password to access company-resources is insecure.
+            </introduction>
+            <text>Are your corporate wireless networks encrypted and protected with a password?</text>
+            <options>
+                <option id="q510o1">
+                    <text>Yes, they are protected with a secure password or passphrase</text>
+                </option>
+                <option id="q510o2">
+                    <text>Yes, every employee uses their own credentials for accessing wireless networks</text>
+                </option>
+                <option id="q510o3">
+                    <text>No, there is no password required</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        or( isSelected("q510o1"), isSelected("q510o2") ) : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q510o3") : recWirelessPassword : {
+                        addRecommendation("recWirelessPassword", 14, "", "", tn("recWirelessPassword-title"),
+                        tn("recWirelessPassword-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q510");
+                        };
+                        TRUE : recWirelessPassword : {
+                        revokeRecommendation("recWirelessPassword");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Protecting your company's wireless network with a secure password or passphrase is important to stop unwanted actors
+                    from accessing your internal resources. This password should not be easily guessed and generally follow the same
+                    characteristics of a strong password as seen earlier (consult the password checklist that you created). This is
+                    important since weak password can be cracked using a brute-force attack.&lt;/p&gt;
+                    &lt;p&gt;Set up WPA3 or WPA2 security whenever possible. Either using a pre-shared key (PSK) or in 802.1X mode with a RADIUS
+                    server (more complicated setup for larger businesses). Avoid the vulnerable WEP standard as it is fundamentally broken.
+                    Also note that just hiding your network by not broadcasting your network name (SSID) does not sufficiently
+                    protect you at all.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Consult the documentation of your router or wireless access point if you don't know how to set up encryption
+                    for your wireless network.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q520" type="A" hidden="true" extRef="NET-5"><!-- show only if there is a WLAN / used to toggle visibility of upcoming questions -->
+            <introduction>
+                Offering a WLAN for guests is often considered a courtesy but can pose a risk to your network of company-internal devices.
+            </introduction>
+            <text>Can guests use a wireless network that you operate?</text>
+            <options>
+                <option id="q520o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q520o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q520o1") : q530visibility : {
+                        setHidden("q530", FALSE); // separated guest WLAN
+                        };
+                        TRUE : q530visibility : {
+                        setHidden("q530", TRUE); // separated guest WLAN
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q530" type="A" hidden="true" extRef="NET-5"><!-- show only if there is a WLAN for guests -->
+            <introduction>
+                Splitting your network into multiple zones is called network segmentation.
+            </introduction>
+            <text>Is the wireless network for guests separated from your corporate wireless network?</text>
+            <options>
+                <option id="q530o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q530o2">
+                    <text>No</text>
+                    <comment>Temporarily stop offering a guest network and look into separating the guest network from your company-internal network. Give the guest network a different passphrase.</comment>
+                </option>
+                <option id="q530o3">
+                    <text>We will no longer offer a guest WLAN</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        or( isSelected("q530o1"), isSelected("q530o3") ) : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q530o2") : recSeparateGuestNetwork : {
+                        addRecommendation("recSeparateGuestNetwork", 30, "", "", tn("recSeparateGuestNetwork-title"),
+                        tn("recSeparateGuestNetwork-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q530");
+                        };
+                        TRUE : recSeparateGuestNetwork : {
+                        revokeRecommendation("recSeparateGuestNetwork");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Having a completely separate wireless network for guests with direct access to the Internet and no
+                    access to company-resources is a basic example for network segmentation. It reduces the attack surface and system
+                    vulnerability, and keeps unknown devices out of your company-internal network.&lt;/p&gt;
+                    &lt;p&gt;If you operate a wireless network for guests, you should separate this network and give the guest network
+                    a different passphrase. Another option is to temporarily (until you have separated the networks) or permanently
+                    stop offering a WLAN for your guests.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Physical and Environmental -->
+        <question id="q600" type="A" hidden="false" extRef="ENV-3">
+            <introduction>
+                Depending on the type of your business, physical security is an important factor.
+            </introduction>
+            <text>Are your work areas where you store sensitive/important data separated from the public?</text>
+            <options>
+                <option id="q600o1">
+                    <text>We don't have any separation.</text>
+                    <comment>Without separation, it is very easy for a malicious actor to steal, alter or erase your important data. Consider restricting physical access or locking sensitive/important data away.</comment>
+                </option>
+                <option id="q600o2">
+                    <text>The zones are somehow divided but can be accessed easily.</text>
+                    <comment>If these zones can be accessed easily, it is also easy for a malicious actor to steal, alter or erase your important data. Consider restricting physical access or locking sensitive/important data away.</comment>
+                </option>
+                <option id="q600o3">
+                    <text>We don't have any separation but all sensitive/important data is locked away.</text>
+                    <comment>Additionally, try to separate the work areas where you store sensitive/important data to increase security.</comment>
+                </option>
+                <option id="q600o4">
+                    <text>The zones are somehow divided but can be accessed easily. All sensitive/important data is locked away.</text>
+                    <comment>Additionally, try to separate the work areas where you store sensitive/important data to increase security.</comment>
+                </option>
+                <option id="q600o5">
+                    <text>The zones are separated by physical means (e.g. a locked door) and cannot be accessed easily.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        or( isSelected("q600o3"), isSelected("q600o4") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q600o5") : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        or( isSelected("q600o1"), isSelected("q600o2") ) : recRestrictPhysicalAccess : {
+                        addRecommendation("recRestrictPhysicalAccess", 33, "", "", tn("recRestrictPhysicalAccess-title"),
+                        tn("recRestrictPhysicalAccess-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q600");
+                        };
+                        TRUE : recRestrictPhysicalAccess : {
+                        revokeRecommendation("recRestrictPhysicalAccess");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Customers should generally not have access to sensitive areas of your company. For example, this can be
+                    rooms or areas where you store customer data, schedules, personal information, company secrets, valuables, business
+                    documents, contracts, etc.&lt;/p&gt;
+                    &lt;p&gt;Rooms like server rooms or archives need increased protection and should not be accessible by customers.&lt;/p&gt;
+                    &lt;p&gt;As an alternative, in case you cannot separate the zones, you can keep all important/sensitive data locked away at all times.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q610" type="A" hidden="false"><!-- used to toggle visibility of upcoming questions -->
+            <text>Do you have servers or other critical IT infrastructure in your office or at your company's location?</text>
+            <options>
+                <option id="q610o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q610o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q610o1") : q620visibility : {
+                        setHidden("q620", FALSE);
+                        };
+                        TRUE : q620visibility : {
+                        setHidden("q620", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q620" type="A" hidden="true" extRef="ENV-5"><!-- only show if company has servers or important IT infrastructure on premise -->
+            <introduction>
+                It is important to keep the most important parts of your IT infrastructure particularly safe.
+            </introduction>
+            <text>Is physical access to your critical IT infrastructure (e.g. servers) protected against access by unauthorized individuals?</text>
+            <options>
+                <option id="q620o1">
+                    <text>Yes, access is limited to authorized individuals and there is physical protection.</text>
+                </option>
+                <option id="q620o2">
+                    <text>Yes partially, access is limited to authorized individuals but there is no physical protection.</text>
+                    <comment>Additionally, try to add physical protection.</comment>
+                </option>
+                <option id="q620o3">
+                    <text>Yes partially, there is physical protection but access is not limited to authorized individuals.</text>
+                    <comment>Additionally, try limit access to a few authorized persons only.</comment>
+                </option>
+                <option id="q620o4">
+                    <text>No, access is not sufficiently protected or limited.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        or( isSelected("q620o2"), isSelected("q620o3") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q620o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        or( isSelected("q620o2"), isSelected("q620o3"), isSelected("q620o4") ) : recProtectItInfra : {
+                        addRecommendation("recProtectItInfra", 35, "", "", tn("recProtectItInfra-title"),
+                        tn("recProtectItInfra-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q620");
+                        };
+                        TRUE : recProtectItInfra : {
+                        revokeRecommendation("recProtectItInfra");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Servers, backup medias, data storage, etc. are important parts of your IT infrastructure and need to be kept
+                    particularly safe because a compromise of these parts would have a great impact on your business. Only authorize as
+                    few employees as possible for such areas and physically restrict access, e.g. by a locked door or cabinet.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Risk Management -->
+        <question id="q700" type="A" hidden="false" extRef="RM-9">
+            <introduction>
+                Managing risk is important for businesses of all sizes and in all sectors.
+            </introduction>
+            <text>Is someone formally responsible for risk management?</text>
+            <options>
+                <option id="q700o1">
+                    <text>Yes</text>
+                    <comment>Very good that someone is formally responsible for risk management. Don't forget that sufficient resources should be allocated to keep the risk management up-to-date and aligned with your business.</comment>
+                </option>
+                <option id="q700o2">
+                    <text>No</text>
+                    <comment>Risk management is a crucial factor in sustaining your company long-term. Someone should be made responsible for this as soon as possible and sufficient resources should be allocated to this person.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q700o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q700o2") : recRiskManagementFormalResponsibility : {
+                        addRecommendation("recRiskManagementFormalResponsibility", 30, "", "", tn("recRiskManagementFormalResponsibility-title"),
+                        tn("recRiskManagementFormalResponsibility-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q700");
+                        };
+                        TRUE : recRiskManagementFormalResponsibility : {
+                        revokeRecommendation("recRiskManagementFormalResponsibility");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Someone needs to be explicitly responsible for risk management. In smaller companies this can also be the
+                    owner itself. Risk management is so important since the likelihood and severity of potential risks can be reduced
+                    drastically by identifying them early and taking appropriate measures against them.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- *************************************************************** -->
+        <!-- Software security -->
+        <question id="q800" type="A" hidden="false" extRef="SFT-2">
+            <introduction>
+                Malware is widespread and without protection it is just a matter of time until your company will be affected.
+            </introduction>
+            <text>Is malware protection (e.g. antivirus program) active on all computers, laptops and mobile devices?</text>
+            <options>
+                <option id="q800o1">
+                    <text>No, malware protection is not installed.</text>
+                    <comment>Malware protection is very important and should be installed on all devices as soon as possible.</comment>
+                </option>
+                <option id="q800o2">
+                    <text>Partially, malware protection is only installed on some devices.</text>
+                    <comment>Malware protection is very important and should be installed on all computers, laptops and mobile devices as soon as possible.</comment>
+                </option>
+                <option id="q800o3">
+                    <text>Yes, malware protection is installed on all devices.</text>
+                    <comment>Very good. Make sure that the malware protection is actually active on all systems.</comment>
+                </option>
+                <option id="q800o4">
+                    <text>Generally yes, but there are a few exceptions.</text>
+                    <comment>Consider installing malware protection on all devices so that there are no exceptions anymore.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q800o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q800o4") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q800o4") : q802visibility : {
+                        setHidden("q802", FALSE); // rule out exceptions
+                        };
+                        TRUE : q802visibility : {
+                        setHidden("q802", TRUE); // do not rule out exceptions
+                        };
+                        isSelected("q800o1") : q810visibility : {
+                        setHidden("q802", TRUE); // hide updates of malware signatures
+                        };
+                        TRUE : q810visibility : {
+                        setHidden("q802", FALSE); // display updates of malware signatures
+                        };
+                        // global logic: recMalwareProtection (add recommendation)
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Malware is malicious software that can infect your computer or mobile device. Some types of malware are
+                    viruses, spyware, worms or trojans. This type of software can cause significant harm to your computers, your data
+                    and the other devices in your network.&lt;/p&gt;
+                    &lt;p&gt;Protection against malware is absolutely essential and should be installed on all computers, laptops and mobile devices.&lt;/p&gt;
+                    &lt;p&gt;You can consult the list of IT assets that you created earlier and check all devices.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q802" type="A" hidden="false" extRef="SFT-2">
+            <text>Is there a solid reason why you don't want to or cannot install malware protection on the few exceptions referred to in the previous question?</text>
+            <options>
+                <option id="q802o1">
+                    <text>Yes, I am sure of this.</text>
+                </option>
+                <option id="q802o2">
+                    <text>No, there is not really something stopping me from installing malware protection everywhere.</text>
+                    <comment>Don't wait any longer and install malware protection then.</comment>
+                </option>
+                <option id="q802o3">
+                    <text>I do not know.</text>
+                    <comment>Then there seems not to be a reason against install malware protection.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q802o1") : scoring : { // add to scoring to previous question
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recPasswordManager (revoke recommendation)
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q810" type="A" hidden="true" extRef="SFT-3">
+            <introduction>
+                So called «signatures» are used to identify malware on your devices. Since malware is constantly changing, you need to
+                have up-to-date signatures to detect the most recent malicious payloads.
+            </introduction>
+            <text>Are malware signatures updated on a regular basis?</text>
+            <options>
+                <option id="q810o1">
+                    <text>Yes, this is done automatically.</text>
+                </option>
+                <option id="q810o2">
+                    <text>Yes, this is a scheduled task.</text>
+                    <comment>Try to automate updates of the signatures if possible.</comment>
+                </option>
+                <option id="q810o3">
+                    <text>No, signatues are not regularly updated.</text>
+                    <comment>Look into how to update the signatures of your anti-malware solution, either automatically or with a scheduled task.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q810o1"), isSelected("q810o2") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q810o3") : recMalwareSignatureUpdates : {
+                        addRecommendation("recMalwareSignatureUpdates", 25, "", "", tn("recMalwareSignatureUpdates-title"),
+                        tn("recMalwareSignatureUpdates-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q810");
+                        };
+                        TRUE : recMalwareSignatureUpdates : {
+                        revokeRecommendation("recMalwareSignatureUpdates");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Your malware protection should always have up-to-date malware signatures in order to detect new and evolving
+                    malicious software. Updating of signatures can be done automatically with most solutions but can also be a scheduled
+                    manual task.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q830" type="A" hidden="false" extRef="SFT-5">
+            <introduction>
+                Software updates allow patching security vulnerabilities or can introduce new features.
+            </introduction>
+            <text>Are devices, software and systems updated regularly (manually or automatically)?</text>
+            <options>
+                <option id="q830o1">
+                    <text>Yes, all systems are updated regularly</text>
+                </option>
+                <option id="q830o2">
+                    <text>Yes, most systems are updated regularly</text>
+                    <comment>Try to update all devices, software and systems to benefit from the latest security fixes.</comment>
+                </option>
+                <option id="q830o3">
+                    <text>No, many systems are not updated regularly</text>
+                    <comment>Start updating all your devices, software and systems since is important to get the latest security fixes.</comment>
+                </option>
+                <option id="q830o4">
+                    <text>No, software or devices are not regularly updated</text>
+                    <comment>Start updating your devices, software and systems since is important to get the latest security fixes.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q830o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q830o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        or( isSelected("q810o3"), isSelected("q810o4") ) : recSoftwareUpdates : {
+                        addRecommendation("recSoftwareUpdates", 25, "", "", tn("recSoftwareUpdates-title"),
+                        tn("recSoftwareUpdates-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q830");
+                        };
+                        TRUE : recSoftwareUpdates : {
+                        revokeRecommendation("recSoftwareUpdates");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;You should always try to keep your systems and software on the latest available version. Having the most recent
+                    patches for known vulnerabilities installed means that your devices, software and systems are better protected against
+                    cyberattacks. If you cannot let updates install automatically, set up a scheduled task to do so in regular intervals.&lt;/p&gt;
+                    &lt;p&gt;You can consult the list of IT assets and the list of software that you created earlier to know what needs regular updates.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q820" type="A" hidden="false" extRef="SFT-4">
+            <introduction>
+                Automatic updates are an easy way to keep your systems up-to-date without manual intervention.
+            </introduction>
+            <text>Are automatic updates activated on your systems?</text>
+            <options>
+                <option id="q820o1">
+                    <text>Yes, on all systems</text>
+                </option>
+                <option id="q820o2">
+                    <text>Yes, but there are exceptions</text>
+                    <comment>Try to activate automatic updates on all your systems.</comment>
+                </option>
+                <option id="q820o3">
+                    <text>No, automatic updates are not activated</text>
+                    <comment>Activate automatic updates on all your systems, so you don't need to manually install them.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q820o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q820o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;To ease the time it takes to update your systems, most software and devices can be configured to install
+                    updates automatically. This is an easy way to keep your systems up-to-date with the latest security fixes without
+                    manual intervention.&lt;/p&gt;
+                    &lt;p&gt;Consult the documentation or manual of your systems to find out whether automatic updates are offered
+                    and how to enable them.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q840" type="A" hidden="false" extRef="SFT-12">
+            <introduction>
+                Unauthorized persons should not be able to use an unlocked computer.
+            </introduction>
+            <text>Are user sessions on computers and mobile devices automatically locked after a standard period of inactivity?</text>
+            <options>
+                <option id="q840o1">
+                    <text>Yes, the systems lock after less than 5 minutes</text>
+                </option>
+                <option id="q840o2">
+                    <text>Yes, the systems lock after more than 5 Minutes</text>
+                    <comment>Adjust the settings to automatically lock the systems after 5 minutes or less.</comment>
+                </option>
+                <option id="q840o3">
+                    <text>Generally yes, the systems lock after less than 5 minutes but there are some exceptions</text>
+                    <comment>Make sure that the exempted systems are protected sufficiently and do not allow access to sensitive information or resources.</comment>
+                </option>
+                <option id="q840o4">
+                    <text>Generally yes, the systems lock after more than 5 minutes but there are some exceptions</text>
+                    <comment>Adjust the settings to automatically lock the systems after 5 minutes or less. Make sure that the exempted systems are protected sufficiently and do not allow access to sensitive information or resources.</comment>
+                </option>
+                <option id="q840o5">
+                    <text>No, we don't automatically lock our systems</text>
+                    <comment>Update the settings of your systems to automatically lock systems of your company after a period of inactivity of 5 minutes or less.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        or( isSelected("q840o2"), isSelected("q840o3") ) : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        or( isSelected("q840o1"), isSelected("q840o4") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 2);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q840o5") : recAutoLockSystems : {
+                        addRecommendation("recAutoLockSystems", 40, "", "", tn("recAutoLockSystems-title"),
+                        tn("recAutoLockSystems-text"),
+                        "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q840");
+                        };
+                        TRUE : recAutoLockSystems : {
+                        revokeRecommendation("recAutoLockSystems");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Generally, users should always lock systems when they are leaving the system unattended. Locking your computers
+                    after a period of inactivity can prevent others from using the logged in account in case the last user forgot to lock or log off
+                    the workstation. Note that just showing a screensaver that can be stopped without providing a password or PIN is not
+                    considered secure.&lt;/p&gt;
+                    &lt;p&gt;Most operating systems (Windows, macOS, Linux, ...) can be configured to lock when the session is inactive
+                    for some minutes. Even mobile devices like smartphones or tables (iOS, Android, ...) have this feature.
+                    Consult the documentation or manual of your systems to find out more.&lt;/p&gt;
+                    &lt;p&gt;There might be some systems where it is not possible to enforce this rule. In these cases, make sure that
+                    the unattended system does not allow access to sensitive information or other systems/resources you want to have
+                    protected.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q998" type="info" hidden="false">
+            <introduction>First Steps in Cybersecurity</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have finished your first coach!&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.fsics.MseFsicsLib"/>
+
+    <metadata key="_cysec.logic">
+        <mvalue key="postQuestion">
+            <stringValue>
+                // global logic: recPasswordManager
+                and( or(isSelected("q65o1"), isSelected("q65o2"), isSelected("q65o4"), isSelected("q65o5")),
+                not(or(isSelected("q68o1"), isSelected("q68o2"))) ) : recPasswordManager : {
+                addRecommendation("recPasswordManager", 15, "", "", tn("recPasswordManager-title"),
+                tn("recPasswordManager-text"),
+                "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q65");
+                };
+                TRUE : recPasswordManager : {
+                revokeRecommendation("recPasswordManager");
+                };
+
+                // global logic: recMalwareProtection
+                and( or(isSelected("q800o1"), isSelected("q800o2")), not(isSelected("q802o1")) ): recMalwareProtection : {
+                addRecommendation("recMalwareProtection", 12, "", "", tn("recMalwareProtection-title"),
+                tn("recMalwareProtection-text"),
+                "", "app/coach.jsp?fqcn=msesec-first-steps-in-cybersecurity.default&amp;question=q800");
+                };
+                TRUE : recMalwareProtection : {
+                revokeRecommendation("recMalwareProtection");
+                };
+
+                // global logic: q315visibility
+                or(isSelected("q300o1"), isSelected("q300o2"), isSelected("q310o1"), isSelected("q310o2")) : q315visibility : {
+                setHidden("q315", FALSE); // ask about assigned criticality
+                };
+                TRUE : q315visibility : {
+                setHidden("q315", TRUE); // do not ask about assigned criticality
+                };
+            </stringValue>
+        </mvalue>
+    </metadata>
+
+    <dictionary>
+        <entry key="recResponsiblePerson-title">Make someone responsible</entry>
+        <entry key="recResponsiblePerson-text">Designate a person responsible for cybersecurity in your company to get started on this journey.</entry>
+        <entry key="recEmpowerResponsiblePerson-title">Empower the responsible person</entry>
+        <entry key="recEmpowerResponsiblePerson-text">Enable the person responsible for cybersecurity to do their job properly. This means to assign the necessary resources available and grant them the power to implement measures.</entry>
+        <entry key="recEmployeeTraining-title">Employee Training</entry>
+        <entry key="recEmployeeTraining-text">Train your employees (and yourself) in the basics as laid out in the referenced question of the coach.</entry>
+        <entry key="recPasswordChecklist-title">Password Security Checklist</entry>
+        <entry key="recPasswordChecklist-text">Create a password security checklist and add the elements which are discussed in the coach to create basic guidelines for your company.</entry>
+        <entry key="recRequireSecurePasswords-title">Use strong passwords</entry>
+        <entry key="recRequireSecurePasswords-text">Inform all employees to set strong passwords as outlined in the question and add this element to your password guidelines. Creating strong passwords is one of the easiest ways to guard against cybercrime.</entry>
+        <entry key="recNoPasswordReuse-title">No password reuse</entry>
+        <entry key="recNoPasswordReuse-text">Change all passwords that are reused to limit damages in case credentials get compromised.</entry>
+        <entry key="recChangeSharedPasswords-title">Change shared passwords when off-boarding employees</entry>
+        <entry key="recChangeSharedPasswords-text">Change all shared passwords after someone has their access revoked in order to ensure they no longer know the active credentials. Add this step to your off-boarding process.</entry>
+        <entry key="recBackups-title">Make backups</entry>
+        <entry key="recBackups-text">Make regular backups of all your important data and store it in a different physical location.</entry>
+        <entry key="recRegularBackups-title">Make regular backups</entry>
+        <entry key="recRegularBackups-text">Make regular backups of all your important data and store it in a different physical location. It is recommended that you back up your data at least once every week.</entry>
+        <entry key="recMultipleBackups-title">Multiple backups</entry>
+        <entry key="recMultipleBackups-text">Make at least two backups and store one of them in a physical location which is different from the other backups or the actual data being backed up.</entry>
+        <entry key="recBackupTwoLocations-title">Backups in different physical locations</entry>
+        <entry key="recBackupTwoLocations-text">Store at least one of your backups in physical location which is different from the other backups or the actual data being backed up.</entry>
+        <entry key="recContingencyPlans-title">Make contingency plans</entry>
+        <entry key="recContingencyPlans-text">Make informal (thought out) or formal (written down) contingency plans in case a system fails so your company can continue to operate to a certain extent.</entry>
+        <entry key="recAssetList-title">Make ITC asset inventory</entry>
+        <entry key="recAssetList-text">Make a list/inventory of all ICT assets in your company (all hardware assets that store or process information whether connected to a network or not).</entry>
+        <entry key="recSoftwareInventory-title">Make software inventory</entry>
+        <entry key="recSoftwareInventory-text">Make a list/inventory of all software, platforms and applications in your company including all licenses.</entry>
+        <entry key="recChangeDefaultPasswords-title">Change default passwords</entry>
+        <entry key="recChangeDefaultPasswords-text">Change all currently used default passwords of all your software and devices.</entry>
+        <entry key="recRevokeAccessWhileOffboarding-title">Change default passwords</entry>
+        <entry key="recRevokeAccessWhileOffboarding-text">If an employee leaves revoke access to all applications/systems immediately during off-boarding. Make sure you have a list of applications/systems where your employees have accounts and keep this list up-to-date at all times.</entry>
+        <entry key="recIncidentPersons-title">Responsible persons in case of an incident</entry>
+        <entry key="recIncidentPersons-text">Define the responsible persons to make decisions and define contact persons in case of an IT incident. Also, make sure they are available.</entry>
+        <entry key="recIncidentExternalContacts-title">Contact information of third-parties</entry>
+        <entry key="recIncidentExternalContacts-text">Assemble and maintain a list with contact information of relevant third-parties.</entry>
+        <entry key="recListExternalItcDependencies-title">Catalogue external ITC services</entry>
+        <entry key="recListExternalItcDependencies-text">Make a list of all external ICT services that your business depends on or relies on. You need to plan ahead what to do in case such a system fails.</entry>
+        <entry key="recWirelessPassword-title">Set a WLAN password</entry>
+        <entry key="recWirelessPassword-text">Protect your wireless network with a secure password/passphrase to stop other people from accessing it.</entry>
+        <entry key="recSeparateGuestNetwork-title">Separate guest WLAN</entry>
+        <entry key="recSeparateGuestNetwork-text">Separate the guest WLAN from your company-internal WLAN or stop offering this service for your guests.</entry>
+        <entry key="recRestrictPhysicalAccess-title">Restrict physical access</entry>
+        <entry key="recRestrictPhysicalAccess-text">Consider restricting physical access for customers to areas where you store important/sensitive data. If you cannot do this, you should keep this data locked away at all times.</entry>
+        <entry key="recProtectItInfra-title">Protect critical IT infrastructure</entry>
+        <entry key="recProtectItInfra-text">Physically protect your critical IT infrastructure (e.g. servers) from unauthorized access and limit the amount of employees that are authorized.</entry>
+        <entry key="recRiskManagementFormalResponsibility-title">Make someone responsible for risk management</entry>
+        <entry key="recRiskManagementFormalResponsibility-text">Someone should be made responsible for risk management and sufficient resources should be allocated to this person. This is a crucial factor in sustaining your company long-term.</entry>
+        <entry key="recMalwareSignatureUpdates-title">Update malware signatures regularly</entry>
+        <entry key="recMalwareSignatureUpdates-text">Update the signatures of your anti-malware solution regularly. This can be done automatically with most solutions or manually as a regularly scheduled task.</entry>
+        <entry key="recSoftwareUpdates-title">Install software updates</entry>
+        <entry key="recSoftwareUpdates-text">Start installing updates on all your devices, software and systems. This is very important to get the latest security fixes.</entry>
+        <entry key="recAutoLockSystems-title">Install software updates</entry>
+        <entry key="recAutoLockSystems-text">Update the settings of your systms to automatically lock systems of your company after a period of inactivity of 5 minutes or less.</entry>
+        <entry key="recPasswordManager-title">Use a password manager</entry>
+        <entry key="recPasswordManager-text">Start using a password manager to keep track of your credentials. Check the recommended software on the linked question.</entry>
+        <entry key="recMalwareProtection-title">Install malware protection</entry>
+        <entry key="recMalwareProtection-text">Install malware protection (e.g. antivirus program) on all computers and laptops and make sure it is active.</entry>
+    </dictionary>
+
+</questionnaire>

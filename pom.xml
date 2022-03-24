@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>eu.smesec.cysec.coach</groupId>
+    <artifactId>cysec-coach-msesec-aggregator</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules><!-- alphabetical order -->
+        <module>cysec-coach-msesec-business-continuity-management</module>
+        <module>cysec-coach-msesec-change-management</module>
+        <module>cysec-coach-msesec-data-protection-and-security</module>
+        <module>cysec-coach-msesec-deep-dive-access-management</module>
+        <module>cysec-coach-msesec-deep-dive-network-security</module>
+        <module>cysec-coach-msesec-deep-dive-software-security</module>
+        <module>cysec-coach-msesec-first-steps-in-cybersecurity</module>
+        <module>cysec-coach-msesec-going-deeper-on-backups</module>
+        <module>cysec-coach-msesec-human-resources-security</module>
+        <module>cysec-coach-msesec-incident-management</module>
+        <module>cysec-coach-msesec-next-steps-asset-management</module>
+        <module>cysec-coach-msesec-organisational-and-governance-aspects</module>
+        <module>cysec-coach-msesec-physical-and-environmental</module>
+        <module>cysec-coach-msesec-risk-management</module>
+        <module>cysec-coach-msesec-supply-chain</module>
+    </modules>
+
+</project>

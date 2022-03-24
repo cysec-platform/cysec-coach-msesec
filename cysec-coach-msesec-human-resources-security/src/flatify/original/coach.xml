@@ -1,0 +1,413 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-human-resources-security" readableName="Human Resources Security (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach addresses Human Resources Security for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q2300" type="info" hidden="false">
+            <introduction>Human Resources Security</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;Your company should be mindful of security aspects when hiring and dealing with employees.
+                In this coach, we will address topics of Human Resources Security.&lt;/p&gt;
+            </infotext>
+        </question>
+        <question id="q2301" type="A" hidden="false">
+            <text>Does your company have employees?</text>
+            <options>
+                <option id="q2301o1">
+                    <text>Yes, our company hires employees.</text>
+                </option>
+                <option id="q2301o2">
+                    <text>No, I am the only employee of the company.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q2301o2") : visibilityNoEmployees : {
+                        setHidden("q2302", TRUE);
+                        setHidden("q2305", TRUE);
+                        setHidden("q2310", TRUE);
+                        setHidden("q2315", TRUE);
+                        setHidden("q2320", TRUE);
+                        };
+                        TRUE : visibilityNoEmployees : {
+                        setHidden("q2302", FALSE);
+                        setHidden("q2305", FALSE);
+                        setHidden("q2310", FALSE);
+                        setHidden("q2315", FALSE);
+                        setHidden("q2320", FALSE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q2302" type="Astarexcl" hidden="false" extRef="HR-2">
+            <introduction>
+                Every company can benefit from having high security standards before hiring employees.
+                This enables businesses to keep their inside treats in check.
+            </introduction>
+            <text>Which of the following background and/or individual security checks does your company perform when hiring employees?</text>
+            <options>
+                <option id="q2302o1">
+                    <text>We verify the background information provided by the applicant (e.g. education records, past employments or residence status).</text>
+                </option>
+                <option id="q2302o2">
+                    <text>We check the candidates criminal record with the appropriate government body.</text>
+                </option>
+                <option id="q2302o3">
+                    <text>We perform a credit check.</text>
+                </option>
+                <option id="q2302oNone">
+                    <text>We do not do any background or security checks.</text>
+                    <comment>
+                        Consider doing at least a basic background check before hiring new staff.
+                        This step is even more crucial if your company handles sensitive information.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2302o1") : scoring: {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        or( isSelected("q2302o2"), isSelected("q2302o3") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        or( not(isSelected("q2302o1")), isSelected("q2302oNone") ) : recBackgroundCheck : {
+                        addRecommendation("recBackgroundCheck", 200, "", "", tn("recBackgroundCheck-title"),
+                        tn("recBackgroundCheck-text"),
+                        "", "app/coach.jsp?fqcn=msesec-human-resources-security.default&amp;question=q2302");
+                        };
+                        TRUE : recBackgroundCheck : {
+                        revokeRecommendation("recBackgroundCheck");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Conducting a pre-screening process is essential and highly recommended in order to prevent and detect insider threats.
+                    To ensure that you will hire the right people, consider enforcing the following checks during the selection process.&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Background check including: &lt;em&gt;personal contact details, education records, current or past employment records and references&lt;/em&gt;&lt;/li&gt;
+                    &lt;li&gt;Criminal record&lt;/li&gt;
+                    &lt;li&gt;Credit check (if applicable in the jurisdiction of residence)&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;em&gt;Do not hesitate to tailor this to your company's needs.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2305" type="A" hidden="false" extRef="HR-3">
+            <introduction>
+                A confidentiality clause is often included in employment contracts.
+                This hinders current and future employees to disclose or exploit the company's proprietary/confidential information.
+            </introduction>
+            <text>Did all employees sign a confidentiality agreement?</text>
+            <options>
+                <option id="q2305o1">
+                    <text>Yes, all employees.</text>
+                </option>
+                <option id="q2305o2">
+                    <text>No, only some employees.</text>
+                </option>
+                <option id="q2305o3">
+                    <text>We don't make employees sign a confidentiality agreement.</text>
+                    <comment>
+                        As a rule of thumb, a confidentiality clause should at least be signed by those employees
+                        that will or may encounter confidential information at work.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2305o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2305o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2305o3") : recConfidentialAgreement : {
+                        addRecommendation("recConfidentialAgreement", 200, "", "", tn("recConfidentialAgreement-title"),
+                        tn("recConfidentialAgreement-text"),
+                        "", "app/coach.jsp?fqcn=msesec-human-resources-security.default&amp;question=q2305");
+                        };
+                        TRUE : recConfidentialAgreement : {
+                        revokeRecommendation("recConfidentialAgreement");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;A confidentiality clause legally binds an employee or vendor to not disclose information of some sort.
+                    For instance, a disgruntled employee may download sensitive information before resigning which may result in a major
+                    liability. Therefore, you need to ask yourself whether there is sensitive and confidential information that you may
+                    want to protect. Below are some aspects to consider:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Define what is considered to be confidential (e.g. business ideas, software program or secret recipe).&lt;/li&gt;
+                    &lt;li&gt;The scope of the confidentiality obligation, i.e. in which situations the material is confidential.&lt;/li&gt;
+                    &lt;li&gt;Determine which employees could intentionally or unintentionally put such information at risk.&lt;/li&gt;
+                    &lt;li&gt;Prescribe clear consequences in case the confidentiality agreement is breached.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2310" type="A" hidden="false" extRef="HR-4">
+            <introduction>
+                Defining the roles and responsibilities of employees is key to ensure mutual understanding of what is expected and to hold them accountable.
+            </introduction>
+            <text>Did all employees sign a document outlining their roles and responsibilities in the organisation?</text>
+            <options>
+                <option id="q2310o1">
+                    <text>Yes, all employees signed such a document</text>
+                </option>
+                <option id="q2310o2">
+                    <text>Yes, roles and responsibilities were outlined in the employment contract</text>
+                </option>
+                <option id="q2310o3">
+                    <text>We don't make employees sign such a document</text>
+                    <comment>
+                        Define the main responsibilities and tasks for each employee. Add this list to future contracts and/or make
+                        already employed staff sign a document where this is outlined.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2310o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2310o2") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2310o3") : recResponsibilityDocument : {
+                        addRecommendation("recResponsibilityDocument", 200, "", "", tn("recResponsibilityDocument-title"),
+                        tn("recResponsibilityDocument-text"),
+                        "", "app/coach.jsp?fqcn=msesec-human-resources-security.default&amp;question=q2310");
+                        };
+                        TRUE : recResponsibilityDocument : {
+                        revokeRecommendation("recResponsibilityDocument");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;In order to avoid disagreements and/or complications at the workplace, it is suggested that there is mutual
+                    understanding. This ensures that they have acknowledged their responsibilities and understand the requirements as
+                    well as the essential duties of the position.&lt;/p&gt;
+                    &lt;p&gt;At least, the following content should be addressed in this document:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Job title (name of the position)&lt;/li&gt;
+                    &lt;li&gt;Description of the essential functions (responsibilities of the position, this may also include deadlines and time frames to accomplish a given set of tasks)&lt;/li&gt;
+                    &lt;li&gt;Level of employment (full-time, part-time and whether overtime is expected)&lt;/li&gt;
+                    &lt;li&gt;Work area (how the job relates to other positions within the organisation)&lt;/li&gt;
+                    &lt;li&gt;Employment location (place of employment, especially when there are multiple branches)&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;Alternatively, a section may be directly incorporated in the employment contract, clearly stating the main responsibilities and tasks for the position.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q2315" type="A" hidden="false" extRef="HR-5">
+            <introduction>
+                It is crucial to protect information that is both integral and critical to the company's success once an employee contract
+                comes to an end.
+            </introduction>
+            <text>Does the employment contract contain a paragraph about post-employment restrictions and provisions?</text>
+            <options>
+                <option id="q2315o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2315o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2315o1") : q2315 : {
+                        addScore("strength", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2315o2") : recPostEmploymentClauses : {
+                        addRecommendation("recPostEmploymentClauses", 300, "", "", tn("recPostEmploymentClauses-title"),
+                        tn("recPostEmploymentClauses-text"),
+                        "", "app/coach.jsp?fqcn=msesec-human-resources-security.default&amp;question=q2315");
+                        };
+                        TRUE : recPostEmploymentClauses : {
+                        revokeRecommendation("recPostEmploymentClauses");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Post-employment restrictions are contractual clauses restricting employees from doing a given set of things or
+                    activities after their employment ends. It is suggested to review whether your company has assets that may require to
+                    be protected by means of such clauses.&lt;/p&gt;
+                    &lt;p&gt;Below is a list of plausible enforceable post-employment restrictions:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Joining competing businesses (non-compete clauses)&lt;/li&gt;
+                    &lt;li&gt;Soliciting customers (non-solicitation clauses)&lt;/li&gt;
+                    &lt;li&gt;Soliciting and doing business with customers (non-dealing clauses)&lt;/li&gt;
+                    &lt;li&gt;Poaching other employees (non-poaching clauses)&lt;/li&gt;
+                    &lt;li&gt;Bypassing a business to go directly to their suppliers/clients (non-circumvention clauses)&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;em&gt;Consider getting help of a lawyer to draft post-employment clauses to make sure that they are
+                    enforceable in your jurisdiction.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 4 -->
+        <question id="q2320" type="A" hidden="false" extRef="HR-1">
+            <introduction>
+                Human resources policies and processes are key to handle and approach important personnel related events and issues.
+                Thus, it is very important to clearly communicate them through written policies.
+            </introduction>
+            <text>Does your company have formal human resources policies or processes?</text>
+            <options>
+                <option id="q2320o1">
+                    <text>Yes, we designed a policy or process but it is not fully implemented.</text>
+                </option>
+                <option id="q2320o2">
+                    <text>Yes, we implemented a policy or process.</text>
+                </option>
+                <option id="q2320o3">
+                    <text>Yes, we implemented a policy or process and update it regularly.</text>
+                </option>
+                <option id="q2320o4">
+                    <text>No, there is no human resources policy or process.</text>
+                    <comment>
+                        Compliance with human resources is desirable in the work place as they can guide you step-by-step on how to handle
+                        a full range of situations. Most importantly, it can help to create a safe and healthy working environment as
+                        your company grows.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2320o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q2320o2"), isSelected("q2320o3")) : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2320o4") : recHumanResourcesPolicies : {
+                        addRecommendation("recHumanResourcesPolicies", 400, "", "", tn("recHumanResourcesPolicies-title"),
+                        tn("recHumanResourcesPolicies-text"),
+                        "", "app/coach.jsp?fqcn=msesec-human-resources-security.default&amp;question=q2320");
+                        };
+                        TRUE : recHumanResourcesPolicies : {
+                        revokeRecommendation("recHumanResourcesPolicies");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Developing and maintaining human resources policies is critical to the long-term success of micro and small
+                    businesses. Indeed, these policies and processes are a key guideline to implement regulations touching upon key topics
+                    such as employment, training, evaluation as well as employees compensation.&lt;/p&gt;
+                    &lt;p&gt;Consider assigning or hiring someone to formulate or review the current employment regulations and laws that may
+                    apply to your company's employees. Make sure that these policies comply with your country laws.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2395" type="info" hidden="false">
+            <introduction>Human Resources Security</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.hrmgmtsec.MseHrMgmtSecLib"/>
+
+    <dictionary>
+        <entry key="recBackgroundCheck-title">Perform employee background checks</entry>
+        <entry key="recBackgroundCheck-text">Do at least a basic background check before hiring new staff to verify the information provided by the applicant. This is even more crucial if your company handles sensitive information.</entry>
+        <entry key="recConfidentialAgreement-title">Confidentiality Agreement</entry>
+        <entry key="recConfidentialAgreement-text">As a rule of thumb, a confidentiality clause should at least be signed by those employees that will or may encounter confidential information at work. Review which employees should sign a confidentiality agreement.</entry>
+        <entry key="recResponsibilityDocument-title">Clearly define responsibility</entry>
+        <entry key="recResponsibilityDocument-text">Define the main responsibilities and tasks for each employee. Add this list to future contracts and make already employed staff sign a document where this is outlined.</entry>
+        <entry key="recPostEmploymentClauses-title">Post-employment provisions</entry>
+        <entry key="recPostEmploymentClauses-text">Add at least a section about post-employment restrictions and provisions to your employment contracts. Consider getting help of a lawyer to draft these clauses to make sure that they are enforceable in your jurisdiction.</entry>
+        <entry key="recHumanResourcesPolicies-title">Human resources policies</entry>
+        <entry key="recHumanResourcesPolicies-text">Assigning or hire someone to formulate or review the current employment regulations and laws that may apply to your company's employees.</entry>
+    </dictionary>
+
+</questionnaire>

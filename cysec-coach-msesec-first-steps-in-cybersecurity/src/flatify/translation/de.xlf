@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:okp="okapi-framework:xliff-extensions" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" version="1.2" its:version="2.0">
+  <file original="coach.xml" source-language="en" datatype="xml" target-language="de">
+    <body>
+      <trans-unit id="coach-readable-name">
+        <source xml:lang="en">First Steps in Cybersecurity (MSE)</source>
+        <target>Erste Schritte in Cybersecurity (MSE)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

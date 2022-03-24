@@ -1,0 +1,1043 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-organisational-and-governance-aspects" readableName="Advanced Organisational and Governance Aspects (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach addresses Organisational and Governance aspects of cybersecurity for micro and small businesses that go further than in the first steps.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q2400" type="info" hidden="false">
+            <introduction>Advanced Organisational and Governance Aspects</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;This coach will extend on the questions and measures that were covered in the coach «First Steps in Cybersecurity».
+                If you have not completed that coach yet, we highly advise that you to finish it before starting this coach.&lt;/p&gt;
+                &lt;p&gt;&lt;em&gt;Please note that the questions will get increasingly more advanced and cover the remaining organisational and
+                governance aspects.&lt;/em&gt;&lt;/p&gt;
+            </infotext>
+        </question>
+        <!-- Priority 1 -->
+        <question id="q2402" type="A" hidden="false" extRef="OG-12">
+            <introduction>
+                All companies, regardless of their size have valuable information that cyber criminals may be after. Thus, it is important
+                that you train and inform your employees about this topic from time to time.
+            </introduction>
+            <text>Do you raise awareness for cybersecurity among your employees?</text>
+            <options>
+                <option id="q2402o1">
+                    <text>Yes, we train all employees them and inform them regularly.</text>
+                </option>
+                <option id="q2402o2">
+                    <text>Yes, some of them are trained and informed.</text>
+                    <comment>This is a step in the right direction. Consider training all your employees regularly.</comment>
+                </option>
+                <option id="q2402o3">
+                    <text>Yes, they have been informed and trained once.</text>
+                    <comment>This is a step in the right direction. Consider training all your employees regularly.</comment>
+                </option>
+                <option id="q2402o4">
+                    <text>No, we do not raise awareness nor train them.</text>
+                    <comment>
+                        It is critical that you start on this task and train your employees on basic online/internet best practices.
+                        Raising awareness for cybersecurity can prevent undesired cyberattacks and thus benefit your business.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2402o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        or(isSelected("q2402o2"), isSelected("q2402o3")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2402o4") : recTrainEmployees : {
+                        addRecommendation("recTrainEmployees", 100, "", "", tn("recTrainEmployees-title"),
+                        tn("recTrainEmployees-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2402");
+                        };
+                        TRUE : recTrainEmployees : {
+                        revokeRecommendation("recTrainEmployees");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Losses resulting from a cyber incident can damage your business and reputation significantly. Therefore, you
+                    should make sure that employees are regularly trained about new and emerging cyber threats and how to protect your
+                    business key assets. Below are some training topics to cover with your staff:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Browsing practices&lt;/li&gt;
+                    &lt;li&gt;Fraudulent/malicious email spotting&lt;/li&gt;
+                    &lt;li&gt;Reinforce usage of strong passwords&lt;/li&gt;
+                    &lt;li&gt;Avoid suspicious downloads&lt;/li&gt;
+                    &lt;li&gt;Discuss most common threats&lt;/li&gt;
+                    &lt;li&gt;Sensitive information protection&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Make sure that cybersecurity is included in the onboarding of new personnel.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q2405" type="A" hidden="false" extRef="OG-10">
+            <introduction>
+                Having basic cybersecurity guidelines for everyone in your company is a great way to raise awareness and keep people informed.
+            </introduction>
+            <text>Are there guidelines on how to deal with emails, digital data and safe browsing?</text>
+            <options>
+                <option id="q2405o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2405o2">
+                    <text>No</text>
+                    <comment>Consider drafting some guidelines for your company that touch upon handling emails, digital data and safe browsing.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2405o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2405o2") : recDraftCyberGuidelines : {
+                        addRecommendation("recDraftCyberGuidelines", 200, "", "", tn("recDraftCyberGuidelines-title"),
+                        tn("recDraftCyberGuidelines-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2405");
+                        };
+                        TRUE : recDraftCyberGuidelines : {
+                        revokeRecommendation("recDraftCyberGuidelines");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Having clear cybersecurity guidelines contributes to protect your business from malicious activities.
+                    These guidelines will be an asset and a key element to which employees can turn to when they need help. In addition,
+                    you can stipulate in them the penalties for violating the company's cybersecurity policies.&lt;/p&gt;
+                    &lt;p&gt;Make sure to keep your cybersecurity guidelines up to date, i.e. review new practices and/or emerging threats.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2410" type="A" hidden="false" extRef="OG-14">
+            <introduction>
+                It is important to assess which rules and regulations your business needs to adhere to. This varies greatly based on your
+                location and type of business. Compliance with those regulations are critical to the continuity of your business.
+            </introduction>
+            <text>Do you know the statutory and regulatory cybersecurity requirements for your business?</text>
+            <options>
+                <option id="q2410o1">
+                    <text>Yes, we are aware of them and review them from time to time.</text>
+                </option>
+                <option id="q2410o2">
+                    <text>Yes, we had a look at them once.</text>
+                    <comment>That's a good start, but it is also important that you review them regularly.</comment>
+                </option>
+                <option id="q2410o3">
+                    <text>No</text>
+                    <comment>
+                        It is critical that you become familiar with the statutory and regulatory cybersecurity requirements of your
+                        company. Depending on the type of your business it might also be that there are no special regulations you need to
+                        follow. However, it could also be that there are some specific regulations and/or rules that are critical to follow.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2410o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2410o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2410o3") : q2415visibility : {
+                        setHidden("q2415", TRUE);
+                        };
+                        TRUE : q2415visibility : {
+                        setHidden("q2415", FALSE);
+                        };
+                        // global logic: recCybersecurityRegulationCompliance
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Assessing which regulations apply to your organisation is often not a simple task. However, it is important to
+                    familiarise yourself with the ones that concern your business. This step is necessary to gain knowledge about what
+                    measures your company needs to implement in order to stay compliant.&lt;/p&gt;
+                    &lt;p&gt;In order to stay be up-to-date, it is necessary to review this from time to time.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2415" type="A" hidden="false" extRef="OG-14">
+            <introduction>After you know what regulations you need to follow, it is time to ensure you comply with them.</introduction>
+            <text>Do you comply with all statutory and regulatory cybersecurity requirements?</text>
+            <options>
+                <option id="q2415o1">
+                    <text>Yes</text>
+                    <comment>This is good. Don't forget to review them regularly and keep them up to date.</comment>
+                </option>
+                <option id="q2415o2">
+                    <text>No</text>
+                    <comment>
+                        Failing to comply with regulations may result in legal and reputational complications for your company. Consider
+                        ensuring compliance with statutory and regulatory cybersecurity requirements as soon as possible.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2415o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recCybersecurityRegulationCompliance
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2420" type="A" hidden="false" extRef="OG-4">
+            <introduction>
+                In order to sustain and improve cybersecurity within your company, it is important that the person that takes
+                responsibility for this journey has the adequate expertise.
+            </introduction>
+            <text>Does the responsible person for cybersecurity have the required knowledge, skills and abilities?</text>
+            <options>
+                <option id="q2420o1">
+                    <text>Yes, they have everything that's required.</text>
+                    <comment>That is very good and helps your company.</comment>
+                </option>
+                <option id="q2420o2">
+                    <text>They are currently acquiring the required knowledge, skills and abilities.</text>
+                </option>
+                <option id="q2420o3">
+                    <text>No</text>
+                    <comment>
+                        If the person responsible for cybersecurity lacks the knowledge required, it may complicate how your company
+                        will be able to navigate and improve in this domain. Consider assigning someone with the adequate expertise or
+                        allow the responsible person to train themselves in cybersecurity.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2420o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2420o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2420o3") : recResponsiblePersonExpertise : {
+                        addRecommendation("recResponsiblePersonExpertise", 200, "", "", tn("recResponsiblePersonExpertise-title"),
+                        tn("recResponsiblePersonExpertise-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2420");
+                        };
+                        TRUE : recResponsiblePersonExpertise : {
+                        revokeRecommendation("recResponsiblePersonExpertise");
+                        };
+                        isSelected("q2420o3") : q2425visibility : {
+                        setHidden("q2425", TRUE);
+                        };
+                        TRUE : q2425visibility : {
+                        setHidden("q2425", FALSE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2425" type="A" hidden="false" extRef="OG-5">
+            <introduction>
+                In order to carry out their role effectively, the person responsible for cybersecurity needs to keep their knowledge up to
+                date with the most recent security tendencies as well as new protective methods and emerging threats.
+            </introduction>
+            <text>Does the responsible person for cybersecurity receive regular training?</text>
+            <options>
+                <option id="q2425o1">
+                    <text>Yes, they receive training continuously.</text>
+                    <comment>That is great practice.</comment>
+                </option>
+                <option id="q2425o2">
+                    <text>Yes, they can train themselves regularly.</text>
+                    <comment>That is great practice.</comment>
+                </option>
+                <option id="q2425o3">
+                    <text>No</text>
+                    <comment>Keeping the responsible person up to date is critical for them to be able to effectively execute their role.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        or(isSelected("q2425o1"), isSelected("q2425o2")) : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q2430" type="A" hidden="false" extRef="OG-11">
+            <introduction>
+                Highlighting the relevance of your policies/regulations will facilitate their understanding, implementation and compliance.
+            </introduction>
+            <text>Are your cybersecurity guidelines understood by everyone in your company?</text>
+            <options>
+                <option id="q2430o1">
+                    <text>Yes, we make sure that everyone in our company understands our guidelines.</text>
+                </option>
+                <option id="q2430o2">
+                    <text>No, probably not.</text>
+                    <comment>
+                        Consider organising a briefing session at least once per year to discuss your company's cybersecurity guidelines.
+                        It is important that all your employees are informed and understand your company's policies and/or regulations.
+                    </comment>
+                </option>
+                <option id="q2430o3">
+                    <text>We are not sure.</text>
+                    <comment>
+                        Consider organising a briefing session at least once per year to discuss your company's cybersecurity guidelines.
+                        It is important that all your employees are informed and understand your company's policies and/or regulations.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2430o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        or(isSelected("q2430o2"), isSelected("q2430o3")) : recGuidelinesUnderstanding : {
+                        addRecommendation("recGuidelinesUnderstanding", 300, "", "", tn("recGuidelinesUnderstanding-title"),
+                        tn("recGuidelinesUnderstanding-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2430");
+                        };
+                        TRUE : recGuidelinesUnderstanding : {
+                        revokeRecommendation("recGuidelinesUnderstanding");
+                        };
+                        isSelected("q2430o2") : q2445visibility : {
+                        setHidden("q2445", TRUE);
+                        };
+                        TRUE : q2445visibility : {
+                        setHidden("q2445", FALSE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It is important to make sure that your employees understand and are familiar with your company's cybersecurity
+                    guidelines. In order to do so, consider using a range of approaches, such as briefings, online courses or interactive
+                    sessions. Think about doing these type of activities regularly to improve understanding and information retention.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2440" type="A" hidden="false" extRef="OG-18">
+            <introduction>
+                When you make changes in your company's guidelines and/or policies, it is important to communicate them to everyone in
+                your company within a reasonable time frame. Doing so will facilitate proper implementation.
+            </introduction>
+            <text>Do you inform everyone in your company about policy/guideline changes in a timely manner?</text>
+            <options>
+                <option id="q2440o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2440o2">
+                    <text>Sometimes</text>
+                    <comment>
+                        It is important to be upfront and straightforward about these changes. Consider holding a meeting or sending an
+                        email to communicate such changes with your staff.
+                    </comment>
+                </option>
+                <option id="q2440o3">
+                    <text>Never</text>
+                    <comment>
+                        It is important to be upfront and straightforward about these changes. Consider holding a meeting or sending an
+                        email to communicate such changes with your staff.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2440o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2440o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q2430o2"), isSelected("q2440o3") ): recInformEmployeesPolicyChanges : {
+                        addRecommendation("recInformEmployeesPolicyChanges", 300, "", "", tn("recInformEmployeesPolicyChanges-title"),
+                        tn("recInformEmployeesPolicyChanges-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2440");
+                        };
+                        TRUE : recInformEmployeesPolicyChanges : {
+                        revokeRecommendation("recInformEmployeesPolicyChanges");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Communicating significant policy and/or guidelines to your employees is critical to their proper implementation.
+                    For example, if you amend the password policy of your company, it is important to inform your staff, so they can take
+                    action as soon as possible and this way your expectations/goals are also meet in an ideal time frame. Consider informing
+                    them via email or by holding a meeting.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2445" type="A" hidden="false" extRef="OG-19">
+            <text>Are you checking whether everyone in your company complies with the guidelines and policies of the organisation?</text>
+            <options>
+                <option id="q2445o1">
+                    <text>Yes, we regularly check this and take corrective action if necessary.</text>
+                </option>
+                <option id="q2445o2">
+                    <text>Yes, we regularly check this but do not follow up on findings.</text>
+                    <comment>It is important that you actually take corrective action to follow up on your findings.</comment>
+                </option>
+                <option id="q2445o3">
+                    <text>Yes, we check this infrequently and take corrective action if necessary.</text>
+                    <comment>Try to do this more regularly.</comment>
+                </option>
+                <option id="q2445o4">
+                    <text>Yes, we check this infrequently and do not follow up on findings.</text>
+                    <comment>Do this regularly and take corrective action to follow up on your findings.</comment>
+                </option>
+                <option id="q2445o5">
+                    <text>No, we do not check this.</text>
+                    <comment>
+                        Start to regularly assess whether everyone in your company complies with the created guidelines and policies.
+                        Afterwards you need to take corrective action to follow up on your findings in order to continuously improve.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        or(isSelected("q2445o1"), isSelected("q2445o2"), isSelected("q2445o3")) : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2445o4") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q2445o3"), isSelected("q2445o2") ): recCheckPolicyCompliance : {
+                        addRecommendation("recCheckPolicyCompliance", 300, "", "", tn("recCheckPolicyCompliance-title"),
+                        tn("recCheckPolicyCompliance-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2445");
+                        };
+                        TRUE : recCheckPolicyCompliance : {
+                        revokeRecommendation("recCheckPolicyCompliance");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2435" type="A" hidden="false" extRef="OG-15">
+            <introduction>
+                Cybersecurity risk is an important type of risk for any enterprise. Thus, companies should ensure that these risks are
+                accounted for in their company-wide risk management procedures.
+            </introduction>
+            <text>Are cybersecurity risks embedded in your company-wide risk management structure?</text>
+            <options>
+                <option id="q2435o1">
+                    <text>Yes, we have incorporated cybersecurity risks.</text>
+                    <comment>This is great practice.</comment>
+                </option>
+                <option id="q2435o2">
+                    <text>No, they are not incorporated.</text>
+                    <comment>
+                        In order to have an encompassing and usable risk management strategy, it is critical that you embed cybersecurity
+                        risks in it. Failing to do so may significantly weaken your capacity to handle and account for possible security
+                        incidents.
+                    </comment>
+                </option>
+                <option id="q2435o3">
+                    <text>We don't do risk management.</text>
+                    <comment>
+                        Risk management is very important for any type of business and your company should definitely start doing that.
+                        In order to have an encompassing and usable risk management strategy, it is critical that you embed cybersecurity
+                        risks in it. Failing to do so may significantly weaken your capacity to handle and account for possible security
+                        incidents.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q2435o3")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2435o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2435o2") : recIncludeCybersecurityInRiskManagement : {
+                        addRecommendation("recIncludeCybersecurityInRiskManagement", 300, "", "", tn("recIncludeCybersecurityInRiskManagement-title"),
+                        tn("recIncludeCybersecurityInRiskManagement-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2435");
+                        };
+                        TRUE : recIncludeCybersecurityInRiskManagement : {
+                        revokeRecommendation("recIncludeCybersecurityInRiskManagement");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2450" type="A" hidden="false" extRef="OG-2">
+            <introduction>
+                Clearly defining the roles and their characteristics is key to avoid overlaps in responsibilities and transparently lays
+                out the expectations.
+            </introduction>
+            <text>Are cybersecurity roles and responsibilities in your company clearly defined?</text>
+            <options>
+                <option id="q2450o1">
+                    <text>Yes, we have them clearly defined and specified.</text>
+                </option>
+                <option id="q2450o2">
+                    <text>No we did not do that.</text>
+                    <comment>Consider defining the cybersecurity roles and responsibilities in your company.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2450o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2460" type="A" hidden="false" extRef="OG-7">
+            <introduction>IT devices and data pose heightened security risks that need to be addressed in your company's guidelines.</introduction>
+            <text>Do you have guidelines/requirements for secure handling of IT devices and data?</text>
+            <options>
+                <option id="q2460o1">
+                    <text>Yes, they exist and are communicated properly.</text>
+                    <comment>That is very good practice.</comment>
+                </option>
+                <option id="q2460o2">
+                    <text>Yes, they exist but are not communicated well enough.</text>
+                    <comment>
+                        That is a step in the right direction. Consider setting up a briefing session or sending an email to inform
+                        everyone in your company. Keeping everyone up to date and informed would be dealt if you wish to have an efficient
+                        implementation of those guidelines.
+                    </comment>
+                </option>
+                <option id="q2460o3">
+                    <text>No, they do not exist.</text>
+                    <comment>
+                        As a first step establish a concise and clear guidelines/requirements that tackle IT devices and data security
+                        aspects. As a second step, consider setting up a briefing session or sending an email to inform everyone in your
+                        company.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2460o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2460o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2460o3"): recGuidelinesOnDataAndDevices : {
+                        addRecommendation("recGuidelinesOnDataAndDevices", 25, "", "", tn("recGuidelinesOnDataAndDevices-title"),
+                        tn("recGuidelinesOnDataAndDevices-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2460");
+                        };
+                        TRUE : recGuidelinesOnDataAndDevices : {
+                        revokeRecommendation("recGuidelinesOnDataAndDevices");
+                        };
+                        isSelected("q2460o3") : q2465visibility : {
+                        setHidden("q2465", FALSE);
+                        };
+                        TRUE : q2465visibility : {
+                        setHidden("q2465", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2465" type="A" hidden="false" extRef="OG-8">
+            <introduction>
+                A correct and efficient implementation of cybersecurity measures and guidelines will help to protect your business from
+                being an easy target. After the first step of drafting your guidelines and measures, you need to implement them properly.
+            </introduction>
+            <text>Are cybersecurity measures and guidelines implemented?</text>
+            <options>
+                <option id="q2465o1">
+                    <text>Yes, they are consistently and systematically implemented.</text>
+                </option>
+                <option id="q2465o2">
+                    <text>Yes, some of them are implemented.</text>
+                    <comment>
+                        Full compliance with your cybersecurity measures is an effective way to keep your company safe from different types
+                        of attacks or human errors. Make sure that your guidelines are properly and consistently implemented.
+                    </comment>
+                </option>
+                <option id="q2465o3">
+                    <text>No, we don't implement them.</text>
+                    <comment>
+                        Compliance with your cybersecurity measures is an effective way to keep your company safe from different types
+                        of attacks or human errors. Make sure that your guidelines are properly and consistently implemented promptly.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2465o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2465o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2465o3"): recImplementMeasures : {
+                        addRecommendation("recImplementMeasures", 300, "", "", tn("recImplementMeasures-title"),
+                        tn("recImplementMeasures-text"),
+                        "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2465");
+                        };
+                        TRUE : recImplementMeasures : {
+                        revokeRecommendation("recImplementMeasures");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Proper and efficient implementation of cybersecurity measures is key to the continuity of your business.
+                    Cybersecurity is important as it touches to a several aspects in your company's regular business.
+                    At last, compliance with your company's regulations can contribute to avoid the costs of cybercrime, such as economic,
+                    reputational or regulatory costs.&lt;/p&gt;
+                    &lt;p&gt;All measures are only as good as they are implemented and followed by everyone in your company.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 4 -->
+        <question id="q2470" type="Astarexcl" hidden="false" extRef="OG-16">
+            <introduction>
+                A company's policies contribute to maintain order within the organization and ensure that everyone understands what is
+                expected from them. They are a great resource to turn to when navigating the work space. See the instruction for what topics
+                should at least be addressed in each policy.
+            </introduction>
+            <text>Do your policies follow a clear structure, address all required topics and are written in a formal style?</text>
+            <options>
+                <option id="q2470o1">
+                    <text>They follow a clear structure.</text>
+                </option>
+                <option id="q2470o2">
+                    <text>They cover at least a set of mandatory topics.</text>
+                </option>
+                <option id="q2470o3">
+                    <text>They are written in a formal style.</text>
+                </option>
+                <option id="q2470oNone">
+                    <text>None of the above.</text>
+                    <comment>
+                        Start updating your policies, so they follow a clear structure, include the required topics and are written in a
+                        format style.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( and(isSelected("q2470o1"), isSelected("q2470o2")), // at least 2 selected
+                        and(isSelected("q2470o1"), isSelected("q2470o3")),
+                        and(isSelected("q2470o2"), isSelected("q2470o3")) ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;As a micro or small enterprise, you will face a variety of risks from within and from the outside. Therefore,
+                    it is in your company's best interest that you do everything you can to limit liability for any type of issues
+                    that may arise. Your policies should be written in a formal style and should at least address the following topics:&lt;p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Introduction&lt;/li&gt;
+                    &lt;li&gt;Purpose&lt;/li&gt;
+                    &lt;li&gt;Scope&lt;/li&gt;
+                    &lt;li&gt;Roles and responsibilities&lt;/li&gt;
+                    &lt;li&gt;Revisions and Updating schedule&lt;/li&gt;
+                    &lt;li&gt;Contact information&lt;/li&gt;
+                    &lt;li&gt;Definitions/glossary (if necessary)&lt;/li&gt;
+                    &lt;li&gt;Acronyms (if necessary)&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2485" type="A" hidden="false" extRef="OG-3">
+            <introduction>
+                Coordination of tasks is critical in a business, as it enables to synchronize all activities of the business. As your
+                company may grow, proper communication of responsibilities among different departments will help you to be able to navigate
+                through every day business more smoothly.
+            </introduction>
+            <text>Are information security roles and responsibilities coordinated with internal roles (e.g. risk management or incident management)?</text>
+            <options>
+                <option id="q2485o1">
+                    <text>Yes, we make sure that information security positions are coordinated with internal roles.</text>
+                </option>
+                <option id="q2485o2">
+                    <text>Not really.</text>
+                    <comment>
+                        It is in your company's best interest to define and coordinate roles and responsibilities to avoid confusions that
+                        may affect your business productivity and employees accountability. Consider seating down with everyone involved in
+                        information security as well as the other key employees to discuss how they can complement each other's roles and
+                        responsibilities in order to avoid overlapping issues and tasks.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2485o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2495" type="A" hidden="false" extRef="OG-9">
+            <introduction>
+                Revising and adapting your cybersecurity measures and guidelines regularly is necessary to identify new threats or caveats
+                while implementing the newest approaches to tackle them.
+            </introduction>
+            <text>How often are cybersecurity measures and guidelines reviewed and updated?</text>
+            <options>
+                <option id="q2495o1">
+                    <text>Every year or more often</text>
+                </option>
+                <option id="q2495o2">
+                    <text>Every one to two years</text>
+                    <comment>
+                        Try to do this at least every year to adapt to the current needs of your company.
+                    </comment>
+                </option>
+                <option id="q2495o3">
+                    <text>Less often than every two years</text>
+                    <comment>
+                        The best course of action is to start to revise your cybersecurity measures and guidelines and adapt them to
+                        your company's most recent needs on a regular basis, e.g. every year.
+                    </comment>
+                </option>
+                <option id="q2495o4">
+                    <text>Never</text>
+                    <comment>
+                        The best course of action is to start to revise your cybersecurity measures and guidelines and adapt them to
+                        your company's most recent needs on a regular basis, e.g. every year.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q2495o1"), isSelected("q2495o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2480" type="A" hidden="false" extRef="OG-17">
+            <introduction>
+                Apart from reviewing your guidelines and documents, it is also important to regularly have a look at the cybersecurity
+                situation of your company as a whole.
+            </introduction>
+            <text>Is the overall cybersecurity status of the organisation reviewed on a regular basis?</text>
+            <options>
+                <option id="q2480o1">
+                    <text>Yes, with an external party.</text>
+                </option>
+                <option id="q2480o2">
+                    <text>Yes, we do this internally.</text>
+                </option>
+                <option id="q2480o3">
+                    <text>Not really.</text>
+                    <comment>
+                        Start reviewing the overall status of your company internally or by using an external contractor or specialised
+                        firm on a regular basis, e.g. every year.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q2480o1"), isSelected("q2480o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 5 -->
+        <question id="q2475" type="A" hidden="false" extRef="OG-13">
+            <text>Do you exchange information on cybersecurity with clients and suppliers (e.g. incidents or effectiveness of various protection technologies)?</text>
+            <options>
+                <option id="q2475o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2475o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2475o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2490" type="A" hidden="false" extRef="OG-3">
+            <text>Are information security roles and responsibilities coordinated with external partners?</text>
+            <options>
+                <option id="q2490o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2490o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2490o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2498" type="info" hidden="false">
+            <introduction>Advanced Organisational and Governance Aspects</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have reached the end of this coach based on your provided answers.&lt;/strong&gt;&lt;br&gt;
+                Please review any new recommendations we might have added for your company. Feel free to revisit this coach at a later time.&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.orggov.MseOrgGovLib"/>
+
+    <metadata key="_cysec.logic">
+        <mvalue key="postQuestion">
+            <stringValue>
+                // global logic: recCybersecurityRegulationCompliance
+                isSelected("q2410o3") : recCybersecurityRegulationCompliance : {
+                addRecommendation("recCybersecurityRegulationCompliance", 200, "", "", tn("recCybersecurityRegulationCompliance-title"),
+                tn("recCybersecurityRegulationCompliance-text1"),
+                "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2410");
+                };
+                isSelected("q2415o2") : recCybersecurityRegulationCompliance : {
+                addRecommendation("recCybersecurityRegulationCompliance", 200, "", "", tn("recCybersecurityRegulationCompliance-title"),
+                tn("recCybersecurityRegulationCompliance-text2"),
+                "", "app/coach.jsp?fqcn=msesec-organisational-and-governance-aspects.default&amp;question=q2415");
+                };
+                TRUE : recCybersecurityRegulationCompliance : {
+                revokeRecommendation("recCybersecurityRegulationCompliance");
+                };
+            </stringValue>
+        </mvalue>
+    </metadata>
+
+    <dictionary>
+        <entry key="recTrainEmployees-title">Train employees</entry>
+        <entry key="recTrainEmployees-text">Make sure that the employees of your company are regularly trained about new and emerging cyber threats and how to protect your business' key assets.</entry>
+        <entry key="recDraftCyberGuidelines-title">Draft cybersecurity guidelines</entry>
+        <entry key="recDraftCyberGuidelines-text">Draft some basic guidelines or checklists for your company that touch upon handling emails, digital data and safe browsing.</entry>
+        <entry key="recResponsiblePersonExpertise-title">Training for the responsible person</entry>
+        <entry key="recResponsiblePersonExpertise-text">Allow the responsible person to train themselves in cybersecurity or assign this role to someone with the adequate expertise.</entry>
+        <entry key="recGuidelinesUnderstanding-title">Ensure guideline understanding</entry>
+        <entry key="recGuidelinesUnderstanding-text">Organise a briefing session in your company at least once per year to inform everyone about your company's cybersecurity guidelines.</entry>
+        <entry key="recInformEmployeesPolicyChanges-title">Inform about policy changes</entry>
+        <entry key="recInformEmployeesPolicyChanges-text">Establish a procedure to inform everyone in your company of all policy/guideline changes in a timely manner.</entry>
+        <entry key="recCheckPolicyCompliance-title">Check guidelines and policies compliance</entry>
+        <entry key="recCheckPolicyCompliance-text">Regularly assess whether everyone in your company complies with the created guidelines and policies. Then, take corrective action to follow up on your findings.</entry>
+        <entry key="recIncludeCybersecurityInRiskManagement-title">Include cybersecurity aspects in risk management</entry>
+        <entry key="recIncludeCybersecurityInRiskManagement-text">Embed cybersecurity risks in your company-wide risk management strategy to strengthen your capacity to handle and account for possible cybersecurity risks.</entry>
+        <entry key="recGuidelinesOnDataAndDevices-title">Establish IT device and data guidelines</entry>
+        <entry key="recGuidelinesOnDataAndDevices-text">Establish a concise and clear guideline for secure handling of IT devices and data security aspects and communicate them to everyone in your company.</entry>
+        <entry key="recImplementMeasures-title">Implement your cybersecurity measures</entry>
+        <entry key="recImplementMeasures-text">Ensure that your company's cybersecurity measures are implemented consistently and systematically in order to improve the security of your company.</entry>
+        <entry key="recCybersecurityRegulationCompliance-title">Follow cybersecurity regulations</entry>
+        <entry key="recCybersecurityRegulationCompliance-text1">Become familiar with the statutory and regulatory cybersecurity requirements that apply to your company.</entry>
+        <entry key="recCybersecurityRegulationCompliance-text2">Ensure that your company complies with the cybersecurity regulations in your jurisdiction(s).</entry>
+    </dictionary>
+
+</questionnaire>

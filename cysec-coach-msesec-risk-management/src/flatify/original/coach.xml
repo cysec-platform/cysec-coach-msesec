@@ -1,0 +1,922 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-risk-management" readableName="Risk Management (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach focuses on Risk Management for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q1300" type="info" hidden="false">
+            <introduction>Risk Management</introduction>
+            <text>Intro</text>
+            <infotext>
+                All businesses face risk regardless of their size. For this reason it is important to be able to understand these risks
+                and tackle them before your business becomes seriously compromised. Recognizing potential threats and finding ways to
+                minimise them is therefore crucial. Here is where risk management comes into play, i.e. executing a sound strategy or
+                plan in which the different risks and threats are identified and where processes to manage or minimise them are prepared.
+            </infotext>
+        </question>
+        <question id="q1302" type="A" hidden="false" extRef="RM-9">
+            <introduction>
+                Risk is inherent to any kind of activity and in all business regardless of their size. The main goal of risk management is
+                to identify, analyse, evaluate and manage risks. In the first coach someone should have been defined as being responsible
+                for risk management.
+            </introduction>
+            <text>Are the role and responsibilities of the person responsible for risk management well-defined?</text>
+            <options>
+                <option id="q1302o1">
+                    <text>Yes, they are well-defined.</text>
+                    <comment>
+                        Great. Make sure that this person has sufficient resources to fulfill their task and contribute to sheltering the
+                        business from risks.
+                    </comment>
+                </option>
+                <option id="q1302o2">
+                    <text>We have someone in charge of risk management but their role has not been clearly defined.</text>
+                    <comment>
+                        When you set clear roles and responsibilities, everyone will be able to know what exactly is expected from them.
+                        Defining risk management roles will also help you to have a better understanding of your own needs in this regard.
+                        Consider defining their roles and responsibilities.
+                    </comment>
+                </option>
+                <option id="q1302o3">
+                    <text>We don't have a person in charge of risk management.</text>
+                    <comment>
+                        Even as a micro or small business you are exposed to risk all the time. It is thus, important to have someone
+                        that is charged to maintaining your company safe by reducing the likelihood of unforeseen events to take place.
+                        When you set clear roles and responsibilities, everyone will be able to know what exactly is expected from them.
+                        Defining risk management roles will also help you to have a better understanding of your own needs in this regard.
+                        Consider doing this as your earliest convenience.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1302o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1302o2"), isSelected("q1302o3")) : recRiskManagementRolesResponsabilites : {
+                        addRecommendation("recRiskManagementRolesResponsabilites", 100, "", "", tn("recRiskManagementRolesResponsabilites-title"),
+                        tn("recRiskManagementRolesResponsabilites-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1302");
+                        };
+                        TRUE : recRiskManagementRolesResponsabilites : {
+                        revokeRecommendation("recRiskManagementRolesResponsabilites");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;As a micro or small company, it is possible that you are very busy running the business and have little time to
+                    dedicate for risk management. However, it is critical that you pay attention and redirect some resources to understand
+                    and plan for those risks. Thus, the person responsible for risk management should be able to help to tackle the
+                    following:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Help to identify your company's risks.&lt;/li&gt;
+                    &lt;li&gt;Assess the likelihood and consequences of those risks.&lt;/li&gt;
+                    &lt;li&gt;Propose solutions and policies to manage the found risks (avoid, reduce or transfer).&lt;/li&gt;
+                    &lt;li&gt;Monitor and audit the company's risk management plan.&lt;/li&gt;
+                    &lt;li&gt;Ensure that the staff adequately implements the plan and its measures.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q1305" type="A" hidden="false" extRef="RM-1">
+            <introduction>
+                The first step in risk management is to identify threats and vulnerabilities of your company's assets. This information
+                will be useful later when, among other things, assessing these risks.
+            </introduction>
+            <text>Have you identified and documented the risks and vulnerabilities of your company's assets?</text>
+            <options>
+                <option id="q1305o1">
+                    <text>Yes, we have documented them (formally).</text>
+                </option>
+                <option id="q1305o2">
+                    <text>Partially, we have written down some of them in an ad-hoc manner (informally).</text>
+                    <comment>
+                        It is important to have a good documentation of your company's vulnerabilities. Please consider, writing them
+                        down formally in a document, and review them regularly.
+                    </comment>
+                </option>
+                <option id="q1305o3">
+                    <text>No, we have no documentation of any sort.</text>
+                    <comment>
+                        It is important to have a good documentation of your company's vulnerabilities. Take action by writing down
+                        formally in a document which are your company's assets, threats and vulnerabilities.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1305o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1305o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1305o2"), isSelected("q1305o3") ): recRisksIdentifyAndDocument : {
+                        addRecommendation("recRisksIdentifyAndDocument", 200, "", "", tn("recRisksIdentifyAndDocument-title"),
+                        tn("recRisksIdentifyAndDocument-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1305");
+                        };
+                        TRUE : recRisksIdentifyAndDocument : {
+                        revokeRecommendation("recRisksIdentifyAndDocument");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Risks are inherent, but it is possible to contain a significant part of them by identifying potential threats,
+                    risks and vulnerabilities your company could face before those risks manifest. Below are some techniques that can help
+                    you to identify the potential risks to your business:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Ask hypothetical «what if» questions (e.g. what would happen if a key employee resigns or what if important data
+                    got erased or stolen?)&lt;/li&gt;
+                    &lt;li&gt;Review your past complaints and/or incident records.&lt;/li&gt;
+                    &lt;li&gt;Consider worst case scenarios.&lt;/li&gt;
+                    &lt;li&gt;Discuss business issues with your staff, customers and/or suppliers.&lt;/li&gt;
+                    &lt;li&gt;Take into account external risks (e.g. one of supplier went out of business or does not provide a particular service anymore)&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;Underneath are some baseline topics where you should identify risks, threats and vulnerabilities:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Finance and economics&lt;/li&gt;
+                    &lt;li&gt;External risks (e.g. suppliers/customers)&lt;/li&gt;
+                    &lt;li&gt;IT systems and electronics&lt;/li&gt;
+                    &lt;li&gt;Property and equipment&lt;/li&gt;
+                    &lt;li&gt;Physical security&lt;/li&gt;
+                    &lt;li&gt;Regulatory and government policy changes&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; while preparing your documentation, you may discover that you need to consider other important
+                    areas of risk that were not listed above. Do not hesitate to include those as well.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1310" type="A" hidden="false" extRef="RM-10">
+            <introduction>
+                Being aware of the importance of risk management within your business is critical. In order to maintain the continuity of
+                your business it is necessary to be aware of the different threats, risks and exposure of your company. These concerns
+                should be adequately managed to reduce uncertainty as well as financial and reputational losses.
+            </introduction>
+            <text>Is everyone in the company aware of the importance of risk management?</text>
+            <options>
+                <option id="q1310o1">
+                    <text>Not really.</text>
+                    <comment>
+                        Micro and small business are also exposed to risk. Thus, it is important to not disregard this matter, ignoring this
+                        topic will result in weak solutions for risks that you failed to address. Consider informing everyone in your
+                        company to maintain awareness and compliance with your risk management plan or policies.
+                    </comment>
+                </option>
+                <option id="q1310o2">
+                    <text>Yes, some individuals.</text>
+                    <comment>
+                        Micro and small business are also exposed to risk. Thus, it is important that everyone in your company is aware of
+                        the importance of risk management. Make sure that your all staff is familiarized with your risk management plan
+                        and/or policies.
+                    </comment>
+                </option>
+                <option id="q1310o3">
+                    <text>Yes, the whole organization.</text>
+                    <comment>
+                        That is very good. Please maintain awareness and compliance with your risk management plan or policies by keeping
+                        everyone in your company informed and up-to-date.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1310o3") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1310o1"), isSelected("q1310o2") ): recRaiseRiskAwareness : {
+                        addRecommendation("recRaiseRiskAwareness", 200, "", "", tn("recRaiseRiskAwareness-title"),
+                        tn("recRaiseRiskAwareness-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1310");
+                        };
+                        TRUE : recRaiseRiskAwareness : {
+                        revokeRecommendation("recRaiseRiskAwareness");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Raising awareness among all your employees about the risks and threats to your company is essential to reduce
+                    and avoid risks. If you already have a risk management plan, make sure that everyone is informed of their specific roles
+                    in relation to that.&lt;/p&gt;
+                    &lt;p&gt;If you don't have a plan yet, it is now the time to start by first identifying the risks, threats and vulnerabilities.
+                    Share and discuss these with your staff, so everyone is updated.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1315" type="A" hidden="false" extRef="RM-2">
+            <introduction>
+                Cybersecurity threats are also part of the everyday life in micro and small businesses. Thus, your company is not exempt
+                from being the target or collateral damage from these threats.
+            </introduction>
+            <text>Do you identify and document internal and external cybersecurity threats?</text>
+            <options>
+                <option id="q1315o1">
+                    <text>Yes, we have identified and documented them.</text>
+                    <comment>Great. Keep doing that regularly as cyber threats are always looming large and evolving.</comment>
+                </option>
+                <option id="q1315o2">
+                    <text>No, we have not documented them.</text>
+                    <comment>
+                        Consider documenting these threats and try to differentiate between malicious and non-malicious incidents.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1315o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1315o2"): recIdentifyCybersecurityThreats : {
+                        addRecommendation("recIdentifyCybersecurityThreats", 200, "", "", tn("recIdentifyCybersecurityThreats-title"),
+                        tn("recIdentifyCybersecurityThreats-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1315");
+                        };
+                        TRUE : recIdentifyCybersecurityThreats : {
+                        revokeRecommendation("recIdentifyCybersecurityThreats");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Micro and small companies often only have limited resources to address cybersecurity issues. In some cases it is the
+                    business owner or other family members who take on different roles within the business. However, it is important someone
+                    with knowledge in information technology is charged with tackling internal and external cybersecurity threats.&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Internal threats:&lt;/strong&gt;these occur when someone has access to your company's internal
+                    network via a system account or direct physical access to the network or server.&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;External threats:&lt;/strong&gt; these threats arise from outside the company, whether it is from an individual
+                    or other party. These entities do not have authorized access to your network, server or computer systems.&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Common threats you should look out for:&lt;/strong&gt;&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Destruction of information&lt;/li&gt;
+                    &lt;li&gt;Elevation of privileges&lt;/li&gt;
+                    &lt;li&gt;Illegal usage&lt;/li&gt;
+                    &lt;li&gt;Disclosure of information&lt;/li&gt;
+                    &lt;li&gt;Theft or loss&lt;/li&gt;
+                    &lt;li&gt;Denial of service&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;em&gt;Do not hesitate to get external expertise to assess and find these threats.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1325" type="A" hidden="false" extRef="RM-7">
+            <introduction>
+                Risk management can be defined as the process of identifying, analysing and evaluating risks, then proposing adequate
+                measures that will minimise these risks, while continuing to fulfill business goals.
+            </introduction>
+            <text>Is there a risk management process/program defined?</text>
+            <options>
+                <option id="q1325o1">
+                    <text>No, we currently do not have a risk management process defined.</text>
+                    <comment>
+                        Micro and small business also need a process to manage any potential risks that could harm their activities.
+                        Consider preparing a risk management plan, this one will be key to protect your business.
+                    </comment>
+                </option>
+                <option id="q1325o2">
+                    <text>Yes, an informal process/program.</text>
+                    <comment>
+                        This is a step in the right direction. However, having an intuitive decision-making plan may not be enough to
+                        prepare your business. Thus, it is critical that you formalize your risk management program/process by writing
+                        (rules and procedures) it down and updating it regularly.
+                    </comment>
+                </option>
+                <option id="q1325o3">
+                    <text>Yes, we have formalized process/program.</text>
+                    <comment>That is very good. Please don't forget to update this process/program from time to time.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1325o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1325o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or( isSelected("q1325o1"), isSelected("q1325o2") ): recPrepareRiskManagementPlan : {
+                        addRecommendation("recPrepareRiskManagementPlan", 200, "", "", tn("recPrepareRiskManagementPlan-title"),
+                        tn("recPrepareRiskManagementPlan-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1325");
+                        };
+                        TRUE : recPrepareRiskManagementPlan : {
+                        revokeRecommendation("recPrepareRiskManagementPlan");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Risk management may appear at first instance as a cumbersome and complex task. However, this process has a
+                    rather straightforward approach, as seen below.&lt;/p&gt;
+                    &lt;ol&gt;
+                    &lt;li&gt;Find which areas of your business will be addressed in this plan.&lt;/li&gt;
+                    &lt;li&gt;Identify the key risks. See one of the
+                    &lt;a href="[smesec_instance]/app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1305"&gt;previous questions&lt;/a&gt;
+                    to know more about how to identify risks and threats.&lt;/li&gt;
+                    &lt;li&gt;Analyse the risks and figure out which ones need to be prioritized. For instance, you may want to plot
+                    a risk heat map which will provide a very useful visualization to decide on which risk to act upon first.&lt;/li&gt;
+                    &lt;li&gt;Evaluate the risk based on your own needs. This means that you need to tailor your own risk criteria.&lt;/li&gt;
+                    &lt;li&gt;Develop a plan to treat the risks, i.e. suggest strategies to solve/treat/minimise/avoid each risk.&lt;/li&gt;
+                    &lt;li&gt;Outline risk management responsibilities, i.e. who is responsible for what.&lt;/li&gt;
+                    &lt;li&gt;Monitor and learn&lt;/li&gt;
+                    &lt;/ol&gt;
+                    &lt;p&gt;If you wish to know more, consider consulting the following sources:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://business.gov.au/risk-management/risk-assessment-and-planning/assess-and-manage-risk#d22617a8-dc18-47bb-8e48-d5e01e21df34"&gt;Australian Government, 2021&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://www.cpacanada.ca/en/public-interest/financial-literacy/financial-literacy-resources/ontario-small-business-financial-literacy-resources/practical-approach-to-managing-risk"&gt;CPA Canada, 2022&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text><!-- TODO: a diagram of the risk management process could be added-->
+            </instruction>
+        </question>
+        <question id="q1320" type="A" hidden="false" extRef="RM-5">
+            <introduction>
+                If you are aware and have identified the possible risks that could affect your business continuity, it is important to find
+                ways to minimise them.
+            </introduction>
+            <text>Do you have immediate response plans or strategies for risks?</text>
+            <options>
+                <option id="q1320o1">
+                    <text>Yes, we have a response plan or clear strategies on how to deal with risks.</text>
+                </option>
+                <option id="q1320o2">
+                    <text>No, currently we don't have such response plan.</text>
+                    <comment>
+                        As a micro and small firm, you also need to be prepared for dealing with risks. Begin by identifying potential sources
+                        of risks. As a second step, it is necessary to analyse those findings i.e. likelihood of the risk happening and its
+                        associated consequences. Once these two steps have been implemented, then it is time to start to draft recommendations
+                        on how to deal with identified risks. This will slowly become your response plan or strategy for managing risks.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1320o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1320o2"): recPrepareResponsePlan : {
+                        addRecommendation("recPrepareResponsePlan", 200, "", "", tn("recPrepareResponsePlan-title"),
+                        tn("recPrepareResponsePlan-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1320");
+                        };
+                        TRUE : recPrepareResponsePlan : {
+                        revokeRecommendation("recPrepareResponsePlan");
+                        };
+                        isSelected("q1320o1") : q1321visibility : {
+                        setHidden("q1321", FALSE);
+                        };
+                        TRUE : q1321visibility : {
+                        setHidden("q1321", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Having a plan or a strategy to deal with risks is a practical and useful way to be prepared to handle these
+                    events whether they are known or unforeseen. Also, bear in mind that micro and small business have also legal obligations
+                    so being prepared for these risk events will certainly play in your favour. A response plan or strategy basically intends
+                    for you to propose the right measures to mitigate plausible risks or threats that could affect your company. Below are
+                    some things to help you to kick off or improve your response plan:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Work on strategies/method to threat each identified risk.&lt;/li&gt;
+                    &lt;li&gt;Prepare reasonable time frames for each strategy.&lt;/li&gt;
+                    &lt;li&gt;Discuss who is responsible for what and when.&lt;/li&gt;
+                    &lt;li&gt;Review allocation of resources (staff, financial or external help), if needed.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1321" type="A" hidden="true" extRef="RM-5">
+            <introduction>
+                If you are aware and have identified the possible risks that could affect your business continuity, it is important to find
+                ways to minimise them. Since you most likely cannot do everything at the same time, you need to set priorities in case a
+                risk manifests.
+            </introduction>
+            <text>In the event that a risk occurs, do you have prioritized some planned measures?</text>
+            <options>
+                <option id="q1321o1">
+                    <text>Yes, our response plan has predetermined how we should respond and which actions should be prioritized.</text>
+                </option>
+                <option id="q1321o2">
+                    <text>No, we haven't taken into consideration which actions should be prioritized.</text>
+                    <comment>In the case that a risk should occur, it is preferable to have prioritised measures that you will take.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1321o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1321o2"): recPrioritiseRiskMeasures : {
+                        addRecommendation("recPrioritiseRiskMeasures", 200, "", "", tn("recPrioritiseRiskMeasures-title"),
+                        tn("recPrioritiseRiskMeasures-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1321");
+                        };
+                        TRUE : recPrioritiseRiskMeasures : {
+                        revokeRecommendation("recPrioritiseRiskMeasures");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q1330" type="A" hidden="false" extRef="RM-11">
+            <introduction>
+                Each company has different risk tolerance levels. It is critical that those thresholds are known and communicated to your
+                employees.
+            </introduction>
+            <text>Is the risk tolerance of your organisation defined and communicated?</text>
+            <options>
+                <option id="q1330o1">
+                    <text>
+                        Yes, our risk management plan addresses the company's risk thresholds. Employees are also informed about our risk
+                        tolerance.
+                    </text>
+                </option>
+                <option id="q1330o2">
+                    <text>Partially, our risk tolerance is addressed but our staff has not been informed.</text>
+                    <comment>It is important that everyone in your company is informed about your company's risk tolerance.</comment>
+                </option>
+                <option id="q1330o3">
+                    <text>No, we have not defined our risk tolerance.</text>
+                    <comment>
+                        Define and communicate your risk tolerance to everyone in your company. It is important that everyone in your
+                        company is informed about your company's risk tolerance. Please include the owners and/or the management team
+                        for working this out.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1330o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1330o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1330o3"): recDefineRiskTolerance : {
+                        addRecommendation("recDefineRiskTolerance", 300, "", "", tn("recDefineRiskTolerance-title"),
+                        tn("recDefineRiskTolerance-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1330");
+                        };
+                        TRUE : recDefineRiskTolerance : {
+                        revokeRecommendation("recDefineRiskTolerance");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It was previously mentioned that part of the risk management plan involves evaluating those risks based on
+                    your own needs. Indeed, every company has risks that they deem unacceptable. For example, a company that deals with
+                    critical information may have very low tolerance with regard to data theft or damage. Alternatively, another business
+                    may be unwilling to have a significant system outage. Therefore, having a low risk tolerance in these areas.&lt;/p&gt;
+                    &lt;p&gt;It is important that you review regularly which activities must be avoided and inform your employees, suppliers
+                    and/or customers of those activities that are absolutely unacceptable.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1335" type="A" hidden="false" extRef="RM-3">
+            <introduction>
+                The impact of different risks varies in terms of human errors or some other critical factors. This is something that needs
+                to be addressed in your company's risk management plan.
+            </introduction>
+            <text>Do you account for the impact/consequences of risks (possible as well as unknown events) in your risk management planning?</text>
+            <options>
+                <option id="q1335o1">
+                    <text>Yes, we have determined the impact of risks in our risk management plan (formal).</text>
+                    <comment>Great, continue to do this regularly and keep it up-to-date for new risk situations.</comment>
+                </option>
+                <option id="q1335o2">
+                    <text>We have partially determined the impact of risks in an ad-hoc manner (informal).</text>
+                    <comment>
+                        This a step in the right direction. As a next step make sure that you write down in your plan the
+                        consequences/impact of those risk situations. Then continue to do this regularly and keep them updated should
+                        new risks be included.
+                    </comment>
+                </option>
+                <option id="q1335o3">
+                    <text>No, we do not account for the impact of such events.</text>
+                    <comment>
+                        Write down in your risk management plan which are the consequences/impacts of possible risk situations.
+                        Then continue to do this regularly and keep them updated for new events.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1335o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1335o3") : q1337visibility : {
+                        setHidden("q1337", TRUE);
+                        };
+                        TRUE : q1337visibility : {
+                        setHidden("q1337", FALSE);
+                        };
+                        // global logic: recIdentifyRiskImpact
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Planning the impact of possible events should be included in your risk management process. It was previously
+                    suggested that a company should plot a risk heat map to inform the decision on which risk to act upon first. This same
+                    chart, also known as "risk matrix" can be very useful to determine the impact of events.&lt;/p&gt;
+                </text><!-- TODO: image with risk matrix could be added -->
+            </instruction>
+        </question>
+        <question id="q1337" type="A" hidden="true" extRef="RM-3">
+            <introduction>
+                As a micro and small business you require to be aware of cybersecurity threats and risks. This means that you also need to
+                identify, assess and mitigate those cyber risks; ideally together with other types of risk already identified.
+            </introduction>
+            <text>Do you identify the business impacts of cybersecurity threats and calculate their probability of occurrence?</text>
+            <options>
+                <option id="q1337o1">
+                    <text>Yes, we have identified cybersecurity risks and their impact as well as probability.</text>
+                    <comment>Great. Make sure to review them regularly.</comment>
+                </option>
+                <option id="q1337o2">
+                    <text>Partially, we have identified cybersecurity risks, but we don't know their impact or probability.</text>
+                    <comment>
+                        Being aware of the probability and impact of your company's risks could help you to prioritize which cyber
+                        concerns should be addressed first. Please consider working out which risks need to be prioritized.
+                    </comment>
+                </option>
+                <option id="q1337o3">
+                    <text>No, we have not identified the impact of cybersecurity threats.</text>
+                    <comment>
+                        As part of your risk management strategy, it is important to that you also tackle the cybersecurity aspect.
+                        Consider starting by identifying possible cyber risks, then analyze their impact to your business and their
+                        probability of occurrence.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1337o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1337o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1337o1") : q1340visibility : {
+                        setHidden("q1340", FALSE);
+                        };
+                        TRUE : q1340visibility : {
+                        setHidden("q1340", TRUE);
+                        };
+                        // global logic: recIdentifyRiskImpact
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;As a micro and small business you may often lack the capability and expertise to withstand undesirable cyber
+                    events. Thus, it is important to take pre-emptive steps. In order to do that, it is suggested that you prepare a chart
+                    where the cyber risks and their probability of occurrence are presented (similar to the one prescribed in the previous
+                    question). For instance, you could have three to five levels, i.e. low, medium and high risk with their corresponding
+                    occurrence.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1340" type="A" hidden="true" extRef="RM-4">
+            <introduction>
+                Once you have evaluated the probability and the impact of the risks to your organisation, you can start rating them based
+                on these values. A common approach for rating risks is by multiplying the probability of occurrence (e.g. 1-4) with the
+                associated impact of a given risk (1-4) to obtain a risk value (1-16).
+            </introduction>
+            <text>Are the risks to your organisation rated based on threats, vulnerabilities, impact and probabilities?</text>
+            <options>
+                <option id="q1340o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1340o2">
+                    <text>No</text>
+                    <comment>You should calculate your risk ratings based on both, the impact and the probability of occurrence.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1340o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1345" type="A" hidden="false" extRef="RM-6">
+            <introduction>
+                It is important to keep your documentation continuously up to date. While it may be drowning to handle all these risks,
+                logs and alerts, it remains essential to balance them out, i.e. resolve them according to their priority.
+            </introduction>
+            <text>Are newly detected risks and vulnerabilities reduced/mitigated or documented as accepted risks?</text>
+            <options>
+                <option id="q1345o1">
+                    <text>Yes, our risk management process dictates how we should proceed when new risks and/or vulnerabilities are detected.</text>
+                    <comment>This is very good practice.</comment>
+                </option>
+                <option id="q1345o2">
+                    <text>Sometimes, we document and act on newly detected risks and/or vulnerabilities.</text>
+                    <comment>
+                        It is highly recommended that your company properly documents newly detected risks and subsequently decides on
+                        how to handle them. This should be in part already addressed or prescribed in your risk management plan/process.
+                    </comment>
+                </option>
+                <option id="q1345o3">
+                    <text>No, we do not have a plan or strategy on how to handle newly found risks and/or vulnerabilities.</text>
+                    <comment>
+                        It is highly recommended that your company properly documents newly detected risks and subsequently decides on
+                        how to handle them. Make sure to address this in your company's risk management plan/process.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1345o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1345o2"), isSelected("q1345o3")) : recDocumentAndMitigateNewRisks : {
+                        addRecommendation("recDocumentAndMitigateNewRisks", 300, "", "", tn("recDocumentAndMitigateNewRisks-title"),
+                        tn("recDocumentAndMitigateNewRisks-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1345");
+                        };
+                        TRUE : recDocumentAndMitigateNewRisks : {
+                        revokeRecommendation("recDocumentAndMitigateNewRisks");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Risk and threats are not fixed to one point in time. On the contrary, those events can pop up at any moment.
+                    Therefore, it is fundamental that your company keeps up with newly found events. This should be part of the general
+                    effort to reduce risk in your company.&lt;/p&gt;
+                    &lt;p&gt;When you detect a new risk, make sure that it is documented. Because of time and resource constraints,
+                    it is clear that not all of these risks will be solved (accept, eliminate or reduce the risk) immediately or at all
+                    for some of them. Nonetheless, some of these risks will require immediate action. It is critical that you know which
+                    newly detected risks require your attention without delay. For instance, you may want to consider the following:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;If the cost of solving the event exceeds the potential cost of the damage caused by the given risk.&lt;/li&gt;
+                    &lt;li&gt;Figure out what your business considers as high and low risk.&lt;/li&gt;
+                    &lt;li&gt;The risk rating which could be extremely low or quite high.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 4 -->
+        <question id="q1350" type="A" hidden="false" extRef="RM-8">
+            <introduction>
+                As a rule of thumb, your should review your company's risk management process/plan once per year. General improvements
+                can be made at any time, even more if your company is growing considerably.
+            </introduction>
+            <text>Do you keep your risk management process/program updated?</text>
+            <options>
+                <option id="q1350o1">
+                    <text>Yes, we review them yearly and update it accordingly.</text>
+                    <comment>This is perfect.</comment>
+                </option>
+                <option id="q1350o2">
+                    <text>Yes, we review it from time to time and update it accordingly.</text>
+                    <comment>
+                        Make sure to review your risk management process/plan yearly. This is a working document that needs be kept
+                        up-to-date adequately and that will contribute to the continuity of your business.
+                    </comment>
+                </option>
+                <option id="q1350o3">
+                    <text>No, we don't review or update them.</text>
+                    <comment>
+                        This is not ideal. Make sure to review your risk management process/plan yearly. This is a working document that
+                        needs be kept up-to-date adequately and that will contribute to the continuity of your business.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1350o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1350o2"), isSelected("q1350o3")): recReviewRiskManagementPlan : {
+                        addRecommendation("recReviewRiskManagementPlan", 400, "", "", tn("recReviewRiskManagementPlan-title"),
+                        tn("recReviewRiskManagementPlan-text"),
+                        "", "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1350");
+                        };
+                        TRUE : recReviewRiskManagementPlan : {
+                        revokeRecommendation("recReviewRiskManagementPlan");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;While it remains at your company's discretion to decide when it is the best time to review your risk
+                    management process/plan; it is important to bear in mind that this a working document, i.e. there are no final
+                    drafts.&lt;/p&gt;
+                    &lt;p&gt;Indeed, there are changes in your business, but also in the area you operate (e.g. new technologies or changes in
+                    the legislation). Thus, reviewing and auditing this document is critical to maintain your business continuity in the
+                    long run.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1398" type="info" hidden="false">
+            <introduction>Risk Management</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.riskmgmt.MseRiskMgmtLib"/>
+
+    <metadata key="_cysec.logic">
+        <mvalue key="postQuestion">
+            <stringValue>
+                // global logic: recIdentifyRiskImpact
+                or( isSelected("q1335o3"), or(isSelected("q1337o2"), isSelected("q1337o3")) ) : recIdentifyRiskImpact : {
+                addRecommendation("recIdentifyRiskImpact", 300, "", "", tn("recIdentifyRiskImpact-title"),
+                if(isSelected("q1335o3"), tn("recIdentifyRiskImpact-text1"), tn("recIdentifyRiskImpact-text2")),
+                "", if(isSelected("q1335o3"),
+                "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1335",
+                "app/coach.jsp?fqcn=msesec-risk-management.default&amp;question=q1337"));
+                };
+                TRUE : recIdentifyRiskImpact : {
+                revokeRecommendation("recIdentifyRiskImpact");
+                };
+            </stringValue>
+        </mvalue>
+    </metadata>
+
+    <dictionary>
+        <entry key="recRiskManagementRolesResponsabilites-title">Define roles and responsibilities for risk management</entry>
+        <entry key="recRiskManagementRolesResponsabilites-text">Define the roles and responsibilities for those in charge of risk management in a clearly formulated document.</entry>
+        <entry key="recRisksIdentifyAndDocument-title">Identify and document risks and vulnerabilities</entry>
+        <entry key="recRisksIdentifyAndDocument-text">It is essential that you properly think about the risks and threats to your company's assets. Then, take action by formally writing them down in a document.</entry>
+        <entry key="recRaiseRiskAwareness-title">Raise awareness for risk management</entry>
+        <entry key="recRaiseRiskAwareness-text">Make sure that everyone in your company is aware of the importance of risk management and is familiar with your risk management plan and/or policies.</entry>
+        <entry key="recIdentifyCybersecurityThreats-title">Identify cybersecurity threats and risks</entry>
+        <entry key="recIdentifyCybersecurityThreats-text">Cyberthreats are always looming large and evolving. Therefore, it is crucial that you identify and properly document these threats, whether they are internal or external.</entry>
+        <entry key="recPrepareRiskManagementPlan-title">Prepare a risk management plan</entry>
+        <entry key="recPrepareRiskManagementPlan-text">It is in your company's best interest to minimise possible risks by planning ahead. Therefore, it is critical that you write (rules and procedures) down your plan. Make sure to also update it regularly.</entry>
+        <entry key="recPrepareResponsePlan-title">Prepare a response plan for risks</entry>
+        <entry key="recPrepareResponsePlan-text">Start drafting recommendations on how to deal with identified risks. This will slowly become your response plan or strategy for managing these risks.</entry>
+        <entry key="recPrioritiseRiskMeasures-title">Prioritise measures</entry>
+        <entry key="recPrioritiseRiskMeasures-text">Prioritise response measures for the identified risks since you won't be able to do everything at the same time in case the risk actually occurs.</entry>
+        <entry key="recDefineRiskTolerance-title">Define the risk tolerance</entry>
+        <entry key="recDefineRiskTolerance-text">Define and communicate your risk tolerance to everyone in your company. Please include the owners and/or the management team for working this out.</entry>
+        <entry key="recDocumentAndMitigateNewRisks-title">Document and mitigate newly found risks/threats</entry>
+        <entry key="recDocumentAndMitigateNewRisks-text">Amend your risk management process to include procedures to properly document and then mitigate newly detected risks in a timely manner.</entry>
+        <entry key="recReviewRiskManagementPlan-title">Review risk management plan regularly</entry>
+        <entry key="recReviewRiskManagementPlan-text">Make sure to review your risk management process/plan once per year as this is a working document that needs be kept up-to-date adequately.</entry>
+        <entry key="recIdentifyRiskImpact-title">Identify (cybersecurity) risks impact and probability</entry>
+        <entry key="recIdentifyRiskImpact-text1">For all identified risks, assess the consequences and impacts of these possible risk situations and not them down in your risk management plan. Keep this updated on a regular basis.</entry>
+        <entry key="recIdentifyRiskImpact-text2">Also consider cybersecurity aspects in your risk management strategy. Starting by identifying possible cyber risks, then analyze their impact to your business and their probability of occurrence.</entry>
+    </dictionary>
+
+</questionnaire>

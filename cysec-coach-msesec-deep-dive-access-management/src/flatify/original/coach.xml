@@ -1,0 +1,1208 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-deep-dive-access-management" readableName="Deep Dive into Access Management (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach for micro and small businesses dives deeper into relevant access management topics.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q2500" type="info" hidden="false">
+            <introduction>Deep Dive into Access Management</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;This coach extends on the questions and measures that were covered in the coach «First Steps in Cybersecurity».
+                If you have not completed that coach yet, we highly advise that you to finish it before starting this coach.&lt;/p&gt;
+                &lt;p&gt;&lt;em&gt;Please note that the questions will get increasingly more advanced and cover the remaining aspects of
+                access management. It is most likely that your company does not fully implement all the mentioned controls. When you feel
+                that it gets too technical and that the proposed recommendations do not fit the type of your business, feel encouraged to
+                work on a different coach instead. In this case you can always come back at a later stage and complete the remaining
+                questions.&lt;/em&gt;&lt;/p&gt;
+            </infotext>
+        </question>
+        <!-- Priority 1 -->
+        <question id="q2505" type="A" hidden="false" extRef="ACS-1"><!-- extends FSICS -->
+            <introduction>By now you should have a password security checklist or a password policy.</introduction>
+            <text>Are all employees of your company informed about your password guidelines?</text>
+            <options>
+                <option id="q2505o1">
+                    <text>Yes, all employees know about this</text>
+                    <comment>Very good, make sure that you inform new employees during the on-boarding process as well.</comment>
+                </option>
+                <option id="q2505o2">
+                    <text>No, not all employees know about this</text>
+                    <comment>Make your guidelines known to everybody in your company right away. Don't forget to inform new employees during the on-boarding process as well.</comment>
+                </option>
+                <option id="q2505o3">
+                    <text>We don't have a password security checklist or password guidelines.</text>
+                    <comment>
+                        Go back to the coach «First Steps in Cybersecurity» and learn how to create your own password security checklist
+                        easily. Dealing securely with your passwords is crucial and should not be neglected.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2505o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2505o3") : visibilityIfNoGuidelines : {
+                        setHidden("q2510", TRUE);
+                        setHidden("q2515", TRUE);
+                        };
+                        TRUE : visibilityIfNoGuidelines : {
+                        setHidden("q2510", FALSE);
+                        setHidden("q2515", FALSE);
+                        };
+                        // global logic: recFollowPasswordGuidelines
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2510" type="A" hidden="false" extRef="ACS-1"><!-- extends FSICS -->
+            <text>Are your password guidelines followed consistently by all employees?</text>
+            <options>
+                <option id="q2510o1">
+                    <text>Yes, all employees follow them consistently.</text>
+                </option>
+                <option id="q2510o2">
+                    <text>Yes, most employees follow them consistently.</text>
+                    <comment>Try to raise the awareness of the employees that do not follow them consistently by explaining their importance.</comment>
+                </option>
+                <option id="q2510o3">
+                    <text>No</text>
+                    <comment>Make sure that everyone follows the password guidelines consistently by explaining their importance.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2510o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recFollowPasswordGuidelines
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2515" type="A" hidden="false" extRef="ACS-1"><!-- extends FSICS -->
+            <introduction>Accounts with higher privileges need more protection.</introduction>
+            <text>Do your password guidelines take an employee's role into account?</text>
+            <options>
+                <option id="q2515o1">
+                    <text>Yes, roles are taken into account.</text>
+                </option>
+                <option id="q2515o2">
+                    <text>Our general rules already meet the requirements for all roles.</text>
+                    <comment>
+                        Verify that your general guidelines really fulfill the requirements for all roles in your organisation.
+                        If necessary, change your guidelines.
+                    </comment>
+                </option>
+                <option id="q2515o3">
+                    <text>We don't take roles into account.</text>
+                    <comment>
+                        Verify that your general guidelines really fulfill the requirements for all roles in your organisation.
+                        If not, change the guidelines to take roles into account.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q2515o2"), isSelected("q2515o1") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Your password guidelines should define higher requirements for administrator passwords or technical accounts
+                    since they have significantly more permissions than a standard user. Another option is to apply the same high requirements
+                    for all users at the expense of increased inconvenience for everyone but higher overall security.&lt;/p&gt;
+                    &lt;p&gt;For example, administrator accounts might be required to use a password with 15 characters or more where
+                    normal users might only need 12 characters.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2520" type="A" hidden="false" extRef="ACS-7"><!-- extends FSICS -->
+            <introduction>Sharing accounts and credentials comes with risks.</introduction>
+            <text>Does every employee have an own personal user account on your devices and resources?</text>
+            <options>
+                <option id="q2520o1">
+                    <text>Yes, every employee has their own user accounts</text>
+                </option>
+                <option id="q2520o2">
+                    <text>Generally yes, but there are a few exceptions</text>
+                    <comment>Try to create personal user accounts for everyone to avoid these exceptions.</comment>
+                </option>
+                <option id="q2520o3">
+                    <text>Generally not every employee has an own user account</text>
+                    <comment>
+                        It is much safer if every employee has their own personal user accounts. This avoids credentials being shared
+                        among employees and allows defining fine-grained permissions separately for each user.
+                    </comment>
+                </option>
+                <option id="q2520o4">
+                    <text>Having personal accounts is not possible with our systems</text>
+                    <comment>
+                        Verify with the supplier of your systems whether this is really not possible. Perhaps there is a workaround or
+                        another solution to improve security and leverage some advantages that are outlined on the right side.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q2520o4")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q2520o1"), isSelected("q2520o2") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recPersonalAccounts
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It is best when every employee has their own personal account. This increases security since the accounts are
+                    separated and every employee can work in their own environment. Here are the advantages of this approach:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;No sharing of credentials (usernames and passwords) among employees&lt;/li&gt;
+                    &lt;li&gt;Logged-in sessions are not accessible to other persons&lt;/li&gt;
+                    &lt;li&gt;Access rights can be restricted on the user-level&lt;/li&gt;
+                    &lt;li&gt;Better traceability and auditing on who made changes&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2525" type="A" hidden="false" extRef="ACS-7"><!-- extends FSICS -->
+            <introduction>
+                Technical users are special accounts that are used by applications, systems or processes.
+            </introduction>
+            <text>If you have technical user accounts, are they only used for a specific task/process?</text>
+            <options>
+                <option id="q2525o1">
+                    <text>Yes, accounts are not reused for unrelated tasks/processes</text>
+                    <comment>
+                        Keep documentation on where these accounts are used and for what purpose. Store the credentials in a safe way,
+                        for example in a password manager.
+                    </comment>
+                </option>
+                <option id="q2525o2">
+                    <text>No, some accounts are used for several unrelated tasks/processes</text>
+                    <comment>
+                        Try to use a different technical user for each task/process. On the one hand, this limits the attack surface
+                        considerably in case credentials get compromised. On the other hand, you can better restrict access for these
+                        technical accounts based on what they need to be abler to access. Keep documentation on where these accounts are
+                        used and for what purpose. Store the credentials in a safe way, for example in a password manager.
+                    </comment>
+                </option>
+                <option id="q2525o3">
+                    <text>We have no technical user accounts.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q2525o3")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2525o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recPersonalAccounts
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;To integrate certain systems with others, they often need to exchange data securely. In order to do this, they require
+                    authenticating which is the equivalent of, for example, a user logging into a website/computer. This authentication is
+                    done with technical user accounts. In contrast to normal user accounts, they are not assigned to a real person but
+                    rather to an abstract system, process or application. Examples of such technical users could be API keys or other access tokens.&lt;/p&gt;
+                    &lt;p&gt;It is important to have a designated technical user for each process, task or application. This way, you only
+                    need to assign the least privileges necessary for the respective technical account. If one of these credentials is
+                    compromised, you only need to change it on a very limited amount of places and the attack surface is as low as possible
+                    due to the separation.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q2530" type="A" hidden="false" extRef="ACS-11">
+            <introduction>
+                As an additional layer of protection for your accounts, you can use two-factor authentication (2FA) or
+                multi-factor authentication (MFA) in addition to your username and password.
+            </introduction>
+            <text>Do the employees in your company use two-factor or multi-factor authentication?</text>
+            <options>
+                <option id="q2530o1">
+                    <text>Yes, whenever possible.</text>
+                    <comment>This is very good, keep that up.</comment>
+                </option>
+                <option id="q2530o2">
+                    <text>Yes, but only for critical systems or privileged/administrator accounts.</text>
+                    <comment>
+                        This is good, keep that up. Remember that 2FA/MFA is a good second line of defence when your primary authentication
+                        method (e.g. your password) is compromised. Try to activate 2FA whenever possible.
+                    </comment>
+                </option>
+                <option id="q2530o3">
+                    <text>No, we generally don't use two-factor or multi-factor authentication.</text>
+                    <comment>
+                        Remember that 2FA/MFA is an effective second line of defence when your primary authentication method (e.g.
+                        your password) is compromised. Try to activate 2FA whenever possible to add additional protection to your accounts.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q2530o1"), isSelected("q2530o2") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or( isSelected("q2530o1"), isSelected("q2530o2") ) : q2535visibility : {
+                        setHidden("q2535", FALSE); // show q2535
+                        };
+                        TRUE : q2535visibility : {
+                        setHidden("q2535", FALSE); // hide q2535
+                        };
+                        isSelected("q2530o3") : recUseTwoFactorAuth : {
+                        addRecommendation("recUseTwoFactorAuth", 200, "", "", tn("recUseTwoFactorAuth-title"),
+                        tn("recUseTwoFactorAuth-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2530");
+                        };
+                        TRUE : recUseTwoFactorAuth : {
+                        revokeRecommendation("recUseTwoFactorAuth");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Two-factor authentication (2FA) or multi-factor authentication (MFA) is an extra layer of security for your accounts.
+                    This means that you will only be allowed to access a resource or account when you present at least two pieces of
+                    evidence (2FA) during the login process. Your username and password is your first factor, this one is complemented by
+                    a software token (e.g. SMS code, authenticator app, one-time access token) or hardware token (e.g. SecureID or
+                    smart card). With 2FA/MFA activated, an attacker cannot access your account with just your username and password but
+                    would need the additional factor as well.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;It is highly recommended that your company uses 2FA/MFA for sensitive or/and important accounts
+                    for extra protection.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2535" type="A" hidden="true" extRef="ACS-11"><!-- only show when 2FA/MFA is used -->
+            <introduction>
+                When using 2FA/MFA you need be careful not to lock yourself out of your accounts in case you lose or misplace one of the required factors.
+            </introduction>
+            <text>Do the employees of your company have a backup method in case they lose or misplace one of the authentication factors?</text>
+            <options>
+                <option id="q2535o1">
+                    <text>Yes, a backup method is available or configured for all accounts.</text>
+                </option>
+                <option id="q2535o2">
+                    <text>Yes, but there are some exceptions.</text>
+                    <comment>
+                        Depending on the service, it might be impossible to recover your accounts in case you lose one of your factors.
+                        Therefore, it is very important to plan for such a scenario and have a backup method available.
+                        This is highly dependent on the type of service you are using. Please consult the relevant documentation or support.
+                    </comment>
+                </option>
+                <option id="q2535o3">
+                    <text>No, we generally don't have a backup method for accounts with 2FA/MFA.</text>
+                    <comment>
+                        Depending on the service, it might be impossible to recover your accounts in case you lose one of your factors.
+                        Therefore, it is very important to plan for such a scenario and have a backup method available. This is highly
+                        dependent on the type of service you are using. Please consult the relevant documentation or support.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2535o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2535o3") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Two-factor authentication (2FA) or multi-factor authentication (MFA) will, by design, prevent you from
+                    logging in to your accounts if you cannot provide the required factors when prompted for them. In consequence,
+                    the system cannot verify your identity if you don't have access to your software or hardware token.&lt;/p&gt;
+                    &lt;p&gt;Depending on the specific service, platform or system you are using, there are different options to prevent
+                    this from happening:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Register more factors that necessary in order to have an alternative factor available. For example, register
+                    a phone number in addition to using an authenticator application.&lt;/li&gt;
+                    &lt;li&gt;Generate backup one-time codes that can be entered instead of a factor. Store these backup codes carefully
+                    and prevent unauthorized access to them.&lt;/li&gt;
+                    &lt;li&gt;It might be possible to re-activate a new device based on a set-up QR-code that you can keep for this purpose.&lt;/li&gt;
+                    &lt;li&gt;The service might offer a special account recovery process. For example, they will require you to
+                    prove your identity with a different method and then reset your credentials.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2540" type="A" hidden="false" extRef="ACS-6">
+            <introduction>As a general rule, a user should have assigned the least set of privileges necessary to conduct their job.</introduction>
+            <text>How are permissions and privileges assigned to users?</text>
+            <options>
+                <option id="q2540o1">
+                    <text>We don't use different permission levels and everyone has almost all permissions.</text>
+                    <comment>
+                        This is unsafe and not recommended. Please restrict permissions of employees to the minimum level of access that
+                        they need to do their job. Extend these permissions when it becomes necessary. In general, assign user permissions
+                        according to the least privilege and limit access based on the need-to-know principle.
+                    </comment>
+                </option>
+                <option id="q2540o2">
+                    <text>We are very generous in assigning permissions and/or there are only very few permission levels.</text>
+                    <comment>
+                        This is potentially dangerous and not recommended. Try to be conservative when assigning privileges and restrict
+                        permissions of employees to what they actually need to do their job. Extend these permissions when it
+                        becomes necessary. In general, assign user permissions according to the least privilege and limit access based on
+                        the need-to-know principle.
+                    </comment>
+                </option>
+                <option id="q2540o3">
+                    <text>We usually assign much more privileges than would actually be necessary.</text>
+                    <comment>
+                        Restrict permissions of employees to what they actually need to do their job. Extend these permissions when it
+                        becomes necessary. In general, assign user permissions according to the least privilege and limit access based on
+                        the need-to-know principle.
+                    </comment>
+                </option>
+                <option id="q2540o4">
+                    <text>We mostly just assign the necessary permissions and extend permissions when necessary.</text>
+                    <comment>Very good, this is a reasonable approach and absolutely recommended – keep it up.</comment>
+                </option>
+                <option id="q2540o5">
+                    <text>We define permissions strictly according to «least privilege».</text>
+                    <comment>Excellent, this is commendable and very good practice.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2540o4") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2540o5") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        or( isSelected("q2540o1"), isSelected("q2540o2"), isSelected("q2540o3") ) : recLeastPrivilege : {
+                        addRecommendation("recLeastPrivilege", 200, "", "", tn("recLeastPrivilege-title"),
+                        tn("recLeastPrivilege-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2540");
+                        };
+                        TRUE : recLeastPrivilege : {
+                        revokeRecommendation("recLeastPrivilege");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;When assigning permissions to users you should always follow the «least privilege» and «need-to-know» principles.
+                    To put it simply, this means that users only get the privileges that are absolutely necessary to fulfill
+                    their jobs. There should always be a valid business reason when giving additional permissions to users. In other
+                    words, users should be limited to the set of permissions required to fulfill their role and responsibilities.&lt;/p&gt;
+                    &lt;p&gt;First, this reduces the amount of damage that a single user can do accidentally or with malicious intent.
+                    Second, if you ever need to audit potential improper use of privileges, the circle of persons and applications/systems
+                    (for technical users) is much smaller.&lt;/p&gt;
+                    &lt;p&gt;For example, only a few persons need access to critical system security controls such as user management
+                    (e.g. adding/editing users and resetting passwords) or administrative functions. It would be extremely insecure if every
+                    user can execute privileged tasks and has unlimited access to your company's resources.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2545" type="A" hidden="false" extRef="ACS-6">
+            <introduction>
+                Privileges can be tied to groups or roles that correspond to a business function (e.g. administration, production workers,
+                or management team) to make it easier to assign permissions to certain users.
+            </introduction>
+            <text>Do you assign access privileges based on roles or groups?</text>
+            <options>
+                <option id="q2545o1">
+                    <text>Yes, user permissions are mostly based on roles or groups.</text>
+                </option>
+                <option id="q2545o2">
+                    <text>Yes, user permissions are based on roles or groups whenever it makes sense.</text>
+                </option>
+                <option id="q2545o3">
+                    <text>Our company doesn't have enough employees that assigning permissions based on groups/roles is sensible.</text>
+                    <comment>
+                        When your company grows, make sure to regularly review whether it makes sense to assign privileges based on groups
+                        or roles. The additional information on this question should help you to make a decision.
+                    </comment>
+                </option>
+                <option id="q2545o4">
+                    <text>No, access is mostly given individually.</text>
+                    <comment>
+                        Assigning access privileges based on groups or roles has advantages and is recommended when your company has
+                        a certain amount of employees using the IT systems. The additional information on this question should help you
+                        to make a decision whether this makes sense for your company or not.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q2545o3")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q2545o1"), isSelected("q2545o1") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It is recommended that you use groups or roles to assign privileges. This makes it much clearer and more
+                    transparent for your company to keep track of users' permissions. Additionally, it serves somehow as a documentation
+                    on what groups/roles should have access to certain resources. When you define edit-permissions for «administration» and
+                    read-only-permission for «production workers», the privileges are apparent. In contrast, having edit-permissions for
+                    «A» and read-only-permissions for «B» and «C», it is not directly visible whether these are individual assignments or if
+                    they all belong to the same groups (e.g. «production workers»).&lt;/p&gt;
+                    &lt;p&gt;For example, if you want to revoke access to a shared folder for all backoffice employees, you only need to remove
+                    the group permission «backoffice» and not each individual user.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;The size of our company and the amount of users influences whether it is sensible to use this approach. It is a
+                    trade-off between adding the complexity of group/role management and enjoying the above-mentioned benefits. Also note
+                    that it does not make sense to assign all privileges based on groups/roles. Try to find the right balance that works
+                    for your company.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2550" type="A" hidden="false" extRef="ACS-9">
+            <introduction>
+                Identity and Access Management (IAM) encompasses tasks relating to managing users (digital entities), assigning
+                privileges, reviewing privileges and auditing access. IAM makes sure that the right users have the appropriate
+                access to your company's resources.
+            </introduction>
+            <text>Did you define the roles and responsibilities concerning identity and access management?</text>
+            <options>
+                <option id="q2550o1">
+                    <text>Yes, we defined the roles and responsibilities for identity and access management.</text>
+                    <comment>This is very good.</comment>
+                </option>
+                <option id="q2550o2">
+                    <text>We have someone that manages identity and access management on an ad-hoc basis.</text>
+                    <comment>
+                        Try to clearly define the responsibilities and role of this person that manages IAM on an ad-hoc basis. This helps
+                        to get a mutual understanding of what is expected from them. It also clarifies the assigned authority and sets the
+                        boundaries of this person's role.
+                    </comment>
+                </option>
+                <option id="q2550o3">
+                    <text>No, we did not define any roles and responsibilities concerning identity and access management.</text>
+                    <comment>
+                        It is essential that your company defines the responsibilities and roles concerning IAM. To that end,
+                        you can designate someone that manages IAM on an ad-hoc basis. This person needs to be instructed accordingly to have
+                        a mutual understanding of what is expected from them. It also clarifies the assigned authority and sets the
+                        boundaries of this person's role.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2550o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2550o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recAssignResponsibilityForIam
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;The purpose of Identity and Access Management (IAM) is to ensure that every user of your company has
+                    appropriate access to the required systems and resources. From a security perspective, it is important that
+                    privileges are actively managed, reviewed and revoked if necessary.&lt;/p&gt;
+                    &lt;p&gt;Here are a few tasks that someone that is responsible for Identity and Access Management (IAM) should be doing:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;manage users of systems and applications (add, modify or remove users)&lt;/li&gt;
+                    &lt;li&gt;grant access privileges&lt;/li&gt;
+                    &lt;li&gt;revoke access privileges&lt;/li&gt;
+                    &lt;li&gt;assign roles and groups to individual users&lt;/li&gt;
+                    &lt;li&gt;manage roles and groups and their assigned privileges&lt;/li&gt;
+                    &lt;li&gt;verify if sensitive data is properly protected&lt;/li&gt;
+                    &lt;li&gt;review and audit access and privileges to resources and systems&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;It is essential that your company defines the responsibilities and roles concerning IAM. In its most simple form,
+                    you can assign someone that manages IAM on an ad-hoc basis. This person needs to be instructed accordingly to have
+                    a mutual understanding of what is expected from them. It also clarifies the assigned authority and sets the
+                    boundaries of this person's role.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2555" type="A" hidden="false" extRef="ACS-9">
+            <introduction>It is common that users need to request additional permissions from time to time.</introduction>
+            <text>Did you define who is in charge of granting or rejecting requests for additional permissions?</text>
+            <options>
+                <option id="q2555o1">
+                    <text>Yes, we defined who is in charge of this.</text>
+                </option>
+                <option id="q2555o2">
+                    <text>No, a specific person in my company is usually doing this without being formally in charge.</text>
+                    <comment>Define someone that is formally responsible for granting and rejecting such requests.</comment>
+                </option>
+                <option id="q2555o3">
+                    <text>No, permissions are just assigned without being granted/rejected by somebody in advance.</text>
+                    <comment>Define someone that is responsible for granting and rejecting such requests.</comment>
+                </option>
+                <option id="q2555o4">
+                    <text>No, we did not define someone that is in charge of this.</text>
+                    <comment>Define someone that is responsible for granting and rejecting such requests.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2555o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recAssignResponsibilityForIam
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It is recommended that your company defines someone that is responsible for granting or rejecting requests
+                    for additional permissions. This person can ensure that the «least privilege» and need-to-know principles are followed.
+                    It also helps to set clear boundaries and fosters a mutual understanding of the responsibilities of the person
+                    in charge of handling such requests.&lt;/p&gt;
+                    &lt;p&gt;Depending on the type of your business, it makes sense that different people are responsible for different
+                    systems. For example, the accountant handles requests for the accounting system and the chief mechanic handles
+                    requests for the information system of the mechanical workshop.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2560" type="A" hidden="false" extRef="ACS-3">
+            <introduction>
+                Users with administrator privileges have broad permissions to interact with systems and resources. Therefore, only a
+                limited amount of persons should have such high privileges. It is recommended to use a «systematic» approach which means
+                that you carefully consider the role and business needs when assigning administrator rights.
+            </introduction>
+            <text>Does your organisation assign administrator privileges systematically?</text>
+            <options>
+                <option id="q2560o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2560o2">
+                    <text>No</text>
+                    <comment>
+                        Please start assigning administrator privileges systematically. It is very important to limit administrator
+                        access as much as possible and follow the «least privileges» principle.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2560o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2560o2") : recAssignAdminSystematically : {
+                        addRecommendation("recAssignAdminSystematically", 200, "", "", tn("recAssignAdminSystematically-title"),
+                        tn("recAssignAdminSystematically-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2560");
+                        };
+                        TRUE : recAssignAdminSystematically : {
+                        revokeRecommendation("recAssignAdminSystematically");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q2565" type="A" hidden="false" extRef="ACS-10">
+            <introduction>
+                Administrator privileges are mostly not necessary for everyday work activities.
+            </introduction>
+            <text>Do employees with administrators rights use a dedicated second account for privileged/elevated activities?</text>
+            <options>
+                <option id="q2565o1">
+                    <text>Yes, whenever possible.</text>
+                </option>
+                <option id="q2565o2">
+                    <text>Yes, for most systems and applications.</text>
+                    <comment>Please review if it makes sense to extend this practice to more systems and applications.</comment>
+                </option>
+                <option id="q2565o3">
+                    <text>Yes, but only for critical systems and applications.</text>
+                    <comment>Please review if it makes sense to extend this practice to more systems and applications.</comment>
+                </option>
+                <option id="q2565o4">
+                    <text>Generally not.</text>
+                    <comment>
+                        Start using separate accounts for elevated or privileged activities at least for your critical systems and
+                        applications. Do not use administrator accounts for everyday work.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q2565o1"), isSelected("q2565o2"), isSelected("q2565o3") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;It is recommended that administrators use a dedicated account for privileged/elevated tasks. In practice, this
+                    means that they do their everyday work activities (e.g. reading and writing e-mails) with their «regular» account and
+                    use a second account when they need to use their administrative privileges (e.g. managing users, installing
+                    software). By having a separate account, the attack surface and in general the damage that could result from
+                    unintentional changes in a system or application is reduced. Also, if the credentials of the «normal» account get
+                    compromised, no administrative access to the protected resources will be possible.&lt;/p&gt;
+                    &lt;p&gt;It does not make sense to follow this advice for all systems and applications. Therefore, it needs to be
+                    evaluated on a case by case basis whether it is reasonable. For example, an administrator account on a computer should
+                    generally not be used for everyday activities.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2570" type="A" hidden="false" extRef="ACS-12">
+            <introduction>If an account is no longer in use, you should remove or deactivate it after a certain period of inactivity.</introduction>
+            <text>Do you disable dormant accounts after a set period of inactivity?</text>
+            <options>
+                <option id="q2570o1">
+                    <text>Yes, we regularly check for dormant accounts.</text>
+                </option>
+                <option id="q2570o2">
+                    <text>Yes, we disable them infrequently and have no regular procedure set up.</text>
+                    <comment>Set up a task for checking for inactive user accounts of a regular basis (e.g. every month).</comment>
+                </option>
+                <option id="q2570o3">
+                    <text>Yes, we disable them on an ad-hoc basis only when we realise that they are not used anymore.</text>
+                    <comment>Set up a task for checking for inactive user accounts of a regular basis (e.g. every month).</comment>
+                </option>
+                <option id="q2570o4">
+                    <text>No, we usually don't disable dormant accounts.</text>
+                    <comment>
+                        Start to check your systems and applications for inactive accounts that can be deactivated. It is important to
+                        remove or disable users accounts that are no longer in use. This especially applies for employees that left
+                        your company. Set up a task for checking for inactive user accounts on a regular basis (e.g. every month).
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q2570o1"), isSelected("q2570o2") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2575" type="A" hidden="false" extRef="ACS-4">
+            <introduction>
+                Relying on streamlined processes like checklists and guidelines helps to deliver consistent results and eliminate
+                unnecessary work.
+            </introduction>
+            <text>Does your organisation have guidelines or procedures for managing/granting/revoking access to systems and resources?</text>
+            <options>
+                <option id="q2575o1">
+                    <text>No, we don't have guidelines/procedures for managing access to systems and resources.</text>
+                    <comment>
+                        Start by creating a short checklist for what should be done when granting or revoking access to systems/resources.
+                        Rise awareness among the responsible persons and employees by explaining the importance and advantages of
+                        streamlined processes.
+                    </comment>
+                </option>
+                <option id="q2575o2">
+                    <text>Yes, we do have such procedures/guidelines, but we do not always follow them.</text>
+                    <comment>
+                        Try to find out why these procedures are not always followed. If necessary, adjust the procedures to match the
+                        specific needs of your company. Raise awareness among the responsible persons and employees by explaining the
+                        importance and advantages of streamlined processes.
+                    </comment>
+                </option>
+                <option id="q2575o3">
+                    <text>Yes, we always follow our guidelines/procedures.</text>
+                    <comment>This is very good, helps to avoid mistakes and saves you time in the long run.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2575o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2575o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Having in place checklists, guidelines or procedures helps to improve manual and error-prone processes.
+                    Especially when dealing with assigning and tracking user permissions, you should always be careful and follow defined
+                    criteria in order to keep sensitive data of your company safe.&lt;/p&gt;
+                    &lt;p&gt;Such guidelines can, for example, contain the following:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;What is the process for assigning user permissions when on-boarding an employee?&lt;/li&gt;
+                    &lt;li&gt;How do we deal with revoking user permissions when off-boarding an employee?&lt;/li&gt;
+                    &lt;li&gt;What user rights generally should be granted for what role?&lt;/li&gt;
+                    &lt;li&gt;Who has the power to decide about whether to assign privileges?&lt;/li&gt;
+                    &lt;li&gt;Who is responsible to review permissions regularly?&lt;/li&gt;
+                    &lt;li&gt;How is the organisation storing shared credentials (preferably in a password manager)? How are such
+                    credentials maintained? When are shared credentials changed/renewed when an employee with knowledge thereof leaves
+                    the company?&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 4 -->
+        <question id="q2580" type="A" hidden="false" extRef="ACS-5"><!-- used to trigger visibility of questions -->
+            <introduction>
+                Sometimes it is necessary to access company-internal systems or resources from outside the company network. «Remote
+                access» means that you can connect to your company's network over the Internet. Services such as a virtual private network
+                (VPN) and remote desktop sessions (RDP) are examples of such remote access. Note that using an online platform that is
+                generally accessible over the Internet does not count as remote access.
+            </introduction>
+            <text>Does your company provide possibilities to connect to internal systems or resources via the Internet (e.g. VPN or RDP)?</text>
+            <options>
+                <option id="q2580o1">
+                    <text>Yes, it is possible to connect to our company-internal systems or resources from outside the company network (Internet).</text>
+                    <comment>Remote access needs to be secured properly to keep your company's data and systems safe.</comment>
+                </option>
+                <option id="q2580o2">
+                    <text>No, employees cannot access company-internal systems or resources from outside the company network (Internet).</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q2580o1") : remoteVisibility : {
+                        setHidden("q2582", FALSE);
+                        setHidden("q2584", FALSE);
+                        setHidden("q2586", FALSE);
+                        };
+                        TRUE : remoteVisibility : {
+                        setHidden("q2582", TRUE);
+                        setHidden("q2584", TRUE);
+                        setHidden("q2586", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2582" type="A" hidden="true" extRef="ACS-5"><!-- only shown when there is remote access -->
+            <text>Is there a guideline/procedure for remote access to resources and systems?</text>
+            <options>
+                <option id="q2582o1">
+                    <text>Yes, we have such a procedure and implement it consistently.</text>
+                </option>
+                <option id="q2582o2">
+                    <text>Yes, we have simple guidelines/checklists and implement them consistently.</text>
+                </option>
+                <option id="q2582o3">
+                    <text>Yes, we have such a procedure or simple checklists/guidelines but don't follow them consistently.</text>
+                    <comment>Try to raise awareness why these guidelines and procedure are important for the protection of your company.</comment>
+                </option>
+                <option id="q2582o4">
+                    <text>No, we do not have a guideline/procedure for remote access.</text>
+                    <comment>Start with a short checklist or simple guidelines that outline the most important aspects concerning remote access.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        or( isSelected("q2582o1"), isSelected("q2582o2") ) : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2582o3") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recRemoteAccessGuidelines
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;To keep your company's data and systems safe, there should be guidelines or procedures when your company offers access
+                    to internal resources or systems from outside the company network. By enabling such access, you are potentially not
+                    only opening a door for your employees but also to malicious actors. Therefore, it is essential that you have
+                    technical controls and organisational controls in place to prevent harmful and risky behavior.&lt;/p&gt;
+                    &lt;p&gt;Employees need to be aware of the need to protect your company's network by following set out guidelines or
+                    checklists. This ensures that best practices are being applied and threats from unsafe actions by employees can be
+                    mitigated to a great extent.&lt;/p&gt;
+                    &lt;p&gt;Here are examples of what could be part of your remote access guidelines:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Specify which users should be given remote access and who grants their requests&lt;/li&gt;
+                    &lt;li&gt;Ensure that confidentiality of your data is maintained&lt;/li&gt;
+                    &lt;li&gt;Define required/allowed authentication mechanisms&lt;/li&gt;
+                    &lt;li&gt;Mandate strong passwords or digital certificates to authenticate&lt;/li&gt;
+                    &lt;li&gt;Define requirements for devices that are allowed to connect remotely (e.g. only company-issued devices)&lt;/li&gt;
+                    &lt;li&gt;Define the acceptable use of the remote access connection&lt;/li&gt;
+                    &lt;li&gt;Log remote access connections for auditing reasons&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2584" type="A" hidden="true" extRef="ACS-5"><!-- only shown when there is remote access -->
+            <introduction>For auditing reasons, it is recommended to log who used remote access at what times to connect to your company-internal network.</introduction>
+            <text>Are you logging remote access connections?</text>
+            <options>
+                <option id="q2584o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2584o2">
+                    <text>No</text>
+                    <comment>
+                        Consider logging who used remote access at what times to connect to your company-internal network. This enables
+                        you to review the logs periodically or in case something suspicious comes up. When a security incident occurs,
+                        it is always good to have usable evidence in order to analyse what happened.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2584o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2586" type="Astarexcl" hidden="true" extRef="ACS-5"><!-- only shown when there is remote access -->
+            <introduction>When logging in to company resources remotely, it is even more important to follow best practices in terms of password security.</introduction>
+            <text>Do users need to authenticate using strong passwords or digital certificates for gaining remote access?</text>
+            <options>
+                <option id="q2586o1">
+                    <text>Yes, they are using strong passwords.</text>
+                </option>
+                <option id="q2586o2">
+                    <text>Yes, they are using digital certificates.</text>
+                </option>
+                <option id="q2586oNone">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q2586o1"), isSelected("q2586o2") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2586oNone") : recRemoteAccessStrongAuth : {
+                        addRecommendation("recRemoteAccessStrongAuth", 400, "", "", tn("recRemoteAccessStrongAuth-title"),
+                        tn("recRemoteAccessStrongAuth-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2586");
+                        };
+                        TRUE : recRemoteAccessStrongAuth : {
+                        revokeRecommendation("recRemoteAccessStrongAuth");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2590" type="A" hidden="false" extRef="ACS-8">
+            <introduction>
+                It is good to have the possibility to review when and by whom critical applications or resources have been accessed.
+            </introduction>
+            <text>Is access to critical applications and resources logged?</text>
+            <options>
+                <option id="q2590o1">
+                    <text>Yes, we log access to critical applications.</text>
+                    <comment>Make sure that you review the log periodically and use it in case you suspect something might be going wrong.</comment>
+                </option>
+                <option id="q2590o2">
+                    <text>Yes, we log access to critical applications and the log is reviewed periodically.</text>
+                </option>
+                <option id="q2590o3">
+                    <text>We don't have critical applications that need auditing information.</text>
+                    <comment>Make sure that you really don't have applications that you want to log access for.</comment>
+                </option>
+                <option id="q2590o4">
+                    <text>No, we don't log that but have systems where this would be sensible.</text>
+                    <comment>
+                        Start logging who used critical applications and resources and what these users did in the system.
+                        Make sure that you review the log periodically and use it in case you suspect something might be going wrong.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q2590o3")) : default : { // no scoring if not applicable
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2590o2") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2590o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2590o4") : recLogCriticalSystemAccess : {
+                        addRecommendation("recLogCriticalSystemAccess", 400, "", "", tn("recLogCriticalSystemAccess-title"),
+                        tn("recLogCriticalSystemAccess-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2590");
+                        };
+                        TRUE : recLogCriticalSystemAccess : {
+                        revokeRecommendation("recLogCriticalSystemAccess");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Your company should be able to review access to critical applications and resources. This mainly means to
+                    log who used critical applications and resources as well as what these users changed in the system.&lt;/p&gt;
+                    &lt;p&gt; At best, this allows tracking each action that was made in those systems and enables to establish which user
+                    executed a given action. Such audit logs should be reviewed periodically and in case something suspicious comes up.
+                    When a security incident occurs, it is always preferable to have usable evidence in order to analyse what happened exactly.&lt;/p&gt;
+                    &lt;p&gt;Of course, logging everything and everywhere does not make sense. Thus, define which systems are very important
+                    to your business and where you want to ensure integrity to that extent.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2598" type="info" hidden="false">
+            <introduction>Deep Dive into Access Management</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.ddam.MseDdamLib"/>
+
+    <metadata key="_cysec.logic">
+        <mvalue key="postQuestion">
+            <stringValue>
+                // global logic: recFollowPasswordGuidelines
+                or( isSelected("q2505o2"), isSelected("q2510o3") ) : recFollowPasswordGuidelines : {
+                addRecommendation("recFollowPasswordGuidelines", 100, "", "", tn("recFollowPasswordGuidelines-title"),
+                tn("recFollowPasswordGuidelines-text"),
+                "", if(isSelected("q2505o2"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2505",
+                "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2510"));
+                };
+                TRUE : recFollowPasswordGuidelines : {
+                revokeRecommendation("recFollowPasswordGuidelines");
+                };
+
+                // global logic: recPersonalAccounts
+                or( isSelected("q2520o3"), isSelected("q2525o2") ) : recPersonalAccounts : {
+                addRecommendation("recPersonalAccounts", 100, "", "", tn("recPersonalAccounts-title"),
+                tn("recPersonalAccounts-text"),
+                "", if(isSelected("q2520o3"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2520",
+                "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2525"));
+                };
+                TRUE : recPersonalAccounts : {
+                revokeRecommendation("recPersonalAccounts");
+                };
+
+                // global logic: recAssignResponsibilityForIam
+                or( isSelected("q2550o3"), isSelected("q2555o3"), isSelected("q2555o4"),
+                and( isSelected("q2550o2"), isSelected("q2555o2")) ) : recAssignResponsibilityForIam : {
+                addRecommendation("recAssignResponsibilityForIam", 200, "", "", tn("recAssignResponsibilityForIam-title"),
+                tn("recAssignResponsibilityForIam-text"),
+                "", if(isSelected("q2550o3"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2550",
+                "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2555"));
+                };
+                TRUE : recAssignResponsibilityForIam : {
+                revokeRecommendation("recAssignResponsibilityForIam");
+                };
+
+                // global logic: recRemoteAccessGuidelines
+                and( isSelected("q2582o4"), not(isSelected("q2586oNone"))) : recRemoteAccessGuidelines : { // prioritize recRemoteAccessStrongAuth
+                addRecommendation("recRemoteAccessGuidelines", 400, "", "", tn("recRemoteAccessGuidelines-title"),
+                tn("recRemoteAccessGuidelines-text"),
+                "", "app/coach.jsp?fqcn=msesec-deep-dive-access-management.default&amp;question=q2582");
+                };
+                TRUE : recRemoteAccessGuidelines : {
+                revokeRecommendation("recRemoteAccessGuidelines");
+                };
+            </stringValue>
+        </mvalue>
+    </metadata>
+
+    <dictionary>
+        <entry key="recUseTwoFactorAuth-title">Use two-factor authentication (2FA)</entry>
+        <entry key="recUseTwoFactorAuth-text">Activate two-factor authentication (2FA) whenever possible to add additional protection to your accounts. This is an effective second line of defence in case your primary authentication method is compromised.</entry>
+        <entry key="recLeastPrivilege-title">Implement «least privilege» principle</entry>
+        <entry key="recLeastPrivilege-text">Assign user permissions according to the least privilege and limit access based on the need-to-know principle. Give employees only the necessary permissions for their job and extend permissions when necessary.</entry>
+        <entry key="recAssignAdminSystematically-title">Tightly control administrator privileges</entry>
+        <entry key="recAssignAdminSystematically-text">Assign administrator privileges systematically and review existing permissions. It is very important to limit administrator access and follow the «least privileges» principle.</entry>
+        <entry key="recRemoteAccessStrongAuth-title">Use strong authentication for remote access</entry>
+        <entry key="recRemoteAccessStrongAuth-text">Make sure that users with remote access follow best practices in terms of password security when accessing your company's network remotely. Using digital certificates would also be a safe method to authenticate.</entry>
+        <entry key="recLogCriticalSystemAccess-title">Log access to critical systems</entry>
+        <entry key="recLogCriticalSystemAccess-text">Start logging who used critical applications and resources and what these users did in the system. Make sure that you review the log periodically and use it in case you suspect something might be going wrong.</entry>
+        <entry key="recFollowPasswordGuidelines-title">Follow password guidelines</entry>
+        <entry key="recFollowPasswordGuidelines-text">Make your guidelines are known to everybody in your company. Try to raise the awareness to follow them consistently by explaining their importance.</entry>
+        <entry key="recPersonalAccounts-title">Personal separated accounts</entry>
+        <entry key="recPersonalAccounts-text">Separate your accounts by creating personal accounts for all employees. If you have technical accounts, unambiguously assign such users to specific tasks/processes.</entry>
+        <entry key="recAssignResponsibilityForIam-title">Responsibility for Access and Identity Management (IAM)</entry>
+        <entry key="recAssignResponsibilityForIam-text">Define responsibilities and roles concerning Access and Identity Management (IAM), especially who is granting and rejecting requests for additional permissions.</entry>
+        <entry key="recRemoteAccessGuidelines-title">Create guidelines for remote access</entry>
+        <entry key="recRemoteAccessGuidelines-text">Since your company allows remote access, it is essential that you create a guidelines that outline the most important aspects concerning remote access.</entry>
+    </dictionary>
+
+</questionnaire>

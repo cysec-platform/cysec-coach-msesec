@@ -1,0 +1,631 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-deep-dive-software-security" readableName="Deep Dive into Software Security (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach dives deeper into Software Security for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q1200" type="info" hidden="false">
+            <introduction>Deep Dive into Software Security</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;This coach will extend on the questions and measures that were covered in the coach «First Steps in Cybersecurity».
+                If you have not completed that coach yet, we highly advise that you to finish it before starting this coach.&lt;/p&gt;
+                &lt;p&gt;&lt;em&gt;Please note that the questions will get increasingly more advanced and cover the remaining aspects of
+                network security. It is most likely that your company does not fully implement all the mentioned controls. When you feel
+                that it gets too technical and that the proposed recommendations do not fit the type of your business, feel encouraged to
+                work on a different coach instead. In this case you can always come back at a later stage and complete the remaining
+                questions.&lt;/em&gt;&lt;/p&gt;
+            </infotext>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q1210" type="A" hidden="false" extRef="SFT-1">
+            <introduction>
+                Web browsers and email clients are used on a daily basis and need particular attention in terms of cybersecurity.
+                Software updates allow patching security vulnerabilities or can introduce new features.
+            </introduction>
+            <text>Are you only using web browsers and email clients that receive regular updates?</text>
+            <options>
+                <option id="q1210o1">
+                    <text>Yes</text>
+                    <comment>
+                        Don't forget to regularly install these updates.
+                        In case an auto-update feature is offered, it is recommended to activate it.
+                    </comment>
+                </option>
+                <option id="q1210o2">
+                    <text>No</text>
+                    <comment>
+                        Stop using web browsers and email clients that don't receive regular updates. Start migrating to applications that
+                        are still fully supported by their vendors. Keeping these applications up-to-date is very important to get the
+                        latest security fixes. Don't forget to regularly install these updates. In case an auto-update feature is offered,
+                        it is recommended to activate it.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1210o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1210o2") : recUseOnlySupportedBrowsersAndEmailClients : {
+                        addRecommendation("recUseOnlySupportedBrowsersAndEmailClients", 200, "", "", tn("recUseOnlySupportedBrowsersAndEmailClients-title"),
+                        tn("recUseOnlySupportedBrowsersAndEmailClients-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1210");
+                        };
+                        TRUE : recUseOnlySupportedBrowsersAndEmailClients : {
+                        revokeRecommendation("recUseOnlySupportedBrowsersAndEmailClients");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Ensure that your software inventory (the list of allowed software in your company) contains a limited
+                    set of web browsers and email clients that receive regular updates. Using the latest versions of the browsers and
+                    email clients provided by the vendor helps keeping you safe.&lt;/p&gt;
+                    &lt;p&gt;You can consult the list of IT assets that you created earlier to know what devices need to be checked.&lt;/p&gt;
+                    &lt;p&gt;Here is a list of recommended browsers:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://www.apple.com/safari/"&gt;Apple Safari&lt;/a&gt; (macOS, iOS)&lt;/li&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://www.microsoft.com/edge"&gt;Microsoft Edge&lt;/a&gt; (Windows, macOS, iOS, Android, Linux)&lt;/li&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://www.google.com/chrome/"&gt;Google Chrome&lt;/a&gt; (Windows, macOS, iOS, Android, Linux)&lt;/li&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://www.mozilla.org/firefox/browsers/"&gt;Firefox&lt;/a&gt; (Windows, macOS, iOS, Android, Linux)&lt;/li&gt;
+                    &lt;li&gt;&lt;p&gt;&lt;em&gt;Please note that you should no longer use «Microsoft Internet Explorer» starting from June 2022 as there
+                    are no more security updates available.&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;Concerning the email client, please consult the documentation of your software products to verify whether
+                    they are still receiving security updates on a regular basis.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1215" type="A" hidden="false" extRef="SFT-6">
+            <introduction>Software updates for mobile devices are as important as for your computers.</introduction>
+            <text>Are mobile devices which are used in the company environment updated regularly?</text>
+            <options>
+                <option id="q1215o1">
+                    <text>Yes, automatic updates are activated.</text>
+                </option>
+                <option id="q1215o2">
+                    <text>Yes, updates are installed manually on a regular schedule.</text>
+                </option>
+                <option id="q1215o3">
+                    <text>Yes, updates are installed manually as soon as updates are available.</text>
+                </option>
+                <option id="q1215o4">
+                    <text>No, updates are not updated regularly.</text>
+                    <comment>Activate automated updates on all your mobile devices (if possible) or set up a task to regularly check for and install the latest software.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1215o1"), isSelected("q1215o2"), isSelected("q1215o3")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1215o4") : recRegularUpdatesMobileDevices : {
+                        addRecommendation("recRegularUpdatesMobileDevices", 200, "", "", tn("recRegularUpdatesMobileDevices-title"),
+                        tn("recRegularUpdatesMobileDevices-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1215");
+                        };
+                        TRUE : recRegularUpdatesMobileDevices : {
+                        revokeRecommendation("recRegularUpdatesMobileDevices");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;You should always try to keep your mobile devices and apps on the latest available version. Having the most
+                    recent patches for known vulnerabilities installed means that your devices and apps are better protected against
+                    cyberattacks. If you cannot let updates install automatically, set up a scheduled task to do so in regular intervals.&lt;/p&gt;
+                    &lt;p&gt;You can consult the list of IT assets and the list of software that you created earlier to know what devices
+                    and apps need regular updates.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q1220" type="A" hidden="false" extRef="SFT-11">
+            <introduction>Removable media like USB sticks or external hard drives can contain malicious content that can cause harm to your devices.</introduction>
+            <text>Are devices configured to not auto-run or auto-play content from removable media?</text>
+            <options>
+                <option id="q1220o1">
+                    <text>Yes, auto-run and auto-play is disabled on our devices.</text>
+                    <comment>Make sure that you disable auto-run and auto-play on devices that your company will buy in the future.</comment>
+                </option>
+                <option id="q1220o2">
+                    <text>None of our devices supports auto-run or auto-play.</text>
+                    <comment>Make sure that you disable auto-run and auto-play on devices that your company will buy in the future.</comment>
+                </option>
+                <option id="q1220o3">
+                    <text>No, auto-run and auto-play is not disabled on our devices.</text>
+                    <comment>
+                        Disable auto-run and auto-play on all devices that support this feature since you can never be sure if the content of a
+                        removable media is safe to open. Consult the list of your IT assets to keep track on which devices the
+                        configuration has been verified or applied.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q1220o2")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1220o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1220o3") : recDisableAutoPlay : {
+                        addRecommendation("recDisableAutoPlay", 300, "", "", tn("recDisableAutoPlay-title"),
+                        tn("recDisableAutoPlay-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1220");
+                        };
+                        TRUE : recDisableAutoPlay : {
+                        revokeRecommendation("recDisableAutoPlay");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Auto-run or auto-play is a feature of Windows that can automatically open applications when you attach/insert
+                    removable media (e.g. USB stick, camera or CD/DVD).&lt;/p&gt;
+                    &lt;p&gt;Since you can never be sure what removable media actually contains, it is recommended to completely disable this feature:
+                    &lt;ul&gt;
+                    &lt;li&gt;&lt;strong&gt;Windows 10:&lt;/strong&gt; Click on «Start» &#8594; «Settings» &#8594; «Devices» &#8594; «AutoPlay». Uncheck «Use AutoPlay for all media devices».&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;Windows 11:&lt;/strong&gt; Click on «Start» &#8594; «Settings» &#8594; «Devices» &#8594; «Bluetooth &amp; devices» &#8594; «AutoPlay». Uncheck «Use AutoPlay for all media devices».&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;Windows 7:&lt;/strong&gt; Click on «Start» &#8594; «Control Panel» &#8594; «Hardware and Sound» &#8594; «AutoPlay». Uncheck «Use AutoPlay for all media devices».&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;Linux:&lt;/strong&gt; Consult the documentation of your distribution.&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;macOS:&lt;/strong&gt; No action is necessary since macOS does not have such feature.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1600" type="A" hidden="false" extRef="SFT-13"><!-- used to hide/show upcoming questions -->
+            <text>Is your organisation developing software internally?</text>
+            <options>
+                <option id="q1600o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1600o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q1600o1") : q1605visibility : {
+                        setHidden("q1605", FALSE);
+                        };
+                        TRUE : q1605visibility : {
+                        setHidden("q1605", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1605" type="A" hidden="true" extRef="SFT-13"><!-- only show if company develops software internally -->
+            <introduction>Software development in your company should take security aspects into account.</introduction>
+            <text>Are you following any procedures for secure software development?</text>
+            <options>
+                <option id="q1605o1">
+                    <text>We don't think about security when developing software at all.</text>
+                    <comment>
+                        Start getting informed about how to implement secure software by reading through the resources provided on this
+                        question.
+                    </comment>
+                </option>
+                <option id="q1605o2">
+                    <text>We try to make out software secure but don't really know much about it.</text>
+                    <comment>
+                        Start getting informed about how to implement secure software by reading through the resources provided on this
+                        question.
+                    </comment>
+                </option>
+                <option id="q1605o3">
+                    <text>Yes, we follow some secure coding practices.</text>
+                    <comment>
+                        That is already very good. Try to improve your knowledge and processes by consulting the resources provided on
+                        this question.
+                    </comment>
+                </option>
+                <option id="q1605o4">
+                    <text>Yes, we employ a secure software development lifecycle (SSDL).</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1605o3") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1605o4") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 2);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1605o1"), isSelected("q1605o2")) : recSecureSoftwareDevelopment : {
+                        addRecommendation("recSecureSoftwareDevelopment", 300, "", "", tn("recSecureSoftwareDevelopment-title"),
+                        tn("recSecureSoftwareDevelopment-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1605");
+                        };
+                        TRUE : recSecureSoftwareDevelopment : {
+                        revokeRecommendation("recSecureSoftwareDevelopment");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Attackers often target software vulnerabilities at the application layer to launch cyberattacks. Therefore,
+                    it is crucial that you are implementing your software with security in mind. This is in particular important when your
+                    software is accessible over a network or can be used by third parties.&lt;/p&gt;
+                    &lt;p&gt;A good start to learn more about this is the
+                    &lt;a target="_blank" href="https://www.veracode.com/security/secure-development"&gt;Secure Software Development&lt;/a&gt;
+                    article in Veracode's knowledge base and the
+                    &lt;a target="_blank" href="https://info.veracode.com/secure-coding-best-practices-hand-book-guide-resource.html"&gt;Secure Coding Handbook&lt;/a&gt;
+                    .&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 4 -->
+        <question id="q1225" type="A" hidden="false" extRef="SFT-10">
+            <introduction>
+                Removable media like USB sticks are often used to exchange data between devices. At the same time, they can potentially
+                pass on malware and infect further devices.
+            </introduction>
+            <text>Does your company perform anti-malware scans of removable media when inserted or connected?</text>
+            <options>
+                <option id="q1225o1">
+                    <text>No, we don't scan removable media.</text>
+                    <comment>
+                        Always scan removable media with an anti-malware software when inserted or connected to one of your company's
+                        devices. This can be done automatically by configuring your software accordingly (if supported). As an alternative,
+                        employees can be instructed to manually run anti-malware scans.
+                    </comment>
+                </option>
+                <option id="q1225o2">
+                    <text>Yes, we scan removable media manually.</text>
+                    <comment>If your anti-malware software supports it, configure to do these scan automatically when removable media is connected/inserted.</comment>
+                </option>
+                <option id="q1225o3">
+                    <text>Yes, we scan removable media automatically.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1225o2"), isSelected("q1225o3")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1225o1") : recMalwareScanRemovableMedia : {
+                        addRecommendation("recMalwareScanRemovableMedia", 400, "", "", tn("recMalwareScanRemovableMedia-title"),
+                        tn("recMalwareScanRemovableMedia-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1225");
+                        };
+                        TRUE : recMalwareScanRemovableMedia : {
+                        revokeRecommendation("recMalwareScanRemovableMedia");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Removable media like USB sticks are a common entry point for malware. Therefore, all employees of your company
+                    should always exercise caution when connecting or inserting removable media. Don't assume that the content is safe,
+                    particularly if it was provided by a third party.&lt;/p&gt;
+                    &lt;p&gt;Always scan removable media with an anti-malware software when inserted or connected to one of your company's
+                    devices. This can be done automatically by configuring your software accordingly (if supported). As an alternative,
+                    employees can be instructed to manually run anti-malware scans.&lt;/p&gt;
+                    &lt;p&gt;Please note that some devices (e.g. network devices) may not support anti-malware software.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1230" type="A" hidden="false" extRef="SFT-7">
+            <introduction>
+                It is good to have the possibility to review when and by whom applications, systems and resources have been accessed.
+            </introduction>
+            <text>Do you have requirements for audit records and log records defined?</text>
+            <options>
+                <option id="q1230o1">
+                    <text>Yes, we defined these requirements as a guideline.</text>
+                </option>
+                <option id="q1230o2">
+                    <text>Yes, we defined these requirements as a formal policy.</text>
+                </option>
+                <option id="q1230o3">
+                    <text>No, we did not define any requirements.</text>
+                    <comment>
+                        Depending on the nature of your business, define what logs and audit records you want to keep. Having set these
+                        requirements clearly written down, makes is much easier to know exactly what needs to be implemented.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1230o1"), isSelected("q1230o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1230o1") : q1235visibility : {
+                        setHidden("q1235", FALSE);
+                        };
+                        TRUE : q1235visibility : {
+                        setHidden("q1235", TRUE);
+                        };
+                        // global logic: recProduceLogAndAuditRecords
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Your company should be able to review access to applications, systems and resources. This is particularly
+                    relevant for critical assets that need a high degree of confidentiality and integrity.&lt;/p&gt;
+                    &lt;p&gt;Depending on the nature of your business, define what logs and audit records you want to keep. At best,
+                    this allows tracking each action that was made in critical systems and enables to establish which user executed a given
+                    action. Such audit logs should be reviewed periodically and in case something suspicious comes up. When a security
+                    incident occurs, it is always preferable to have usable evidence in order to analyse what happened exactly. Of course,
+                    logging everything and everywhere does not make sense. Thus, define which systems are very important to your business
+                    and where you want to ensure integrity to that extent.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 5 -->
+        <question id="q1235" type="A" hidden="true" extRef="SFT-7"><!-- only show if requirements defined -->
+            <introduction>Audit and log records should be created based on your clearly defined requirements.</introduction>
+            <text>Are systems and networking devices configured to produce audit and log records according to your requirements?</text>
+            <options>
+                <option id="q1235o1">
+                    <text>Yes</text>
+                    <comment>Remember to review these records periodically and in case something suspicious comes up.</comment>
+                </option>
+                <option id="q1235o2">
+                    <text>No</text>
+                    <comment>
+                        Configure your systems and applications to produce the log and audit records according to your requirements. Review
+                        the requirements if you don't find them appropriate. Such audit logs should be reviewed periodically and
+                        particularly in case something suspicious comes up.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1235o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recProduceLogAndAuditRecords
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1239" type="Astarexcl" hidden="false">
+            <text>Does your company offer a service that is accessible by clients or external service providers?</text>
+            <options>
+                <option id="q1239o1">
+                    <text>Web application (e.g. customer portal or online shop).</text>
+                </option>
+                <option id="q1239o2">
+                    <text>APIs (Application Programming Interface).</text>
+                </option>
+                <option id="q1239o3">
+                    <text>Other methods to access company-controlled data/systems from outside the company.</text>
+                </option>
+                <option id="q1239oNone">
+                    <text>No, clients or external service providers cannot access any of our systems.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        or(isSelected("q1239o1"), isSelected("q1239o2"), isSelected("q1239o3")) : q1240visibility : {
+                        setHidden("q1240", FALSE);
+                        };
+                        TRUE : q1240visibility : {
+                        setHidden("q1240", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1240" type="A" hidden="true" extRef="SFT-9">
+            <introduction>Monitoring is an effective tool to spot problems and detect concerning behaviours and patterns.</introduction>
+            <text>Do you monitor activities of external service providers and clients so that cybersecurity incidents can be detected?</text>
+            <options>
+                <option id="q1240o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1240o2">
+                    <text>No</text>
+                    <comment>
+                        Consider setting up monitoring to detect cybersecurity incidents based on activities of external service providers
+                        and clients. Look into solutions on the market that suit the specific needs of your company. Consult the
+                        documentation or contact the vendor of your systems if you are not sure how to configure monitoring for them.
+                        Contact a professional if you are unsure or don't know what is right for your business.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1240o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recMonitorSystemsToDetectIncidents
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1250" type="A" hidden="false" extRef="SFT-8">
+            <introduction>Monitoring is an effective tool to spot problems and detect concerning behaviours and patterns.</introduction>
+            <text>Do you monitor usage (computers, systems, data and devices) on the part of your employees to detect potential cybersecurity incidents?</text>
+            <options>
+                <option id="q1250o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1250o2">
+                    <text>No</text>
+                    <comment>
+                        Consider setting up monitoring to detect cybersecurity incidents based on activities of your employees. Look into
+                        solutions on the market that suit the specific needs of your company. Consult the documentation or contact the
+                        vendor of your systems if you are not sure how to configure monitoring for them. Contact a professional if you are
+                        unsure or don't know what is right for your business.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1250o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recMonitorSystemsToDetectIncidents
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1298" type="info" hidden="false">
+            <introduction>Deep Dive into Software Security</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.softsec.MseSoftwareSecurityLib"/>
+
+    <metadata key="_cysec.logic">
+        <mvalue key="postQuestion">
+            <stringValue>
+                // global logic: recProduceLogAndAuditRecords
+                or(isSelected("q1230o2"), isSelected("q1235o2"))  : recProduceLogAndAuditRecords : {
+                addRecommendation("recProduceLogAndAuditRecords", if(isSelected("q1230o2"), 400, 500), "", "", tn("recProduceLogAndAuditRecords-title"),
+                tn("recProduceLogAndAuditRecords-text"),
+                "", if(isSelected("q1230o2"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1230",
+                "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1235"));
+                };
+                TRUE : recProduceLogAndAuditRecords : {
+                revokeRecommendation("recProduceLogAndAuditRecords");
+                };
+
+                // global logic: recMonitorSystemsToDetectIncidents
+                or(isSelected("q1240o2"), isSelected("q1250o1")) : recMonitorSystemsToDetectIncidents : {
+                addRecommendation("recMonitorSystemsToDetectIncidents", 500, "", "", tn("recMonitorSystemsToDetectIncidents-title"),
+                tn("recMonitorSystemsToDetectIncidents-text"),
+                "", if(isSelected("q1240o2"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1240",
+                "app/coach.jsp?fqcn=msesec-deep-dive-software-security.default&amp;question=q1250"));
+                };
+                TRUE : recMonitorSystemsToDetectIncidents : {
+                revokeRecommendation("recMonitorSystemsToDetectIncidents");
+                };
+            </stringValue>
+        </mvalue>
+    </metadata>
+
+    <dictionary>
+        <entry key="recUseOnlySupportedBrowsersAndEmailClients-title">Use only supported browsers and email clients</entry>
+        <entry key="recUseOnlySupportedBrowsersAndEmailClients-text">Stop using web browsers and email clients that don't receive regular updates and migrate to applications that are still fully supported by their vendors. Don't forget to regularly install these updates.</entry>
+        <entry key="recRegularUpdatesMobileDevices-title">Update mobile devices regularly</entry>
+        <entry key="recRegularUpdatesMobileDevices-text">Activate automated updates on all your mobile devices (if possible) or set up a task to regularly check for and install the latest software.</entry>
+        <entry key="recDisableAutoPlay-title">Disable auto-run/auto-play</entry>
+        <entry key="recDisableAutoPlay-text">Disable auto-run and auto-play on all devices that support this feature since you can never be sure if the content of a removable media is safe to open.</entry>
+        <entry key="recSecureSoftwareDevelopment-title">Secure Software Development</entry>
+        <entry key="recSecureSoftwareDevelopment-text">Follow some basic guidelines for developing secure software. You can start with the resources proposed on the question.</entry>
+        <entry key="recMalwareScanRemovableMedia-title">Malware scan for removable media</entry>
+        <entry key="recMalwareScanRemovableMedia-text">Scan removable media with an anti-malware software whenever inserted or connected to one of your company's devices. Either configure your software to do it automatically or instruct your employees to do it manually.</entry>
+        <entry key="recProduceLogAndAuditRecords-title">Produce log and audit records</entry>
+        <entry key="recProduceLogAndAuditRecords-text">Configure your systems and applications to produce the log and audit records according to requirements that you need to define in advance.</entry>
+        <entry key="recMonitorSystemsToDetectIncidents-title">Monitor your systems</entry>
+        <entry key="recMonitorSystemsToDetectIncidents-text">Set up monitoring to detect cybersecurity incidents based on activities of external service providers, clients and your staff.</entry>
+    </dictionary>
+
+</questionnaire>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>eu.smesec.cysec.coach</groupId>
+        <artifactId>cysec-coach-msesec-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+        <relativePath>../cysec-coach-msesec-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>cysec-coach-msesec-supply-chain</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>eu.smesec.cysec.platform</groupId>
+            <artifactId>cysec-platform-bridge</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>eu.smesec.cysec</groupId>
+            <artifactId>lib-coach-standard-language</artifactId>
+            <exclusions>
+                <exclusion><!-- do not use transitive version of the cysec-bridge -->
+                    <groupId>eu.smesec.cysec.platform</groupId>
+                    <artifactId>cysec-platform-bridge</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>MseSupplyChainLib</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-flatify-files</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/flatify-input</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <targetPath>original</targetPath>
+                                    <directory>src/flatify/original</directory>
+                                </resource>
+                                <resource>
+                                    <targetPath>de</targetPath>
+                                    <directory>src/flatify/translation/de</directory>
+                                </resource>
+                                <resource>
+                                    <targetPath>fr</targetPath>
+                                    <directory>src/flatify/translation/fr</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>eu.smesec.cysec.maven</groupId>
+                <artifactId>coach-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>merge-translations</id>
+                        <goals>
+                            <goal>merge-translations</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <coachXml>src/flatify/original/coach.xml</coachXml>
+                            <xlfBaseDir>src/flatify/translation</xlfBaseDir>
+                            <outputBaseDir>${project.build.directory}/flatify-input</outputBaseDir>
+                            <languageConfigFile>src/flatify/translation/config.xml</languageConfigFile>
+                            <failOnMissingTranslation>false</failOnMissingTranslation>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>flatify-files</id>
+                        <goals>
+                            <goal>flatify</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <inputDirectory>${project.build.directory}/flatify-input</inputDirectory>
+                            <outputFile>${project.build.directory}/${project.artifactId}.xml</outputFile>
+                            <languageConfigFile>src/flatify/translation/config.xml</languageConfigFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>extract-translations-to-source</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>eu.smesec.cysec.maven</groupId>
+                        <artifactId>coach-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>extract-translations</id>
+                                <goals>
+                                    <goal>extract-translations</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <coachXml>src/flatify/original/coach.xml</coachXml>
+                                    <outputXlf>src/flatify/translation/source.xlf</outputXlf>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

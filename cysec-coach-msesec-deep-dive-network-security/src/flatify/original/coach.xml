@@ -1,0 +1,844 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-deep-dive-network-security" readableName="Deep Dive into Network Security (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach takes a deep dive into network security for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q1700" type="info" hidden="false">
+            <introduction>Deep Dive into Network Security</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;This coach will extend on the questions and measures that were covered in the coach «First Steps in Cybersecurity».
+                If you have not completed that coach yet, we highly advise that you to finish it before starting this coach.&lt;/p&gt;
+                &lt;p&gt;&lt;em&gt;Please note that the questions will get increasingly more advanced and cover the remaining aspects of
+                network security. It is most likely that your company does not fully implement all the mentioned controls. If you
+                consider that it gets too technical or that the proposed recommendations do not fit the type of your business, feel
+                free to work on a different coach instead. In this case you can always come back at a later stage and complete the remaining
+                questions.&lt;/em&gt;&lt;/p&gt;
+            </infotext>
+        </question>
+        <question id="q1701" type="Astarexcl" hidden="false"><!-- used to hide upcoming questions -->
+            <text>Does your company operate a wired and/or wireless network?</text>
+            <options>
+                <option id="q1701o1">
+                    <text>Yes, a wired network (LAN).</text>
+                </option>
+                <option id="q1701o2">
+                    <text>Yes, a wireless network (WLAN).</text>
+                </option>
+                <option id="q1701oNone">
+                    <text>No, our company doesn't have a network.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q1701o2") : wirelessNetworkVisibility : {
+                        setHidden("q1702", FALSE);
+                        };
+                        TRUE : wirelessNetworkVisibility : {
+                        setHidden("q1702", TRUE);
+                        };
+                        // global logic: generalNetworkVisibility
+                        // global logic: q1710visibility
+                        // global logic: q1735Visibility
+                        // global logic: q1740visibility
+                        // global logic: q1745visibility
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 1 -->
+        <question id="q1702" type="A" hidden="true" extRef="NET-5"><!-- extends FSICS / wireless network -->
+            <introduction>
+                If your company-internal wireless network contains protected resources (e.g. servers or storage devices), you should limit
+                access to trusted corporate devices (owned and managed by your company).
+            </introduction>
+            <text>Is there a separate wireless network for personal/untrusted devices?</text>
+            <options>
+                <option id="q1702o1">
+                    <text>We don't offer a wireless network for personal/untrusted devices.</text>
+                </option>
+                <option id="q1702o2">
+                    <text>Yes, the company's guest network is used for them.</text>
+                    <comment>This is sufficient if the guest network is separated from your company-internal network.</comment>
+                </option>
+                <option id="q1702o3">
+                    <text>Yes, a separate network is provided.</text>
+                </option>
+                <option id="q1702o4">
+                    <text>No, personal/untrusted devices use the same network as corporate devices.</text>
+                    <comment>Consider to temporarily stop offering a wireless network for personal/untrusted devices and look into separating this wireless network from your company-internal network.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q1702o1")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or( isSelected("q1702o2"), isSelected("q1702o3") ) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1702o4") : recSeparateUntrustedNetwork : {
+                        addRecommendation("recSeparateUntrustedNetwork", 100, "", "", tn("recSeparateUntrustedNetwork-title"),
+                        tn("recSeparateUntrustedNetwork-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1702");
+                        };
+                        TRUE : recSeparateUntrustedNetwork : {
+                        revokeRecommendation("recSeparateUntrustedNetwork");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Having a separate wireless network for untrusted/personal devices (e.g. devices of employees) keeps your
+                    company-internal resources protected in their own network. This reduces the attack surface and is a basic example of
+                    network segmentation.&lt;/p&gt;
+                    &lt;p&gt;If you operate a wireless network that contains untrusted/personal devices, this should be a separate network without
+                    access to your company's resources. Another option is to completely refrain from offering a wireless network for these
+                    types of devices.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Hint: A wireless network set up for guests can also be used for untrusted devices if no access to
+                    your company's resources is possible.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q1705" type="A" hidden="true" extRef="NET-1"><!-- general network -->
+            <introduction>
+                A firewall is a device or software component that is used to block unwanted network traffic and helps protect your
+                network from unauthorized access.
+            </introduction>
+            <text>Is your company's network protected by a firewall?</text>
+            <options>
+                <option id="q1705o1">
+                    <text>Yes, we have a separated device or software for this.</text>
+                </option>
+                <option id="q1705o2">
+                    <text>Yes, our router acts as a firewall.</text>
+                    <comment>Make sure that the firewall features are active and properly configured.</comment>
+                </option>
+                <option id="q1705o3">
+                    <text>I'm not sure.</text>
+                    <comment>
+                        Check if your router already has a firewall that is active. Therefore, consult the documentation of your network
+                        products or contact the vendor. If not, look into protecting your company's network with a firewall in order to
+                        keep your network secure and private. Protecting your company's network with a firewall is very important.
+                    </comment>
+                </option>
+                <option id="q1705o4">
+                    <text>No, we don't have a firewall.</text>
+                    <comment>
+                        Protecting your company's network with a firewall is very important. Check if your router already has a firewall
+                        that is active. If not, look into protecting your company's network with a firewall in order to keep your network
+                        secure and private.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        or(isSelected("q1705o1"), isSelected("q1705o2")) : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        or(isSelected("q1705o3"), isSelected("q1705o4")) : recProtectNetworkFirewall : {
+                        addRecommendation("recProtectNetworkFirewall", 200, "", "", tn("recProtectNetworkFirewall-title"),
+                        tn("recProtectNetworkFirewall-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1705");
+                        };
+                        TRUE : recProtectNetworkFirewall : {
+                        revokeRecommendation("recProtectNetworkFirewall");
+                        };
+                        // global logic: q1710visibility
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Your company's network contains resources belonging to your business and they should be protected from third-parties
+                    and unauthorized persons. In contrast, the Internet contains a lot of public resources that can be accessed by many
+                    persons. Thus, there needs to be a sort of gatekeeper between these networks, alike to a security officer that guards a
+                    door separating internal and external areas.&lt;/p&gt;
+                    &lt;p&gt;A network device or software component that controls incoming and outgoing network traffic between two
+                    networks is called a firewall. Data is blocked or allowed-through based on a set of defined security rules that are
+                    applied. Protecting your company's network with a firewall is essential to keep your network secure and private.&lt;/p&gt;
+                    &lt;p&gt;Most routers for consumers and small businesses come with an integrated basic firewall. However, these features
+                    are not always active by default. Therefore, you need to manually inspect and verify that the firewall is active on the
+                    router if you wish to rely on the router's firewall. If you are not sure, consult the documentation of your network
+                    products or contact the vendor.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1710" type="A" hidden="true" extRef="NET-2"><!-- general network / only if dedicated firewall -->
+            <introduction>Updates for network equipment are as important as updates for your computers or other devices critical for your business.</introduction>
+            <text>Is the software of your FIREWALL updated regularly?</text>
+            <options>
+                <option id="q1710o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1710o2">
+                    <text>No</text>
+                    <comment>Activate automated updates on your firewall (if possible) or set up a task to regularly check for and install the latest software.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1710o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recUpdateNetworkDevices
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1712" type="A" hidden="true" extRef="NET-2"><!-- general network -->
+            <introduction>Updates for network equipment are as important as updates for your computers or other devices critical for your business.</introduction>
+            <text>Is the software of your ROUTER updated regularly?</text>
+            <options>
+                <option id="q1712o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1712o2">
+                    <text>No</text>
+                    <comment>Activate automated updates on your router (if possible) or set up a task to regularly check for and install the latest software.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1712o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recUpdateNetworkDevices
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1715" type="A" hidden="true" extRef="NET-2"><!-- general network -->
+            <introduction>Updates for network equipment are as important as updates for your computers or other devices critical for your business.</introduction>
+            <text>Is the software of your other network devices (e.g. network attached storage (NAS), switches, security gateways, wireless access points) updated regularly?</text>
+            <options>
+                <option id="q1715o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1715o2">
+                    <text>No</text>
+                    <comment>Activate automated updates on all your network devices (if possible) or set up a task to regularly check for and install the latest software.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1715o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recUpdateNetworkDevices
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1720" type="A" hidden="false" extRef="NET-6">
+            <introduction>
+                When accessing the Internet, it is vital to use secure and encrypted connections at all times. This keeps the exchanged
+                data private and stops malicious actors from snooping or collection data on what you are doing.
+            </introduction>
+            <text>Do your employees generally use HTTPS to access websites on the Internet?</text>
+            <options>
+                <option id="q1720o1">
+                    <text>Yes, we always ensure that.</text>
+                </option>
+                <option id="q1720o2">
+                    <text>Yes, we ensure that before entering any login credentials or other data.</text>
+                </option>
+                <option id="q1720o3">
+                    <text>No, we do not ensure this.</text>
+                    <comment>
+                        Inform the employees of your company that websites on the Internet should always be accessed over HTTPS which
+                        offers a secure and encrypted connection.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1720o1"), isSelected("q1720o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recSecureChannelsInternet
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Unencrypted network traffic can be easily intercepted, read and even modified by third-parties between your
+                    device and the server. This is kind of like sending a messages from A to B by passing along a message from one person
+                    to another in a public space. Therefore, using encrypted communication channels is vital to maintain your privacy when
+                    browsing websites on the Internet.&lt;/p&gt;
+                    &lt;p&gt;Certainly, you have noticed that browsers commonly display a &lt;em&gt;lock icon&lt;/em&gt; in the address bar to indicate that
+                    the connection to the server is secured. This means that the website is being accessed over &lt;strong&gt;HTTPS&lt;/strong&gt;
+                    which employs an encryption protocol (TLS/SSL) to encrypt the communication between your browser and the server.&lt;/p&gt;
+                    &lt;p&gt;When browsing the Internet, always make sure that the connection is established over HTTPS. This is especially
+                    important if you enter login credentials or other data. You can either check for the lock in the address bar
+                    or verify that the address starts with «https://» instead of «http://». Make sure to inform the employees of your
+                    company about this.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1722" type="A" hidden="false" extRef="NET-6">
+            <introduction>
+                Not only websites should be accessed over a secure and encrypted channel but all connections on the Internet.
+            </introduction>
+            <text>Do you generally use secure and encrypted communication connections on the Internet?</text>
+            <options>
+                <option id="q1722o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1722o2">
+                    <text>No</text>
+                    <comment>
+                        Review and verify that your company only uses encrypted channels to exchange data on the Internet. Inform the
+                        employees of your company accordingly.
+                    </comment>
+                </option>
+                <option id="q1722o3">
+                    <text>I'm not sure.</text>
+                    <comment>
+                        Review and verify that your company only uses encrypted channels to exchange data on the Internet. Inform the
+                        employees of your company accordingly.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1722o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recSecureChannelsInternet
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;While accessing the internet, it is vital to use secure and encrypted connections at all times. This applies
+                    for websites but also in other situations and for other services. Review and verify that your company only uses
+                    encrypted channels to exchange data on the Internet.&lt;/p&gt;
+                    &lt;p&gt;Here are some examples:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Sending and receiving e-mails on devices with insecure protocols like POP3, SMTP or IMAP. Make sure to use
+                    secure alternatives like POP3S, SMTPS or IMAPS. Check the documentation of your e-mail service.&lt;/li&gt;
+                    &lt;li&gt;Accessing data storages with insecure protocols like FTP. Make sure to use secure alternatives like FTPS or SFTP.&lt;/li&gt;
+                    &lt;li&gt;Accessing databases like SQL servers. Make sure that encryption is enabled which is often not the case by default.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q1725" type="A" hidden="true" extRef="NET-3"><!-- general network -->
+            <introduction>
+                Splitting your network into multiple zones is called network segmentation or segregation. A common practice and basic
+                example is to have a separate wireless network for guests or untrusted devices.
+            </introduction>
+            <text>Is your network segregated where necessary and sensible?</text>
+            <options>
+                <option id="q1725o1">
+                    <text>We don't need a segregated network.</text>
+                </option>
+                <option id="q1725o3">
+                    <text>Yes, logically separated (e.g. different VLANs).</text>
+                </option>
+                <option id="q1725o4">
+                    <text>Yes, physically separated.</text>
+                </option>
+                <option id="q1725o5">
+                    <text>Yes, logically and physically separated.</text>
+                </option>
+                <option id="q1725o2">
+                    <text>No, our network is not segregated.</text>
+                    <comment>
+                        Check whether it is sensible to split your network into multiple parts. If that's the case, separate these parts
+                        either physically or logically.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q1725o1")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1725o3"), isSelected("q1725o4"), isSelected("q1725o5")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: q1735visibility
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Network segregation/separation means to divide your network into smaller parts. This allows you to control
+                    the traffic between these parts, for example, block traffic from one part to another. If you operate critical systems
+                    that should not be on the same network as other devices in your company, you can split these networks.&lt;/p&gt;
+                    &lt;p&gt;Separation can be done physically by using completely separated network equipment. More often, there is a
+                    logical separation which can be achieved using different VLANs (Virtual Local Area Network) or by grouping and tagging
+                    network traffic. Note that your network equipment needs to support these features and they need to be manually
+                    configured accordingly.&lt;/p&gt;
+                    &lt;p&gt;Check whether it is sensible to split your network into multiple parts. If that's the case, separate these
+                    parts either physically or logically.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1730" type="A" hidden="false" extRef="NET-9">
+            <introduction>Most operating systems come with an integrated firewall (host-based firewall).</introduction>
+            <text>Is a host-based firewall active on all your computers?</text>
+            <options>
+                <option id="q1730o1">
+                    <text>Yes</text>
+                    <comment>Very good. Regularly check whether the defined rules are still accurate.</comment>
+                </option>
+                <option id="q1730o2">
+                    <text>No</text>
+                    <comment>Protect network access on your computers and servers by activating their host-based firewalls.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1730o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1730o2") : recHostBasedFirewall : {
+                        addRecommendation("recHostBasedFirewall", 300, "", "", tn("recHostBasedFirewall-title"),
+                        tn("recHostBasedFirewall-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1730");
+                        };
+                        TRUE : recHostBasedFirewall : {
+                        revokeRecommendation("recHostBasedFirewall");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;End-devices like computers and servers should be protected with a host-based firewall. This type of firewall can be
+                    defined as «a software-based firewall installed on a server to monitor and control its incoming and outgoing network
+                    traffic» (&lt;a target="_blank" href="https://csrc.nist.gov/glossary/term/host_based_firewall"&gt;NIST, 2022&lt;/a&gt;). Based
+                    on the created inventory of hardware assets, verify whether all such devices of your company have an active firewall.
+                    If this is not the case, enable the firewall and configure sensible exclusions when necessary.&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Windows&lt;/strong&gt;&lt;br&gt;
+                    The firewall settings can be found here:
+                    «Settings &gt; Update &amp; Security &gt; Windows Security &gt; Firewall &amp; network protection»&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;macOS&lt;/strong&gt;&lt;br&gt;
+                    The firewall settings can be found here:
+                    «System Preferences &gt; Security and Privacy &gt; Firewall».&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Linux&lt;/strong&gt;&lt;br&gt;
+                    Depending on the linux distribution, there are different packages pre-installed or available. One of these utility
+                    programs is «iptables» which can be used to define, manage and show the rules of the packet filtering system in the
+                    linux kernel. A user-friendly firewall configuration tool is «ufw» (abbreviation for Uncomplicated Firewall) allowing to
+                    create and manage simple host-based and port-based firewall rules.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Consult the documentation of your operating system or device if you are not sure how to set up the
+                    firewall.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1735" type="A" hidden="true" extRef="NET-10"><!-- wired network / only show when network is segregated -->
+            <introduction>
+                A network boundary is a place where data leaves one logical network and enters another. An example for this is a modem or
+                router where data from the Internet (WAN) crosses over into the local area network (LAN). If a network is segmented into
+                multiple parts, the places where data is exchanged between these parts become network boundaries.
+            </introduction>
+            <text>Is there an up-to-date inventory of the organisation's network boundaries?</text>
+            <options>
+                <option id="q1735o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1735o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1735o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: q1740visibility
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1740" type="A" hidden="true" extRef="NET-11"><!-- wired network / only shown if network boundaries inventoried -->
+            <introduction>
+                A network boundary often separates networks with different security levels and requirements. Therefore, the communication
+                between these networks should be controlled.
+            </introduction>
+            <text>Is communication over unauthorised TCP/UDP ports and application traffic between network boundaries denied?</text>
+            <options>
+                <option id="q1740o1">
+                    <text>Yes, firewalls are used to ensure that only authorized traffic passes our network boundaries.</text>
+                </option>
+                <option id="q1740o2">
+                    <text>Yes, a different method is used to ensure that only authorized traffic passes our network boundaries.</text>
+                </option>
+                <option id="q1740o3">
+                    <text>No, we don't deny unauthorized traffic at our network boundaries.</text>
+                    <comment>
+                        Install/configure a firewall to stop unauthorized communication over TCP or UDP ports or unauthorized application
+                        traffic to ensure between your company's network boundaries.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1740o1"), isSelected("q1740o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1740o3") : recControlTrafficNetworkBoundaries : {
+                        addRecommendation("recControlTrafficNetworkBoundaries", 300, "", "", tn("recControlTrafficNetworkBoundaries-title"),
+                        tn("recControlTrafficNetworkBoundaries-text"),
+                        "", "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1740");
+                        };
+                        TRUE : recControlTrafficNetworkBoundaries : {
+                        revokeRecommendation("recControlTrafficNetworkBoundaries");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <!-- TODO: talk about TCP & UDP / perhaps add an image to illustrate the «network boundary» -->
+        </question>
+        <!-- Priority 4 -->
+        <question id="q1750" type="A" hidden="true" extRef="NET-8"><!-- general network -->
+            <introduction>
+                The Domain Name System (DNS) is basically the phonebook of the Internet. When you visit a website, the address of the
+                server needs to be looked up in this phonebook. There are lists of known malicious domains that can be blocked.
+            </introduction>
+            <text>Do you use DNS filtering services to help block access to known malicious domains?</text>
+            <options>
+                <option id="q1750o1">
+                    <text>Yes, we are using an external service for this.</text>
+                </option>
+                <option id="q1750o2">
+                    <text>Yes, we have our own DNS filtering service.</text>
+                    <comment>Ensure that the list of blocked domains gets updated regularly.</comment>
+                </option>
+                <option id="q1750o3">
+                    <text>No, we don't use DNS filtering.</text>
+                    <comment>Consider using a DNS filtering service to block known malicious domains.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1750o1"), isSelected("q1750o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Whenever you visit a website/domain, your browser needs to know the IP address of the server hosting the
+                    requested website. Therefore, a server of the Domain Name System (DNS) is queried and provides an address for the
+                    desired website/domain. This process is called resolving a domain name.&lt;/p&gt;
+                    &lt;p&gt;DNS filtering services help block access to known malicious domains by not providing the corresponding address.
+                    In consequence, the browser does not know the destination (IP address) and cannot connect to the server. There are
+                    several reasons why you might wish to block certain domains: stop advertisements, limit user tracking, prevent access
+                    to specific websites/services, keep malware out of the company's network or block malicious software.&lt;/p&gt;
+                    &lt;p&gt;You can use an external service for DNS filtering, such as:
+                    &lt;a target="_blank" href="https://www.quad9.net">quad9&lt;/a&gt; (free),
+                    &lt;a target="_blank" href="https://www.opendns.com">OpenDNS&lt;/a&gt; (free) or
+                    &lt;a target="_blank" href="https://umbrella.cisco.com">Cisco Umbrella&lt;/a&gt; (paid).
+                    &lt;br&gt;
+                    An alternative is to run your own infrastructure with appropriate blocking lists, such as
+                    &lt;a target="_blank" href="https://nxfilter.org">NxFilter&lt;/a&gt; (free and paid) or
+                    &lt;a target="_blank" href="https://pi-hole.net">Pi-hole&lt;/a&gt; (free).&lt;/p&gt;.
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 5 -->
+        <question id="q1744" type="Astarexcl" hidden="true"><!-- general network -->
+            <text>Does any of the following apply to your business?</text>
+            <options>
+                <option id="q1744o1">
+                    <text>We have a network with more than 100 devices.</text>
+                </option>
+                <option id="q1744o2">
+                    <text>Our company provides networking services for clients.</text>
+                </option>
+                <option id="q1744o3">
+                    <text>Our company is part of the country's critical infrastructure.</text>
+                </option>
+                <option id="q1744oNone">
+                    <text>None of the above.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        // global logic: q1745visibility
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1745" type="A" hidden="true" extRef="NET-7"><!-- general network / display depending on q1744 -->
+            <introduction>
+                In order to know more about the security of your network, you can monitor its components such as routers, firewalls,
+                switches and servers – this is called network monitoring.
+            </introduction>
+            <text>Are your networks monitored continuously to detect potential cybersecurity incidents?</text>
+            <options>
+                <option id="q1745o1">
+                    <text>Yes, we monitor our network.</text>
+                </option>
+                <option id="q1745o2">
+                    <text>No, we don't monitor our network.</text>
+                    <comment>
+                        Check whether it would make sense to implement network monitoring. Contact a professional if you are unsure or
+                        don't know what is right for your business.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1745o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Monitoring your network can help in detecting potential cybersecurity incidents. Additionally, it is a great
+                    tool to troubleshoot network issues in case something goes wrong. If your company operates a network with more than
+                    100 devices or offers a service in which networking is a crucial component, then network monitoring would be a
+                    sensible thing to implement.&lt;/p&gt;
+                    &lt;p&gt;There are various software and hardware components for network monitoring. What is best for your environment
+                    depends on your concrete needs and requirements. Contact a professional if you are unsure or don't know what is
+                    right for your business.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1795" type="info" hidden="false">
+            <introduction>Deep Dive into Network Security</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.netsec.MseNetSecLib"/>
+
+    <metadata key="_cysec.logic">
+        <mvalue key="preQuestion">
+            <stringValue>
+                // global logic: generalNetworkVisibility
+                or(isSelected("q1701o1"), isSelected("q1701o2")) : generalNetworkVisibility : {
+                setHidden("q1705", FALSE);
+                setHidden("q1712", FALSE);
+                setHidden("q1715", FALSE);
+                setHidden("q1725", FALSE);
+                setHidden("q1750", FALSE);
+                };
+                TRUE : generalNetworkVisibility : {
+                setHidden("q1705", TRUE);
+                setHidden("q1712", TRUE);
+                setHidden("q1715", TRUE);
+                setHidden("q1725", TRUE);
+                setHidden("q1750", TRUE);
+                };
+
+                // global logic: q1710visibility
+                // show if dedicated firewall exists and general network visible
+                and( isSelected("q1705o1"), or(isSelected("q1701o1"), isSelected("q1701o2")) ) : q1710visibility : {
+                setHidden("q1710", FALSE);
+                };
+                TRUE : q1710visibility : {
+                setHidden("q1710", TRUE);
+                };
+
+                // global logic: q1735visibility
+                // show if the network is segregated and wired network exists
+                and( or(isSelected("q1725o3"), isSelected("q1725o4"), isSelected("q1725o5")), isSelected("q1701o1") ) : q1735visibility : {
+                setHidden("q1735", FALSE);
+                };
+                TRUE : q1735visibility : {
+                setHidden("q1735", TRUE);
+                };
+
+                // global logic: q1740visibility
+                // show if there is an inventory of network boundaries and general network visible
+                and( isSelected("q1735o1"), or(isSelected("q1701o1"), isSelected("q1701o2")) ) : q1740visibility : {
+                setHidden("q1740", FALSE);
+                };
+                TRUE : q1740visibility : {
+                setHidden("q1740", TRUE);
+                };
+
+                // global logic: q1745visibility
+                // show depending on q1744 and general network visible
+                and( or(isSelected("q1744o1"), isSelected("q1744o2"), isSelected("q1744o3")),
+                or(isSelected("q1701o1"), isSelected("q1701o2")) ) : q1710visibility : {
+                setHidden("q1745", FALSE);
+                };
+                TRUE : q1745visibility : {
+                setHidden("q1745", TRUE);
+                };
+            </stringValue>
+        </mvalue>
+        <mvalue key="postQuestion">
+            <stringValue>
+                // global logic: recUpdateNetworkDevices
+                or( isSelected("q1710o2"), isSelected("q1712o2"), isSelected("q1715o2") ) : recUpdateNetworkDevices : {
+                addRecommendation("recUpdateNetworkDevices", 200, "", "", tn("recUpdateNetworkDevices-title"),
+                tn("recUpdateNetworkDevices-text"),
+                "", if(isSelected("q1710o2"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1710",
+                if(isSelected("q1712o2"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1712",
+                "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1715"
+                )));
+                };
+                TRUE : recUpdateNetworkDevices : {
+                revokeRecommendation("recUpdateNetworkDevices");
+                };
+
+                // global logic: recSecureChannelsInternet
+                or(isSelected("q1720o3"), isSelected("q1722o2"), isSelected("q1722o3")) : recSecureChannelsInternet : {
+                addRecommendation("recSecureChannelsInternet", 200, "", "", tn("recSecureChannelsInternet-title"),
+                tn("recSecureChannelsInternet-text"),
+                "", if(isSelected("q1720o3"), // link to different question based on answers
+                "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1720",
+                "app/coach.jsp?fqcn=msesec-deep-dive-network-security.default&amp;question=q1722"
+                ));
+                };
+                TRUE : recSecureChannelsInternet : {
+                revokeRecommendation("recSecureChannelsInternet");
+                };
+            </stringValue>
+        </mvalue>
+    </metadata>
+
+    <dictionary>
+        <entry key="recSeparateUntrustedNetwork-title">Separate WLAN for untrusted/personal devices</entry>
+        <entry key="recSeparateUntrustedNetwork-text">Separate the wireless network for untrusted/personal devices from your company-internal network or stop offering a wireless network for untrusted/personal devices.</entry>
+        <entry key="recProtectNetworkFirewall-title">Use a firewall to protect your network</entry>
+        <entry key="recProtectNetworkFirewall-text">Protect your company's network with a firewall in order to keep your internal network secure and private.</entry>
+        <entry key="recHostBasedFirewall-title">Activate firewall on end-devices</entry>
+        <entry key="recHostBasedFirewall-text">Protect network access to your end-devices by activating the host-based firewall on your computers and servers.</entry>
+        <entry key="recControlTrafficNetworkBoundaries-title">Control communication across network boundaries</entry>
+        <entry key="recControlTrafficNetworkBoundaries-text">Install/configure a firewall to stop unauthorized communication over TCP or UDP ports or unauthorized application traffic to ensure between your company's network boundaries.</entry>
+        <entry key="recUpdateNetworkDevices-title">Regularly update your network devices/equipment</entry>
+        <entry key="recUpdateNetworkDevices-text">Activate automated updates if possible or set up a task to regularly check for and install the latest software across all your networking devices/equipment (e.g. routers, firewalls, network attached storage (NAS), switches, security gateways, wireless access points).</entry>
+        <entry key="recSecureChannelsInternet-title">Use secure/encrypted communication channels on the Internet</entry>
+        <entry key="recSecureChannelsInternet-text">Review and verify that your company only uses encrypted channels to exchange data on the Internet. Inform the employees of your company accordingly.</entry>
+    </dictionary>
+
+</questionnaire>

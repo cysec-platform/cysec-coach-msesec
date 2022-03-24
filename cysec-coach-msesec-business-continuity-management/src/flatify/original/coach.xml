@@ -1,0 +1,497 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-business-continuity-management" readableName="Business Continuity Management (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach addresses Business Continuity Management for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q2000" type="info" hidden="false">
+            <introduction>Business Continuity Management</introduction>
+            <text>Intro</text>
+            <infotext>
+                Identifying potential threats to your company's systems and data is crucial in order to build resilience and capabilities
+                for an effective response. In this coach, we will address topics of Business Continuity Management.
+            </infotext>
+        </question>
+        <!-- Priority 1 -->
+        <question id="q2001" type="A" hidden="false" extRef="BCM-2">
+            <introduction>
+                Unfortunately no business is immune to the risk of human mistakes, attacks, disasters or disruptions. A disruption is an
+                unplanned negative deviation from your company's objective on delivering products or services. Having an established
+                business continuity plan is key to the company's survival in those situations.
+            </introduction>
+            <text>Does your company have a plan that ensures the continuity of your business despite a disruption?</text>
+            <options>
+                <option id="q2001o1">
+                    <text>Yes, we have a written-down plan that allows us to remain operational to a certain extent.</text>
+                </option>
+                <option id="q2001o2">
+                    <text>Yes, we have an informally thought-out plan that intends to allow us to remain operational to a certain extent.</text>
+                    <comment>That is a step in the right direction. As a next step, ensure that this plan is properly documented.</comment>
+                </option>
+                <option id="q2001o3">
+                    <text>No, we do not have a plan.</text>
+                    <comment>
+                        It is extremely important to be prepared to the unexpected. Start to plan how will your business continue its
+                        operations in case of a disruption. Define what services or products you can still deliver and to what extent.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 3);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 3);
+                        };
+                        isSelected("q2001o1") : scoring : {
+                        addScore("strength", 3);
+                        addScore("knowhow", 2);
+                        addScore("uu", 3);
+                        };
+                        isSelected("q2001o2") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2001o3") : recBusinessContinuityPlans : {
+                        addRecommendation("recBusinessContinuityPlans", 100, "", "", tn("recBusinessContinuityPlans-title"),
+                        tn("recBusinessContinuityPlans-text"),
+                        "", "app/coach.jsp?fqcn=msesec-business-continuity-management.default&amp;question=q2001");
+                        };
+                        TRUE : recBusinessContinuityPlans : {
+                        revokeRecommendation("recBusinessContinuityPlans");
+                        };
+                        or(isSelected("q2001o1"), isSelected("q2001o2")) : hasBusinessContinuityPlansVisibility : {
+                        setHidden("q2025", FALSE);
+                        setHidden("q2030", FALSE);
+                        setHidden("q2035", FALSE);
+                        };
+                        TRUE : hasBusinessContinuityPlansVisibility : {
+                        setHidden("q2025", TRUE);
+                        setHidden("q2030", TRUE);
+                        setHidden("q2035", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Developing a continuity business plan is an essential part of sustaining your business at float and ready to any
+                    type of eventuality. Consider assessing risk for the following categories and prepare a contingency plan for each of
+                    them:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Data and information (e.g. no access to internet or loss of data/passwords)&lt;/li&gt;
+                    &lt;li&gt;Buildings (e.g. access or damage to business premises)&lt;/li&gt;
+                    &lt;li&gt;Personnel (e.g. loss of key staff, legal or supply issues)&lt;/li&gt;
+                    &lt;li&gt;Stock and equipment (e.g. storing spare parts or accidental damage)&lt;/li&gt;
+                    &lt;li&gt;Handover of tasks (have redundancy available)&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q2010" type="A" hidden="false" extRef="BCM-3">
+            <introduction>
+                Every company has an amount of data they are ready to lose in case of a disruptive event. Therefore, every company should
+                have an optimal and tailored data backup plan based on their needs.
+            </introduction>
+            <text>Do you know your company's maximum tolerable data loss for each category in case of a disruptive incident?</text>
+            <options>
+                <option id="q2010o1">
+                    <text>Yes, we know what amount of data loss we can tolerate.</text>
+                </option>
+                <option id="q2010o2">
+                    <text>Yes, we have a fair estimate or idea.</text>
+                    <comment>
+                        As a next step, think of which data is key to the continuity of your business, document this information for
+                        future reference and take immediate action (i.e. implement an optimal data backup plan).
+                    </comment>
+                </option>
+                <option id="q2010o3">
+                    <text>No, we have no clue.</text>
+                    <comment>
+                        In order to be able to take the right measures in case of a disruptive incident, it is important to have
+                        knowledge and awareness of the amount of data your business will be «okay» losing. Without this critical
+                        information is not possible to assess the potential damage. As a consequence, it becomes harder to find immediate
+                        and appropriate solutions. Think of which data is key to the continuity of your business, document this
+                        information and take the right action (i.e. implement optimal data backup plan).
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2010o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2010o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2010o3") : recRecoveryPoint : {
+                        addRecommendation("recRecoveryPoint", 200, "", "", tn("recRecoveryPoint-title"),
+                        tn("recRecoveryPoint-text"),
+                        "", "app/coach.jsp?fqcn=msesec-business-continuity-management.default&amp;question=q2010");
+                        };
+                        TRUE : recRecoveryPoint : {
+                        revokeRecommendation("recRecoveryPoint");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Being aware of the maximum amount of data that can be lost in an unexpected event is crucial to your business
+                    continuity. In order to be ready and raise awareness for future disruptive scenarios. You should carefully consider
+                    how much data may be lost after a disruptive incident. Afterwards, define your company's «Recovery Point Objective (RPO)»
+                    for each data category. The RPO is expressed in an amount of time (e.g. 2 hours or 1 day) and depends on your business
+                    needs and criticality of the data.&lt;/p&gt;
+                    &lt;p&gt;Once these parameters have been assessed, it is time for your company to implement optimal data backup plans to
+                    meet these objectives.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2015" type="A" hidden="false" extRef="BCM-3">
+            <introduction>
+                Companies should be aware of the implications of systems being not available (e.g. downtime for unexpected reason).
+                Hence, it is important that you know how long you can operate without some systems and how long it will take to restore them.
+            </introduction>
+            <text>Do you know how long you could continue to operate without certain systems (acceptable amount of time to restore them)?</text>
+            <options>
+                <option id="q2015o1">
+                    <text>Yes, we know the amount of time we will be able to work without certain systems.</text>
+                </option>
+                <option id="q2015o2">
+                    <text>Yes, we have a vague idea of how long we will be able to work without certain systems.</text>
+                    <comment>
+                        That is a step in the right direction. However, you should strive for a more precise estimate. Not knowing the
+                        amount of time could have a real impact on your business (e.g. loss of revenue, reputation or productivity). This
+                        also entails to know how long it will take to recover those systems.
+                    </comment>
+                </option>
+                <option id="q2015o3">
+                    <text>No, we don't know how long we would be able to operate without some systems.</text>
+                    <comment>
+                        Consider evaluating as soon as possible, for how long you could work with some systems offline. Not knowing the
+                        amount of time could have a real impact on your business (e.g. loss of revenue, reputation or productivity). This
+                        also entails to know how long it will take to recover those systems.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2015o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2015o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 0);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2015o3") : recKnowYourRecoveryTime : {
+                        addRecommendation("recKnowYourRecoveryTime", 200, "", "", tn("recKnowYourRecoveryTime-title"),
+                        tn("recKnowYourRecoveryTime-text"),
+                        "", "app/coach.jsp?fqcn=msesec-business-continuity-management.default&amp;question=q2015");
+                        };
+                        TRUE : recKnowYourRecoveryTime : {
+                        revokeRecommendation("recKnowYourRecoveryTime");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;The «Recovery Time Objective (RTO)» expresses the amount of time it takes for a business to restore its processes
+                    to an acceptable level after a disaster to avoid intolerable consequences. The «Maximum tolerable downtime» is the
+                    amount of time, a process can be disrupted without causing significant damage to the organisation's business objectives.&lt;/p&gt;
+                    &lt;p&gt;It is critical for business to be able to continue to work even when some systems are unavailable. Depending on your
+                    type of business, timings might be crucial and your systems need to meet certain resilience criteria.
+                    Therefore, it is essential to be fully aware of the following points:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Can you remain functional with some systems being unavailable?&lt;/li&gt;
+                    &lt;li&gt;For how long can you continue your business with those systems being unavailable?&lt;/li&gt;
+                    &lt;li&gt;How much time will it actually take to recover those systems until they are operational again?&lt;/li&gt;
+                    &lt;li&gt;How will this affect your business in terms of loss of revenue, reputation or productivity?&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2020" type="A" hidden="false" extRef="BCM-3">
+            <introduction>Business impact analysis is crucial for the continuity planning process of a company.</introduction>
+            <text>Are you performing business impact analysis regularly?</text>
+            <options>
+                <option id="q2020o1">
+                    <text>Yes, we regularly analyse the business impact and assess the risks of disruptions.</text>
+                    <comment>
+                        This is great. Make sure you continue reviewing your business impact analysis regularly. Indeed, the more detailed
+                        the list of business processes and functions within the business, the more often you should to this review.
+                    </comment>
+                </option>
+                <option id="q2020o2">
+                    <text>Yes, we do business impact analysis from time to time.</text>
+                    <comment>
+                        Try to regularly revisit analysing the business impact and assessing the risks of disruptions. The more detailed
+                        the list of your business processes and functions, the more often you should review your business impact analysis.
+                    </comment>
+                </option>
+                <option id="q2020o3">
+                    <text>No, we do not perform an impact analysis.</text>
+                    <comment>
+                        The purpose of a business impact analysis is to guide your company, i.e. it will help to prioritize business
+                        processes and reduce the risks associated to different IT components. As a result, your business will be able to
+                        better react and respond accordingly in future undesirable scenarios or disruption.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2020o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2020o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;A business impact analysis can be defined as «an analysis of an information system's requirements, functions
+                    and interdependencies used to characterize system contingency requirements and priorities
+                    in the event of a significant disruption»
+                    (&lt;a target="_blank" href="https://csrc.nist.gov/glossary/term/business_impact_analysis"&gt;NIST, 2022&lt;/a&gt;).&lt;/p&gt;
+                    &lt;p&gt;While this is a broad subject to cover, you should start by covering the following aspects:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Determine key processes, interdependencies and recovery criticality (impact of the downtime).&lt;/li&gt;
+                    &lt;li&gt;Establish a detailed list of resource (e.g. facilities, personnel, software, equipment, data files) requirements necessary to resume business.&lt;/li&gt;
+                    &lt;li&gt;Identify recovery priorities for system resources and assign priority levels.&lt;/li&gt;
+                    &lt;li&gt;Develop recovery time requirements.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+                <!-- Reference: https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-34r1.pdf (p.15-16) -->
+            </instruction>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q2025" type="A" hidden="true" extRef="BCM-5"><!-- only show if they have BCM plans -->
+            <introduction>
+                It is essential to put into practice and audit your company business continuity plan. This ensures that your plan is
+                feasible and enables to keep it up to date.
+            </introduction>
+            <text>Do you test your business continuity management plans?</text>
+            <options>
+                <option id="q2025o1">
+                    <text>Yes, we perform walk-through exercises.</text>
+                    <comment>This is a step in the right direction. As a next step, you should test and audit them at regular intervals.</comment>
+                </option>
+                <option id="q2025o2">
+                    <text>Yes, we perform real-time exercises and dry runs.</text>
+                    <comment>Great. Make sure to continue doing this at regular intervals.</comment>
+                </option>
+                <option id="q2025o3">
+                    <text>No, we don't test our business continuity management plans.</text>
+                    <comment>
+                        While it is great that you have a business continuity plan, it is important to know whether it can actually be
+                        put into practice and works as intended. As a next step, you should test your business continuity plan.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2025o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2025o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q2025o2"), isSelected("q2025o3")) : recTestBusinessContinuityPlan : {
+                        addRecommendation("recTestBusinessContinuityPlan", 300, "", "", tn("recTestBusinessContinuityPlan-title"),
+                        tn("recTestBusinessContinuityPlan-text"),
+                        "", "app/coach.jsp?fqcn=msesec-business-continuity-management.default&amp;question=q2025");
+                        };
+                        TRUE : recTestBusinessContinuityPlan : {
+                        revokeRecommendation("recTestBusinessContinuityPlan");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;There are different routes that your company can take to test and audit your business continuity plan.
+                    It is in your company's best interest to implement all of them at regular intervals.&lt;/p&gt;
+                    &lt;ol&gt;
+                    &lt;li&gt;&lt;strong&gt;Role-playing exercises&lt;/strong&gt; allows everyone involved in the plan to go through it and
+                    identify any missing steps, inconsistencies or errors.&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;Walk-through reviews&lt;/strong&gt; assess your plans in-depth and test the approach with everyone involved.
+                    It audits everyone's own responsibilities to spot any weak points.&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;Dry-runs&lt;/strong&gt; test your plans in a simulated scenario. It can help to reveal inconsistencies,
+                    omissions or overlooked critical aspects.&lt;/li&gt;
+                    &lt;/ol&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2030" type="A" hidden="true" extRef="BCM-6"><!-- only show if they have BCM plans -->
+            <introduction>
+                Revising and adapting your business continuity plan is necessary to identify new threats or caveats while implementing
+                the newest approaches to tackle them.
+            </introduction>
+            <text>Is your business continuity plan regularly reviewed and updated?</text>
+            <options>
+                <option id="q2030o1">
+                    <text>Yes, we do this internally and the person/team is trained for doing this.</text>
+                </option>
+                <option id="q2030o2">
+                    <text>Yes, we do this internally but the person/team is not really trained for doing this.</text>
+                    <comment>Look into training the responsible person or team.</comment>
+                </option>
+                <option id="q2030o3">
+                    <text>Yes, we do this with a third-party (specialist consultants).</text>
+                </option>
+                <option id="q2030o4">
+                    <text>No, we don't review and update our business continuity plan.</text>
+                    <comment>
+                        The best course of action is to start to revise the business continuity plan and adapt it to your company's most
+                        recent needs.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2030o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 0);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q2030o2"), isSelected("q2030o3")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 5 -->
+        <question id="q2035" type="A" hidden="true" extRef="BCM-4"><!-- only show if they have BCM plans -->
+            <text>Are your business continuity management procedures based on an available standard?</text>
+            <options>
+                <option id="q2035o1">
+                    <text>Yes, we implement ISO 22301.</text>
+                </option>
+                <option id="q2035o2">
+                    <text>Yes, we implement a different standard.</text>
+                </option>
+                <option id="q2035o3">
+                    <text>No, we do not follow any available standards.</text>
+                    <comment>
+                        Consider if implementing ISO 22301 could benefit your business.
+                        This may eventually become a requirement in the future should your company grow significantly.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q2035o1"), isSelected("q2035o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q2098" type="info" hidden="false">
+            <introduction>Business Continuity Management</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.bcm.MseBcmLib"/>
+
+    <dictionary>
+        <entry key="recBusinessContinuityPlans-title">Make continuity plans</entry>
+        <entry key="recBusinessContinuityPlans-text">Make informal (thought-out) or formal (written-down) contingency plans in case of a disruption so your company can continue to operate to a certain extent.</entry>
+        <entry key="recRecoveryPoint-title">Know your tolerance threshold</entry>
+        <entry key="recRecoveryPoint-text">Think of which data is key to the continuity of business and how often this one requires to be backed up. Make sure to document this information and take the right action towards an optimal data backup plan.</entry>
+        <entry key="recKnowYourRecoveryTime-title">Operate during a downtime</entry>
+        <entry key="recKnowYourRecoveryTime-text">Evaluate for how long you could work when some systems are unavailable (e.g. offline). This also entails to know how long it will take to recover those systems.</entry>
+        <entry key="recTestBusinessContinuityPlan-title">Test your business continuity plan</entry>
+        <entry key="recTestBusinessContinuityPlan-text">Test your business continuity plan regularly to verify how effective and reliable the plan would be in case a real disruption occurs.</entry>
+    </dictionary>
+
+</questionnaire>

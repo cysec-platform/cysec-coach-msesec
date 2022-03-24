@@ -1,0 +1,96 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-change-management" readableName="Change Management (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach addresses Change Management for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q2100" type="info" hidden="false">
+            <introduction>Change Management</introduction>
+            <text>Intro</text>
+            <infotext>&lt;strong&gt;This coach is not yet finished!&lt;/strong&gt;</infotext>
+        </question>
+        <question id="q2102" type="A" hidden="false" extRef="CM-1">
+            <text>Is someone in your organisation responsible for change management?</text>
+            <options>
+                <option id="q2102o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2102o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q2105" type="A" hidden="false" extRef="CM-2">
+            <text>Is there a change management process/procedure designed and in place?</text>
+            <options>
+                <option id="q2105o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2105o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q2110" type="A" hidden="false" extRef="CM-3">
+            <text>Is change management used to track configuration changes and other changes to the IT environment?</text>
+            <options>
+                <option id="q2110o1">
+                    <text>Yes, we handle every change like this</text>
+                </option>
+                <option id="q2110o2">
+                    <text>Yes, but not for small changes</text>
+                </option>
+                <option id="q2110o3">
+                    <text>No, not at all</text>
+                </option>
+            </options>
+        </question>
+        <question id="q2115" type="A" hidden="false" extRef="CM-4">
+            <text>Is change management an organisation-wide integrated process?</text>
+            <options>
+                <option id="q2115o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2115o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q2198" type="info" hidden="false">
+            <introduction>Change Management</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.changemgmt.MseChangeMgmtLib"/>
+
+</questionnaire>

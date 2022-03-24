@@ -1,0 +1,759 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-going-deeper-on-backups" readableName="Going deeper on Backups (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach focuses on the next steps concerning backups for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q1500" type="info" hidden="false">
+            <introduction>Going deeper on Backups</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;This coach will extend on the questions and measures that were covered in the coach «First Steps in Cybersecurity».
+                If you have not completed that coach yet, we highly advise that you to finish it before starting this coach.&lt;/p&gt;
+                &lt;p&gt;&lt;em&gt;Please note that the questions will get increasingly more advanced and cover the remaining aspects on the topic of
+                backups.&lt;/em&gt;&lt;/p&gt;
+            </infotext>
+        </question>
+        <!-- Priority 1 -->
+        <question id="q1502" type="A" hidden="false" extRef="BK-1,BK-6"><!-- already addressed a bit differently in first coach -->
+            <introduction>
+                A copy of data which is stored elsewhere is called a backup. By now you should have a clear idea what data is essential
+                to your business and you most likely have a list of devices and systems of your company. If you are unsure if some data is
+                essential, ask yourself if your company could function without it. If the answer is yes, then it is something you need to
+                back up.
+            </introduction>
+            <text>Is your company storing any essential data in places that are not backed up?</text>
+            <options>
+                <option id="q1502o1">
+                    <text>We don't really have a backup of our essential data.</text>
+                    <comment>
+                        Do not store essential data without a backup since you are at risk of losing it. Make sure that all essential data
+                        is backed up to a secure place on a regular basis.
+                    </comment>
+                </option>
+                <option id="q1502o2">
+                    <text>Some essential data is stored in places that are not backed-up.</text>
+                    <comment>
+                        Do not store essential data without a backup since you are at risk of losing it. Make sure that all essential data
+                        is backed up to a secure place on a regular basis.
+                    </comment>
+                </option>
+                <option id="q1502o3">
+                    <text>All of our essential data is stored in places that are backed-up.</text>
+                    <comment>That is very good. Make sure that your backup runs regularly.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1502o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1502o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1502o1"), isSelected("q1502o2")) : recStoreEssentialDataWithBackup : {
+                        addRecommendation("recStoreEssentialDataWithBackup", 100, "", "", tn("recStoreEssentialDataWithBackup-title"),
+                        tn("recStoreEssentialDataWithBackup-text"),
+                        "", "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1502");
+                        };
+                        TRUE : recStoreEssentialDataWithBackup : {
+                        revokeRecommendation("recStoreEssentialDataWithBackup");
+                        };
+                        isSelected("q1502o1") : earlyExit : {
+                        setNext("q1598");
+                        };
+                        TRUE : earlyExit : {
+                        setNext("q1510");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;You should already have an accurate list of all essential data your company has stored. The place (e.g. device,
+                    application, system, network share) should also be precisely noted down.&lt;/p&gt;
+                    &lt;p&gt;Backups can be used to restore the data if desired, for example in case of data loss, accidental deletion or
+                    corruption. In case of a ransomware attack*, having a backup is key to recover your data. It is important that you
+                    identify what data is essential to your company in order to determine whether it is worth saving it.
+                    &lt;strong&gt;In other words, it is basically all the information that your business could not function without.&lt;/strong&gt;
+                    What exactly this data is, heavily depends on your business but here are some examples:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;list of customers and suppliers&lt;/li&gt;
+                    &lt;li&gt;personnel records&lt;/li&gt;
+                    &lt;li&gt;administration documents&lt;/li&gt;
+                    &lt;li&gt;contracts and insurance policies&lt;/li&gt;
+                    &lt;li&gt;business plans and marketing material&lt;/li&gt;
+                    &lt;li&gt;credentials (usernames and passwords)&lt;/li&gt;
+                    &lt;li&gt;software licenses&lt;/li&gt;
+                    &lt;li&gt;financial/transactional data&lt;/li&gt;
+                    &lt;li&gt;payment recipes and account statements&lt;/li&gt;
+                    &lt;li&gt;tax-related documents&lt;/li&gt;
+                    &lt;li&gt;inventory records&lt;/li&gt;
+                    &lt;li&gt;communication platforms (e.g. emails history)&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;* A ransomware attack is &lt;em&gt;&quot;a type of malicious software (malware). When it gets into
+                    your device, it makes your computer or its files unusable [by locking up or encrypting your files]. Cybercriminals use
+                    ransomware to deny you access to your files or devices. They then demand you pay them to get back your access&quot;&lt;/em&gt;
+                    (&lt;a target="_blank" href="https://www.cyber.gov.au/ransomware"&gt;ACSC, 2022&lt;/a&gt;).&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1510" type="Astarexcl" hidden="false" extRef="BK-4"><!-- already addressed in first coach with focus on multiple backups -->
+            <introduction>
+                You should ensure that all backups have at least one offline backup destination – this means a place separate from your
+                computer. This is necessary to stop any malicious actor or software from compromising all backups at any given time.
+                «Offline» in this case means that said backup is not accessible via a network connection or physically disconnected from
+                the backed-up system (e.g. computer).
+            </introduction>
+            <text>Do you keep at least one backup offline at any given time?</text>
+            <options>
+                <option id="q1510o1">
+                    <text>Yes, at all times at least one copy is not accessible via a network connection.</text>
+                </option>
+                <option id="q1510o2">
+                    <text>Yes, at all times at least one copy is physically separated from the backed-up system (e.g. your computer).</text>
+                </option>
+                <option id="q1510oNone">
+                    <text>No, we don't keep at least one backup offline.</text>
+                    <comment>
+                        Please ensure to never connect all backup medias at the same time to protect you from compromising all of your
+                        backups simultaneously. Keep at least one backup offline at any given time, either by having it disconnected from
+                        the backed-up system (e.g. computer), or by ensuring it is not accessible via a network connection.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1510o1"), isSelected("q1510o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1510oNone") : recAtLeastOneOfflineBackup : {
+                        addRecommendation("recAtLeastOneOfflineBackup", 100, "", "", tn("recStoreEssentialDataWithBackup-title"),
+                        tn("recStoreEssentialDataWithBackup-text"),
+                        "", "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1510");
+                        };
+                        TRUE : recAtLeastOneOfflineBackup : {
+                        revokeRecommendation("recAtLeastOneOfflineBackup");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;In case your systems are compromised by ransomware, it is very important that your backup media is not directly
+                    accessible by infected systems. It is often the case that connected USB and network storage drives will be encrypted
+                    as well. Even connected cloud storage locations containing backups are not safe in these cases.&lt;/p&gt;
+                    &lt;p&gt;Having at least one backup offline at any given time will prevent the scenario that all backups are compromised
+                    simultaneously. It can be seen as the second line of defence when your primary backup fails.&lt;/p&gt;
+                    &lt;p&gt;To achieve an offline-backup, you can ensure to never connect all backup medias at the same time. In addition,
+                    only connect the backup media as long as necessary (i.e. for the duration of the backup). Disconnect hard drives and
+                    memory sticks after the backup completed. If you are using tape drives, configure the tapes to auto-eject when a backup
+                    is finished.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q1520" type="A" hidden="false" extRef="BK-3,BK-6">
+            <introduction>
+                There are a variety of reasons that could cause your backup to fail. It is recommended to regularly verify whether your
+                backups are running on schedule and are created successfully.
+            </introduction>
+            <text>Do you regularly check if your backups are created successfully?</text>
+            <options>
+                <option id="q1520o1">
+                    <text>Yes, we check if they are created successfully.</text>
+                </option>
+                <option id="q1520o2">
+                    <text>We are automatically notified by the backup software/system in case a backup fails to be created.</text>
+                    <comment>
+                        That is very good. However, it is a good idea to regularly test if this notification system actually works.
+                    </comment>
+                </option>
+                <option id="q1520o3">
+                    <text>No, we don't check that.</text>
+                    <comment>
+                        Verify at least once a week whether your backups are created successfully. This allows to take immediate action in
+                        case of failing backups. Note that a failed backup is basically the same as having no backup for this point in time.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1520o1"), isSelected("q1520o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1520o3") : noCheckVisibility : {
+                        setHidden("q1522", TRUE);
+                        setHidden("q1515", TRUE);
+                        };
+                        TRUE : noCheckVisibility : {
+                        setHidden("q1522", FALSE);
+                        setHidden("q1515", FALSE);
+                        };
+                        // global logic: recTestBackups
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1522" type="A" hidden="false" extRef="BK-3,BK-6"><!-- hidden when not checked whether creation was successful -->
+            <introduction>
+                It is important to verify whether your backups actually contain all necessary files and data. This does not mean to check
+                every single file but taking some spot samples and/or by comparing the backup size or number of files with the expected
+                values based on the original data.
+            </introduction>
+            <text>Do you regularly check if your backups contain all data/files that are intended to be backed-up?</text>
+            <options>
+                <option id="q1522o1">
+                    <text>Yes, we check if they contain all required data.</text>
+                </option>
+                <option id="q1522o2">
+                    <text>No, we don't check that.</text>
+                    <comment>
+                        You should make sure that your backups contain all data that you intend to have backed-up. Do this check from time
+                        to time and especially after making changes to the backup procedure.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1522o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recTestBackups
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1515" type="A" hidden="false" extRef="BK-3"><!-- hidden when not checked whether creation was successful -->
+            <introduction>
+                You should test to replay/apply all your backups from time to time in order to validate them as ready for use in case of an
+                emergency. For backups of very critical data this should be done more often than for less essential data.
+            </introduction>
+            <text>How often do you check whether backups can be replayed/applied?</text>
+            <options>
+                <option id="q1515o1">
+                    <text>At least once every month</text>
+                    <comment>That is very good. Don't forget to always test your backups after major changes to the backup configuration.</comment>
+                </option>
+                <option id="q1515o2">
+                    <text>At least once every 2-3 months</text>
+                    <comment>
+                        If the backed up data is very essential to your company, consider testing your backups more often depending on the
+                        criticality of the backed up system or data.
+                    </comment>
+                </option>
+                <option id="q1515o3">
+                    <text>At least once every year</text>
+                    <comment>
+                        If the backed up data is very essential to your company, consider testing your backups more often depending on the
+                        criticality of the backed up system or data.
+                    </comment>
+                </option>
+                <option id="q1515o4">
+                    <text>Less often than yearly</text>
+                    <comment>
+                        You should check whether your company's backups can be replayed/applied at least once every year and after major
+                        changes to the backup configuration.
+                    </comment>
+                </option>
+                <option id="q1515o5">
+                    <text>Never</text>
+                    <comment>
+                        Without testing the backups of your company, you effectively do not know whether they would actually work should
+                        someone need them. Therefore, you should check whether your company's backups can be replayed/applied at least
+                        once every year and after major changes to the backup configuration.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1515o1"), isSelected("q1515o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1515o3")) : scoring : {
+                        addScore("knowhow", 1);
+                        };
+                        // global logic: recTestBackups
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;In order to validate your company's backups as being ready to use in case of an emergency, regular testing is
+                    vital. This ensures that your backups can actually be used and will function properly.&lt;/p&gt;
+                    &lt;p&gt;Therefore, you should check whether your company's backups can be replayed/applied at least once or twice every year
+                    and after major changes to the backup configuration. It is recommended to test your backups once every few months.&lt;/p&gt;
+                    &lt;p&gt;If the backed up data is very essential to your company, consider testing your backups more often depending on the
+                    criticality of the backed up system or data.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1525" type="A" hidden="false" extRef="BK-6">
+            <introduction>
+                It is crucial that all essential and important systems are backed up. Please consult your list of devices and software and
+                verify whether you have backups of all systems that are essential to your business. This is, the systems your business
+                cannot function without.
+            </introduction>
+            <text>Does your company have a backup for all essential systems?</text>
+            <options>
+                <option id="q1525o1">
+                    <text>Yes, all our essential systems have a backup.</text>
+                </option>
+                <option id="q1525o2">
+                    <text>Only some of our essential systems have a backup.</text>
+                    <comment>
+                        Your company should have a backup for all essential systems. Don't wait any longer and start backing up the
+                        remaining systems as soon as possible to be prepared should an incident occur.
+                    </comment>
+                </option>
+                <option id="q1525o3">
+                    <text>None of our essential systems have a backup.</text>
+                    <comment>
+                        Your company should have a backup for all essential systems. Don't wait much longer and start backing up all the
+                        company's systems as soon as possible to be prepared should an incident occur.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1525o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recBackupAllEssentialSystems
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;You should be able to gather a list of all essential systems of your company by looking at the list of devices and
+                    software of your company. This list should contain all systems that your company cannot function without.&lt;/p&gt;
+                    &lt;p&gt;Here are some examples:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;reservation system for appointments&lt;/li&gt;
+                    &lt;li&gt;client directory / customer management system&lt;/li&gt;
+                    &lt;li&gt;accounting system&lt;/li&gt;
+                    &lt;li&gt;inventory management system&lt;/li&gt;
+                    &lt;li&gt;servers and data storage&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1530" type="Astarexcl" hidden="false" extRef="BK-5">
+            <introduction>
+                Storing the backup in the same place as the backed-up data is not enough to protect you reliably in case something happens
+                that compromises this location. A backup kept somewhere different from your company's premises is called an off-site backup.
+            </introduction>
+            <text>Is at least one backup kept off-site or in a place where it is protected from damage (e.g. water, fire or unauthorised access)?</text>
+            <options>
+                <option id="q1530o1">
+                    <text>Yes, we have an off-site backup.</text>
+                </option>
+                <option id="q1530o2">
+                    <text>Yes, we have at least one backup that is well-protected from fire, water or other damage including unauthorised access.</text>
+                </option>
+                <option id="q1530oNone">
+                    <text>No, we don't have such backups.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1530o1"), isSelected("q1530o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recProtectYourBackups
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;In order to ensure the integrity of your backups, it is necessary to protect your backups from any physical
+                    damage (e.g. fire or water damage) and unauthorised access. There are different ways to achieve this level of protection.&lt;/p&gt;
+                    &lt;p&gt;First, you could store a backup in a location different from your company's premises which is often referred
+                    to as an &lt;em&gt;off-site backup&lt;/em&gt;. Such a backup could be a removable storage device (e.g. USB key or
+                    backup tape) that is stored in a different location than the backed up system. Another option is to store the backup
+                    in the cloud (e.g. OneDrive, Dropbox, Google Drive) or on a company-owned network storage which is in a different
+                    location than the backed up system.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1534" type="Astarexcl" hidden="false" extRef="BK-5"><!-- used to toggle visibility of upcoming questions -->
+            <text>Are your backups transferred across a network or the Internet?</text>
+            <options>
+                <option id="q1534o1">
+                    <text>Yes, our backups are stored in the cloud (e.g. OneDrive, Dropbox, Google Drive)</text>
+                </option>
+                <option id="q1534o2">
+                    <text>Yes, we have backups that are moved across the company network (e.g. to another device in the local network).</text>
+                </option>
+                <option id="q1534oNone">
+                    <text>No, our backups are not transferred across a network or the Internet.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q1534o2") : q1535Visibility : {
+                        setHidden("q1535", FALSE);
+                        };
+                        TRUE : q1535Visibility : {
+                        setHidden("q1535", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1535" type="A" hidden="true" extRef="BK-5">
+            <introduction>
+                It is recommended to always use encryption when transferring backups across your network. This ensures that nobody can
+                read the transferred data undetected while it is in transit to the backup location. Reputable cloud services generally use strong
+                encryption. If you have a self-made backup process or use another device on the network to store your backups, make sure
+                that the data is encrypted while being transferred.
+            </introduction>
+            <text>Are backups protected by encryption when they are transferred across the network?</text>
+            <options>
+                <option id="q1535o1">
+                    <text>Yes, the backups are encrypted while being transferred.</text>
+                </option>
+                <option id="q1535o2">
+                    <text>No, the backups are not encrypted while being transferred.</text>
+                    <comment>
+                        Please make sure that the data is encrypted while being transferred to the backup destination to prevent other
+                        users or devices on the network from reading that data being transferred.
+                    </comment>
+                </option>
+                <option id="q1535o3">
+                    <text>I don't know.</text>
+                    <comment>
+                        Consult the documentation of your backup solution to get to know this information. Please note that most reputable
+                        cloud services generally use encrypted connections.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1535o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1536" type="Astarexcl" hidden="false" extRef="BK-5">
+            <introduction>
+                Backups of your company most likely contain sensitive data. Backup media such as USB sticks, hard drives, tapes or other
+                devices should either be physically protected (e.g. locked away at all times) and/or the data on them should ideally be encrypted.
+            </introduction>
+            <text>Are backups properly protected via physical security and/or encrypted?</text>
+            <options>
+                <option id="q1536o1">
+                    <text>Yes, the backups are encrypted.</text>
+                </option>
+                <option id="q1536o2">
+                    <text>Yes, the backups are stored safely and locked away.</text>
+                </option>
+                <option id="q1536oNone">
+                    <text>No, they are not protected.</text>
+                    <comment>Protect your backups by encrypting their content or storing them safely and locked away at all times.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q1536o1"), isSelected("q1536o2")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        // global logic: recProtectYourBackups
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q1545" type="A" hidden="false" extRef="BK-7">
+            <introduction>
+                Not all backup methods allow you to restore data on an individual basis (e.g. single files or data entries). Since the most
+                common scenario when you would need your backup is to get single files or entries back, your backup method should support
+                to restore the relevant pieces of data without restoring the whole system.
+            </introduction>
+            <text>Can your backup method or backup software retrieve individual files or entries (e.g. a contact or calendar entry) easily and quickly for the data you think it would be necessary?</text>
+            <options>
+                <option id="q1545o1">
+                    <text>Yes, for all the data/systems where it is necessary.</text>
+                </option>
+                <option id="q1545o2">
+                    <text>Yes, but only for some data/systems where it is necessary.</text>
+                    <comment>Try to use a backup method that allows this for all the data where you deem it necessary.</comment>
+                </option>
+                <option id="q1545o3">
+                    <text>No, this cannot be done quickly with our backup method.</text>
+                    <comment>
+                        Consider the time and effort it takes to restore individual files or data objects when you need them. Decide whether
+                        it would make sense to adjust your backup method in order to retrieve individual files.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1545o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1545o2") : scoring : {
+                        addScore("knowhow", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;There are different ways to back up a system, each with different advantages and disadvantages. You should
+                    be able to quickly and easily restore single files or data entries, a very common scenario. This could become necessary
+                    due to accidental deletion of such files or because someone made unintentional changes.&lt;/p&gt;
+                    &lt;p&gt;Make a list of the data you would need to restore on an individual basis (e.g. single files or data entries).
+                    Afterwards, check if your backup method allows getting individual files or records back easily.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1504" type="A" hidden="false"><!-- used to toggle visibility of upcoming questions -->
+            <text>Does your company run any servers?</text>
+            <options>
+                <option id="q1504o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1504o2">
+                    <text>No</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        isSelected("q1504o1") : q1540visibility : {
+                        setHidden("q1540", FALSE);
+                        };
+                        TRUE : q1540visibility : {
+                        setHidden("q1540", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1540" type="A" hidden="true" extRef="BK-2">
+            <introduction>
+                Your company's servers are essential systems and it should be possible to recover them quickly in case of an incident.
+                This can be achieved by backing up your servers as a complete system which means that the data (e.g. files) as well as all
+                the configuration of the server is backed up as a single «image». If it becomes necessary, you can completely restore the
+                server as a whole.
+            </introduction>
+            <text>Are your servers backed up as a complete system (e.g. image-based backup) to enable quick recovery of an entire system?</text>
+            <options>
+                <option id="q1540o1">
+                    <text>Yes, all servers.</text>
+                </option>
+                <option id="q1540o2">
+                    <text>Yes, but only some of them.</text>
+                    <comment>Try to do back-up all of your servers as an entire system to enable quick recovery for them as well.</comment>
+                </option>
+                <option id="q1540o3">
+                    <text>No</text>
+                    <comment>Start backing up your servers as en entire system to enable quick recovery in case of a disruptive event.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1540o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1540o2") : scoring : {
+                        addScore("knowhow", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;An image-based backup is basically a backup of an entire computer or server. This includes all files of the
+                    operating system, all data that is stored on the computer/server, all applications and all configuration. In other
+                    words, it is a complete copy that can be used to restore the entire system to a previous state.&lt;/p&gt;
+                    &lt;p&gt;Since your servers are part of the essential systems of your company, you should have them up and running
+                    quickly. Using a backup method as the one outlined above can help you with that.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1598" type="info" hidden="false">
+            <introduction>Going deeper on Backups</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have reached the end of this coach based on your provided answers.&lt;/strong&gt;&lt;br&gt;
+                Please review any new recommendations we might have added for your company. Feel free to revisit this coach at a later time.&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.template.MseBackupLib"/>
+
+    <metadata key="_cysec.logic">
+        <mvalue key="postQuestion">
+            <stringValue>
+                // global logic: recTestBackups
+                or(isSelected("q1520o3"), isSelected("q1522o2"), or(isSelected("q1515o4"), isSelected("q1515o5"))) : recTestBackups : {
+                addRecommendation("recTestBackups", 200, "", "", tn("recTestBackups-title"), tn("recTestBackups-text"),
+                "", if(isSelected("q1520o3"), "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1520",
+                if(isSelected("q1522o2"), "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1522",
+                "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1515")
+                ));
+                };
+                TRUE : recTestBackups : {
+                revokeRecommendation("recTestBackups");
+                };
+
+                // global logic: recBackupAllEssentialSystems
+                or(isSelected("q1525o2"), isSelected("q1525o3")) : recBackupAllEssentialSystems : {
+                addRecommendation("recBackupAllEssentialSystems", 200, "", "", tn("recBackupAllEssentialSystems-title"),
+                tn("recBackupAllEssentialSystems-text"),
+                "", "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1525");
+                };
+                TRUE : recBackupAllEssentialSystems : {
+                revokeRecommendation("recBackupAllEssentialSystems");
+                };
+
+                // global logic: recProtectYourBackups
+                or(isSelected("q1530oNone"), isSelected("q1536oNone")) : recProtectYourBackups : {
+                addRecommendation("recProtectYourBackups", 200, "", "", tn("recProtectYourBackups-title"),
+                if(isSelected("q1530oNone"), tn("recProtectYourBackups-text1"), tn("recProtectYourBackups-text2"))
+                "", if(isSelected("q1530oNone"), "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1530",
+                "app/coach.jsp?fqcn=msesec-going-deeper-on-backups.default&amp;question=q1536"));
+                };
+                TRUE : recProtectYourBackups : {
+                revokeRecommendation("recProtectYourBackups");
+                };
+            </stringValue>
+        </mvalue>
+    </metadata>
+
+    <dictionary>
+        <entry key="recStoreEssentialDataWithBackup-title">Make backups of all essential data</entry>
+        <entry key="recStoreEssentialDataWithBackup-text">Do not store any essential data without a backup. Make sure that all essential data is regularly backed up or copied to a secure place.</entry>
+        <entry key="recAtLeastOneOfflineBackup-title">Keep an offline backup</entry>
+        <entry key="recAtLeastOneOfflineBackup-text">Ensure to never connect all backup medias at the same time. Keep at least one backup not accessible over a network connection or disconnected from the backed-up system (e.g. your computer).</entry>
+        <entry key="recTestBackups-title">Test your backups</entry>
+        <entry key="recTestBackups-text">Check if your company's backups are created successfully and contain all required data. Also verify whether your backups can be replayed/applied at least once every few months.</entry>
+        <entry key="recBackupAllEssentialSystems-title">Backup all essential systems</entry>
+        <entry key="recBackupAllEssentialSystems-text">Start backing up all the company's essential systems. Those are the ones that are absolutely necessary for the business to continue its operation.</entry>
+        <entry key="recProtectYourBackups-title">Protect your backups</entry>
+        <entry key="recProtectYourBackups-text1">Protect your backups by keeping at least one backup off-site or in a place where it is protected from fire, water or other damage.</entry>
+        <entry key="recProtectYourBackups-text2">Protect your backups by encrypting their content or storing them safely and locked away at all times.</entry>
+    </dictionary>
+</questionnaire>

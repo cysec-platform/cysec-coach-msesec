@@ -1,0 +1,697 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-incident-management" readableName="Incident Management (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach dives deeper on Incident Management for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q8000" type="info" hidden="false">
+            <introduction>Incident Management</introduction>
+            <text>Intro</text>
+            <infotext>
+                &lt;p&gt;Unfortunately, no company is exempted from incidents, whether that is a malicious attack or an unintentional accident.
+                Regardless, when such unexpected event takes place, it is important to be ready and prepared to know how to react and respond.&lt;/p&gt;
+                &lt;p&gt;This coach will extend on the questions and measures that were covered in the coach «First Steps in Cybersecurity».
+                If you have not completed that coach yet, we highly advise that you to finish it before starting this coach.&lt;/p&gt;
+                &lt;p&gt;&lt;em&gt;Please note that the questions will get increasingly more advanced and cover the remaining aspects of
+                network security. It is most likely that your company does not fully implement all the mentioned controls. When you feel
+                that it gets too technical and that the proposed recommendations do not fit the type of your business, feel encouraged to
+                work on a different coach instead. In this case you can always come back at a later stage and complete the remaining
+                questions.&lt;/em&gt;&lt;/p&gt;
+            </infotext>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q1805" type="A" hidden="false" extRef="INC-11">
+            <introduction>
+                Once there are anomalies detected it is important to report them. Documenting every step of a security incident is key to
+                handle the situation and prevent similar experiences in the future. An «incident» can be referred to as the occurrence of
+                an event that characterises itself by being unexpected, unusual or unpleasant.
+            </introduction>
+            <text>Do all employees know how to report security incidents and computer anomalies to the responsible person/team?</text>
+            <options>
+                <option id="q1805o1">
+                    <text>Yes, we have an official procedure where employees report and inform the relevant person/team.</text>
+                </option>
+                <option id="q1805o2">
+                    <text>Yes, there is an informal procedure with some guidelines.</text>
+                    <comment>That is a step in the right direction. Make sure to inform all employees of the relevant person to contact and how.</comment>
+                </option>
+                <option id="q1805o3">
+                    <text>No, we don't have a reporting procedure for such events.</text>
+                    <comment>
+                        It is important to be properly informed of these type of events. Thus, you should ensure that your employees know
+                        how to report suspicious activities or any other sorts of detected anomalies to the responsible person or team.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1805o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1805o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1805o3") : recInformHowToReportIncidents : {
+                        addRecommendation("recInformHowToReportIncidents", 200, "", "", tn("recInformHowToReportIncidents-title"),
+                        tn("recInformHowToReportIncidents-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1805");
+                        };
+                        TRUE : recInformHowToReportIncidents : {
+                        revokeRecommendation("recInformHowToReportIncidents");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Employees should report incidents to the relevant entities whether that is a team or one contact person. Hence,
+                    make sure that your staff knows who to contact and how whenever they encounter suspicious activities. Make sure to
+                    publish at least one of the following:&lt;/p&gt;
+                    &lt;ol&gt;
+                    &lt;li&gt;A phone number for reporting incidents&lt;/li&gt;
+                    &lt;li&gt;An email address to inform the responsible person about incidents&lt;/li&gt;
+                    &lt;li&gt;An online form for incident reporting&lt;/li&gt;
+                    &lt;/ol&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1810" type="A" hidden="false" extRef="INC-6">
+            <introduction>
+                Documenting every step of an incident is important. Not only it this information could prove important for future risk
+                assessment of the company, but it can also be used as a sort of "time machine" that can be consulted when similar
+                incidents unfold.
+            </introduction>
+            <text>Do you document incidents when they occur?</text>
+            <options>
+                <option id="q1810o1">
+                    <text>Yes, we document all of them accordingly to our company guidelines.</text>
+                </option>
+                <option id="q1810o2">
+                    <text>Yes, we document some of them without clear guidelines.</text>
+                    <comment>
+                        In order to be able to correctly tackle future attacks and to be fully informed of your organisation risks,
+                        consider reporting and documenting all incidents that occur. To that end, you can create guidelines and dedicate
+                        a document or system where the responsible person can file them.
+                    </comment>
+                </option>
+                <option id="q1810o3">
+                    <text>No, we do not document them at all.</text>
+                    <comment>
+                        In order to be able to correctly tackle future attacks and to be fully informed of your organisation risks;
+                        Consider reporting and documenting all incidents that occur. To that end, you can create guidelines and dedicate
+                        a document or system where the responsible person can file them.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1810o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1810o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1810o3") : recDocumentIncidents : {
+                        addRecommendation("recDocumentIncidents", 200, "", "", tn("recDocumentIncidents-title"),
+                        tn("recDocumentIncidents-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1810");
+                        };
+                        TRUE : recDocumentIncidents : {
+                        revokeRecommendation("recDocumentIncidents");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;An incident may have a significant probability of compromising your every day business operations by disrupting
+                    them in a myriad of ways. Therefore, it is critical that you document these unexpected security events as soon as
+                    they are discovered. Below you will find some information that is useful for documenting these events:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;General details (date, time, employee that reported the event)&lt;/li&gt;
+                    &lt;li&gt;Date/time when the security incident &lt;em&gt;occurred&lt;/em&gt;&lt;/li&gt;
+                    &lt;li&gt;Date/time when the security incident was &lt;em&gt;discovered&lt;/em&gt;&lt;/li&gt;
+                    &lt;li&gt;Type of incident (e.g. phishing, unauthorised access, denial of service, ransomware, data loss, fraud, etc.) and timeline.&lt;/li&gt;
+                    &lt;li&gt;Which part of the business was affected?&lt;/li&gt;
+                    &lt;li&gt;Risk analysis based on the evidence.&lt;/li&gt;
+                    &lt;li&gt;Possible external parties involved.&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;Depending on your type of business, the responsible person may use a different form to log
+                    these incident. Small organisations can use a simple table or text document. For large organisations, it makes more
+                    sense to use a ticket management system or another platform when the number of incidents to handle gets higher.&lt;/p&gt;
+                    &lt;p&gt;At last, make sure to store this information securely and out of reach of unauthorised persons.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1800" type="A" hidden="false" extRef="INC-1">
+            <introduction>A well-prepared plan is a powerful tool to handle unforeseeable situations.</introduction>
+            <text>Do you have immediate measures and response procedures in case of a security incident?</text>
+            <options>
+                <option id="q1800o1">
+                    <text>No, we don't know what we would do in case of an incident.</text>
+                    <comment>
+                        In order to be able to handle incidents, a well-defined plan is required. Indeed, this will lay out the different
+                        steps required, the roles and responsibilities of the involved persons. Hence, it is critical that you start
+                        work on a plan that tackles how to react in the event of an incident or any other type of malicious activity
+                        that could affect your business.
+                    </comment>
+                </option>
+                <option id="q1800o2">
+                    <text>Yes, we have defined such measures but not established them fully.</text>
+                    <comment>This is a step in the right direction. Make sure to implement them accordingly.</comment>
+                </option>
+                <option id="q1800o3">
+                    <text>Yes, we have defined and established such measures.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1800o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1800o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 0);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1800o1") : recResponseFramework : {
+                        addRecommendation("recResponseFramework", 7, "", "", tn("recResponseFramework-title"),
+                        tn("recResponseFramework-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1800");
+                        };
+                        TRUE : recResponseFramework : {
+                        revokeRecommendation("recResponseFramework");
+                        };
+                        or(isSelected("q1800o3"), isSelected("q1800o2")) : q1820visibility : {
+                        setHidden("q1820", FALSE);
+                        setHidden("q1830", FALSE);
+                        };
+                        TRUE : q1820visibility : {
+                        setHidden("q1820", TRUE);
+                        setHidden("q1830", TRUE);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Drafting a security incident plan is an important step for managing unexpected events. With this one, it will be
+                    possible for your business to not only be prepared for this type of unforeseen events, but it will also facilitate
+                    a rapid and adequate response. The following elements should be carefully considered and included in the plan:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Identify what needs to be protected (level of priority).&lt;/li&gt;
+                    &lt;li&gt;Clear identification and assignment of responsibilities (e.g. create a response team).&lt;/li&gt;
+                    &lt;li&gt;A containment and handling strategy (e.g. disconnect the systems or gather information).&lt;/li&gt;
+                    &lt;li&gt;A communication strategy for internal and external stakeholders (e.g. if there is a data privacy breech you will
+                    need to contact law enforcement).&lt;/li&gt;
+                    &lt;li&gt;In-house capabilities or contracts with external experts for incident response. If you consider that your company
+                    may not have the right expertise, consider to contract a service provider to handle it.&lt;/li&gt;
+                    &lt;li&gt;Allocation of financial resources for incident handling.&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;&lt;em&gt;Make sure to keep your plan up to date and review it every time a significant incident happens.&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q1820" type="A" hidden="true" extRef="INC-3"><!-- only show if they have response measures -->
+            <introduction>An incident response plan is not a static document. Therefore, it is important to review and update it regularly.</introduction>
+            <text>Are you reviewing and updating your immediate response strategies?</text>
+            <options>
+                <option id="q1820o1">
+                    <text>No, we don't update them.</text>
+                    <comment>Make sure to review your response strategies regularly (e.g. once per year) and when an incident takes place.</comment>
+                </option>
+                <option id="q1820o2">
+                    <text>Yes, we update them from time to time.</text>
+                    <comment>Make sure to review your response strategies regularly (e.g. once per year) and when an incident takes place.</comment>
+                </option>
+                <option id="q1820o3">
+                    <text>Yes, we update them regularly</text>
+                    <comment>That is perfect. Make sure to also your immediate response strategies when an incident takes place.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1820o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 0);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1820o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1820o1") : recReviewImmediateResponseMeasures : {
+                        addRecommendation("recReviewImmediateResponseMeasures", 300, "", "", tn("recReviewImmediateResponseMeasures-title"),
+                        tn("recReviewImmediateResponseMeasures-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1820");
+                        };
+                        TRUE : recReviewImmediateResponseMeasures : {
+                        revokeRecommendation("recReviewImmediateResponseMeasures");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1830" type="A" hidden="false" extRef="INC-5"><!-- only show if they have response measures -->
+            <introduction>
+                Part of the success of a response plan relies on the proper and adequate categorization of incidents. Doing this will
+                facilitate organisation and thus enable a prompt resolution of the issue depending on its priority level.
+            </introduction>
+            <text>Are your incidents categorized in accordance with the response plan?</text>
+            <options>
+                <option id="q1830o1">
+                    <text>Yes, we categorize them according to our response plan.</text>
+                </option>
+                <option id="q1830o2">
+                    <text>No, we don't always categorize them accordingly to our response plan.</text>
+                    <comment>Consistency with your plan is important. Thus, consider categorizing incidents as prescribed in your response plan.</comment>
+                </option>
+                <option id="q1830o3">
+                    <text>No, we don't have incident categorization in our response plan.</text>
+                    <comment>
+                        Consider creating a functional and sustainable categorization. While this may be a complex task, it will come in
+                        handy when logging incidents and triggering your response plan.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1830o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1830o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1830o3") : recIncidentCategorisation : {
+                        addRecommendation("recIncidentCategorisation", 300, "", "", tn("recIncidentCategorisation-title"),
+                        tn("recIncidentCategorisation-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1830");
+                        };
+                        TRUE : recIncidentCategorisation : {
+                        revokeRecommendation("recIncidentCategorisation");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Including a categorization of incidents in your response plan is key element that will complement and support the
+                    decision-making by helping to prioritize events; it also will help to facilitate the incident logging and avoid
+                    redundancies.&lt;/p&gt;
+                    &lt;p&gt;Below you find some things to think about when creating categories:&lt;/p&gt;
+                    &lt;ol&gt;
+                    &lt;li&gt;Define what an incident means for your company.&lt;/li&gt;
+                    &lt;li&gt;Identify which type of events may have a significant impact on your company's activities.&lt;/li&gt;
+                    &lt;li&gt;Define priority levels such as &lt;em&gt;critical&lt;/em&gt;, &lt;em&gt;high&lt;/em&gt;, &lt;em&gt;medium&lt;/em&gt;, &lt;em&gt;low&lt;/em&gt;.&lt;/li&gt;
+                    &lt;li&gt;Think whether it makes sense to group certain types of incidents.&lt;/li&gt;
+                    &lt;/ol&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1835" type="A" hidden="false" extRef="INC-9">
+            <introduction>
+                Vulnerability management enables your company to become aware of their current weaknesses and shortcomings. These
+                will eventually require to be corrected or patched to ensure the integrity and continued success of your business.
+            </introduction>
+            <text>Are there procedures for identifying vulnerabilities and dealing with them?</text>
+            <options>
+                <option id="q1835o1">
+                    <text>No, we don't have such procedures.</text>
+                    <comment>
+                        Consider doing a vulnerability assessment that identifies overlooked weaknesses. Make sure to review them
+                        regularly and implement corrective measures if required.
+                    </comment>
+                </option>
+                <option id="q1835o2">
+                    <text>Yes, we have developed such procedures.</text>
+                    <comment>
+                        That is a step in the right direction. Make sure implement and review them regularly and implement corrective
+                        measures if required.
+                    </comment>
+                </option>
+                <option id="q1835o3">
+                    <text>Yes, we have developed such procedures and we review them regularly.</text>
+                    <comment>Great, make sure to keep that up and implement corrective measures if required.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1835o3") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1835o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1835o1") : recVulnerabilityManagement : {
+                        addRecommendation("recVulnerabilityManagement", 300, "", "", tn("recVulnerabilityManagement-title"),
+                        tn("recVulnerabilityManagement-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1835");
+                        };
+                        TRUE : recVulnerabilityManagement : {
+                        revokeRecommendation("recVulnerabilityManagement");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Vulnerability assessment is critical to the integrity and continued success of your business. As a starting point,
+                    you could construct a &lt;em&gt;vulnerability matrix&lt;/em&gt; in which at least the following areas of vulnerability
+                    should be found with a corresponding threat rating (very low, low, moderate, high or very high):&lt;/p&gt;
+                    &lt;ol&gt;
+                    &lt;li&gt;Personal security (internal stuff, external third parties)&lt;/li&gt;
+                    &lt;li&gt;Physical security (physical access, equipment security and configuration)&lt;/li&gt;
+                    &lt;li&gt;Access control (user registration, permissions, devices access, software access)&lt;/li&gt;
+                    &lt;li&gt;Information systems (backups, systems maintenance, web services, communication)&lt;/li&gt;
+                    &lt;li&gt;Network security (routers, firewall, servers, internet connection, wireless connection)&lt;/li&gt;
+                    &lt;li&gt;Information assurance (sensitive information storage, privacy, data protection)&lt;/li&gt;
+                    &lt;/ol&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1825" type="A" hidden="false" extRef="INC-4">
+            <introduction>
+                Intrusion detection and prevention systems are «software that automates the process of monitoring the events occurring in a
+                computer system or network and analyzing them for signs of possible incidents and attempting to stop detected possible
+                incidents» (&lt;a target="_blank" href="https://csrc.nist.gov/glossary/term/intrusion_detection_and_prevention_system"&gt;NIST, 2022&lt;/a&gt;).
+            </introduction>
+            <text>Do you react on notifications from detection systems?</text>
+            <options>
+                <option id="q1825o1">
+                    <text>We have no detection systems.</text>
+                </option>
+                <option id="q1825o2">
+                    <text>Yes, we react on such notifications and handle the incidents accordingly.</text>
+                </option>
+                <option id="q1825o3">
+                    <text>No, such notifications are usually not reviewed.</text>
+                    <comment>It is important to regularly check these notifications and act on them if necessary.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q1825o1")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1825o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+        </question>
+        <question id="q1815" type="A" hidden="false" extRef="INC-10">
+            <introduction>Part of the process oh handling an incident involves taking a closer look at the available evidence.</introduction>
+            <text>Are cybersecurity incidents analysed to understand targets and methods?</text>
+            <options>
+                <option id="q1815o1">
+                    <text>Yes, we perform basic analysis.</text>
+                </option>
+                <option id="q1815o2">
+                    <text>Yes, we have an external contractor that does the analysis for our company.</text>
+                </option>
+                <option id="q1815o3">
+                    <text>Yes, we analyse incidents inclusive forensic investigation (internal/external) if necessary.</text>
+                </option>
+                <option id="q1815o4">
+                    <text>No, we don't analyse incidents to understand targets and methods.</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1815o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or(isSelected("q1815o2"), isSelected("q1815o3")) : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1815o4") : recIncidentAnalysis : {
+                        addRecommendation("recIncidentAnalysis", 300, "", "", tn("recIncidentAnalysis-title"),
+                        tn("recIncidentAnalysis-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1815");
+                        };
+                        TRUE : recIncidentAnalysis : {
+                        revokeRecommendation("recIncidentAnalysis");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;In order to handle a cyber incident, it is also important to follow-up on it with an analysis. Indeed, this information
+                    is necessary to be able to formulate an adequate response. Hence, identifying what happened, how and why must be done.
+                    This step also paves the way to subsequent steps.&lt;/p&gt;
+                    &lt;p&gt;If you consider your organisation does not have the enough in-house skills to deal with this type of incidents, there
+                    is always the option to out source this task to a cybersecurity firm. Consider consulting this with your incident response team.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 4 -->
+        <question id="q1845" type="A" hidden="false" extRef="INC-7">
+            <introduction>
+                It is essential to put into practice and audit your company response and recovery plans. This ensures that your plan is
+                realistic, feasible and enables to keep this one up to date.
+            </introduction>
+            <text>Do you test your response and recovery plans?</text>
+            <options>
+                <option id="q1845o1">
+                    <text>We perform walk-through exercises.</text>
+                    <comment>This is a step in the right direction. As a next step, you should test and audit them at regular intervals.</comment>
+                </option>
+                <option id="q1845o2">
+                    <text>We perform real-time exercises and dry runs.</text>
+                    <comment>Great. Make sure to do this at regular intervals.</comment>
+                </option>
+                <option id="q1845o3">
+                    <text>No, we don't test our response and recovery plans</text>
+                    <comment>
+                        While it is great you have a response and recovery plan, it is important to know whether they can stand up
+                        rigorous examination. As a next step, you should put your plans to test by visiting each step with all involved
+                        persons (walk-through exercises).
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 2);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q1845o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 2);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q1845o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1845o3") : recTestResponseRecoveryPlan : {
+                        addRecommendation("recTestResponseRecoveryPlan", 400, "", "", tn("recTestResponseRecoveryPlan-title"),
+                        tn("recTestResponseRecoveryPlan-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1845");
+                        };
+                        TRUE : recTestResponseRecoveryPlan : {
+                        revokeRecommendation("recTestResponseRecoveryPlan");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;There are different routes that your company can take to test and audit your response and recovery plans.
+                    It is in your company best interest to implement all of them at regular intervals.&lt;/p&gt;
+                    &lt;ol&gt;
+                    &lt;li&gt;&lt;strong&gt;Role-playing exercises&lt;/strong&gt; allow everyone involved in the plan to go through it and
+                    identify any missing steps, inconsistencies or errors.&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;Walk-through&lt;/strong&gt; reviews in more in-depth the test approach with everyone involved.
+                    It audits everyone's own responsibilities to spot any weak points.&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;Dry-runs&lt;/strong&gt; are proper simulation testing. It can help to reveal inconsistencies, omissions
+                    or overlooked critical aspects.&lt;/li&gt;
+                    &lt;/ol&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 5 -->
+        <question id="q1840" type="A" hidden="false" extRef="INC-12">
+            <introduction>Containing a security incident is about limiting the damage and in some cases stopping the attacker.</introduction>
+            <text>Are there measures taken to contain a cybersecurity incident, block its spread and mitigate its impact (e.g. defence-in-depth)?</text>
+            <options>
+                <option id="q1840o1">
+                    <text>Yes, we have prescribed the measures that should be taken in our business continuity plan and/or response plan.</text>
+                </option>
+                <option id="q1840o2">
+                    <text>No, we do not have any such measures.</text>
+                    <comment>
+                        Consider either drafting your own containment plan or seek assistance from external experts. Regardless, of what you
+                        decide it is important to have a clear strategy on how to contain the spread of cybersecurity incidents.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q1840o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q1840o2") : recContainmentPlan : {
+                        addRecommendation("recContainmentPlan", 500, "", "", tn("recContainmentPlan-title"),
+                        tn("recContainmentPlan-text"),
+                        "", "app/coach.jsp?fqcn=msesec-incident-management.default&amp;question=q1840");
+                        };
+                        TRUE : recContainmentPlan : {
+                        revokeRecommendation("recContainmentPlan");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Containing a security incident involves taking the right steps to ensure that the situation does not cause more
+                    damage. Depending on the harm caused, this might mean to disconnect your servers, changing the firewall rules, updating
+                    signatures, etc.&lt;/p&gt;
+                    &lt;p&gt;&lt;em&gt;Note: if your company does not have the necessary expertise, we recommend that you hire external experts
+                    to assist you in containing incidents and/or carry out forensic investigation (if necessary).&lt;/em&gt;&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q1898" type="info" hidden="false">
+            <introduction>Incident Management</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have answered all questions of this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.incmgmt.MseIncMgmtLib"/>
+
+    <dictionary>
+        <entry key="recInformHowToReportIncidents-title">Inform how to report incidents</entry>
+        <entry key="recInformHowToReportIncidents-text">Ensure that all employees know how to report security incidents and computer anomalies. They need to know how to contact the responsible person/team and what to report.</entry>
+        <entry key="recDocumentIncidents-title">Document incidents</entry>
+        <entry key="recDocumentIncidents-text">Report and document all incidents that occur within your organisation. To that end, you can create a procedure where the responsible person can file them accordingly.</entry>
+        <entry key="recResponseFramework-title">Define immediate response measures</entry>
+        <entry key="recResponseFramework-text">Prepare your company for security incidents by having prepared immediate measures and response procedures.</entry>
+        <entry key="recReviewImmediateResponseMeasures-title">Review immediate response plans</entry>
+        <entry key="recReviewImmediateResponseMeasures-text">An incident response plan is not a static document. Therefore, make sure to review your response strategies regularly (e.g. once per year) and when an incident takes place.</entry>
+        <entry key="recIncidentCategorisation-title">Incident categorisation</entry>
+        <entry key="recIncidentCategorisation-text">Consider creating a functional and sustainable categorisation. While this may be a complex task, it will come in handy when logging incidents and triggering your response plan.</entry>
+        <entry key="recVulnerabilityManagement-title">Establish vulnerability management</entry>
+        <entry key="recVulnerabilityManagement-text"> Consider doing a vulnerability assessment that identifies overlooked weaknesses. Make sure to review them regularly and implement corrective measures if required.</entry>
+        <entry key="recIncidentAnalysis-title">Incident analysis</entry>
+        <entry key="recIncidentAnalysis-text">In order to handle a cyber incident, it is also important to follow-up on it with an analysis. If you consider your organisation does not have the enough in-house skills to deal with this type of incidents, there is always the option to out source this task to a cybersecurity firm.</entry>
+        <entry key="recTestResponseRecoveryPlan-title">Test your response and recovery plans</entry>
+        <entry key="recTestResponseRecoveryPlan-text">Your response and recovery plan should be tested on a regular basis in order to verify how effective and reliable the plans would be in real-life scenarios.</entry>
+        <entry key="recContainmentPlan-title">Measures to contain incidents</entry>
+        <entry key="recContainmentPlan-text">Take concrete measures to contain a cybersecurity incident, block its spread or mitigate its impact. In order to contain the spread of cybersecurity incidents. Consider either drafting your own containment plan or seek assistance from external experts.</entry>
+    </dictionary>
+
+</questionnaire>

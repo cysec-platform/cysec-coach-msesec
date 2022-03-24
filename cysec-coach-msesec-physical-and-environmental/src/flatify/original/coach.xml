@@ -1,0 +1,191 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-physical-and-environmental" readableName="Physical and Environmental Security (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach focuses on physical and environmental cybersecurity topics for micro and small businesses.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q1400" type="info" hidden="false">
+            <introduction>Physical and Environmental Security</introduction>
+            <text>Intro</text>
+            <infotext>&lt;strong&gt;This coach is not yet finished!&lt;/strong&gt;</infotext>
+        </question>
+        <question id="q1402" type="A" hidden="false" extRef="ENV-3"><!-- partially covered in first coach -->
+            <text>Have you established multiple security zones (e.g. public, work areas, restricted work areas, high-security areas...)?</text>
+            <options>
+                <option id="q1402o1">
+                    <text>No, we don't have multiple security zones</text>
+                </option>
+                <option id="q1402o2">
+                    <text>Yes, we have at least two security zones</text>
+                </option>
+                <option id="q1402o3">
+                    <text>Yes, we have more than two security zones</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1405" type="A" hidden="false" extRef="ENV-3">
+            <text>Are your servers and network devices protected from access by unauthorised persons?</text>
+            <options>
+                <option id="q1405o1">
+                    <text>No</text>
+                </option>
+                <option id="q1405o2">
+                    <text>Yes, they are placed in server rooms or communications rooms</text>
+                </option>
+                <option id="q1405o3">
+                    <text>Yes, they are placed in a lockable cabinet or security container</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1410" type="A" hidden="false" extRef="ENV-5"><!-- partially covered in first coach -->
+            <text>Is physical access to IT infrastructure appropriately protected against access by third parties and unauthorized individuals?</text>
+            <options>
+                <option id="q1410o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1410o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1415" type="A" hidden="false" extRef="ENV-2">
+            <text>Is access to key facilities limited to a certain amount of persons?</text>
+            <options>
+                <option id="q1415o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1415o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1420" type="A" hidden="false" extRef="ENV-4">
+            <text>Do you deliver critical services to customers?</text>
+            <options>
+                <option id="q1420o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1420o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1425" type="A" hidden="false" extRef="ENV-4">
+            <text>Did you identify dependencies and critical functions for delivery of critical services?</text>
+            <options>
+                <option id="q1425o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1425o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1430" type="A" hidden="false" extRef="ENV-6">
+            <text>Are physical assets and buildings monitored/logged to detect cybersecurity incidents?</text>
+            <options>
+                <option id="q1430o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1430o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1435" type="A" hidden="false" extRef="ENV-6">
+            <text>Are physical assets and buildings under surveillance to detect cybersecurity incidents?</text>
+            <options>
+                <option id="q1435o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1435o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1440" type="A" hidden="false" extRef="ENV-1">
+            <text>Is there a policy for physical and environmental security in place which defines roles and responsibilities?</text>
+            <options>
+                <option id="q1440o1">
+                    <text>Yes, we have a formal policy</text>
+                </option>
+                <option id="q1440o2">
+                    <text>Yes, we have an informal policy</text>
+                </option>
+                <option id="q1440o3">
+                    <text>No, we don't have a policy</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1445" type="A" hidden="false" extRef="ENV-1">
+            <text>Is the policy for physical and environmental security periodically reviewed and updated?</text>
+            <options>
+                <option id="q1445o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q1445o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1450" type="A" hidden="false" extRef="ENV-7">
+            <text>How often are physical and environmental measures tested or audited?</text>
+            <options>
+                <option id="q1450o1">
+                    <text>Every month</text>
+                </option>
+                <option id="q1450o2">
+                    <text>Every 2-5 months</text>
+                </option>
+                <option id="q1450o3">
+                    <text>Once or twice per year</text>
+                </option>
+                <option id="q1450o4">
+                    <text>Every two years</text>
+                </option>
+                <option id="q1450o5">
+                    <text>Less often than every two years</text>
+                </option>
+                <option id="q1450o6">
+                    <text>Never</text>
+                </option>
+            </options>
+        </question>
+        <question id="q1498" type="info" hidden="false">
+            <introduction>Physical and Environmental Security</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have finished this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.phyenv.MsePhyEnvLib"/>
+
+</questionnaire>

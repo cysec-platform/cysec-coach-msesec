@@ -1,0 +1,725 @@
+<?xml version='1.0'?>
+<!--
+  Copyright (C) 2021 - 2022 FHNW (University of Applied Sciences and Arts Northwestern Switzerland)
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<questionnaire xmlns="https://smesec.eu" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="https://smesec.eu https://smesec.eu/questionnaire.xsd"
+               id="msesec-data-protection-and-security" readableName="Data Protection and Security (MSE)"
+               version="1" order="0" language="en">
+    <description>
+        This coach focuses on Data Protection and Security for micro and small enterprises.
+    </description>
+
+    <attachments>
+        <attachment id="icon">
+            <content filename="assets/coach-icon.png"/>
+        </attachment>
+    </attachments>
+
+    <questions>
+        <question id="q2200" type="info" hidden="false">
+            <introduction>Data Protection and Security</introduction>
+            <text>Intro</text>
+            <infotext>
+                As a micro or small enterprise, you are also concerned with data protection and security matters varying from financial information
+                details to personal information of your staff, clients or suppliers. Indeed, this topic is not only a legal necessity, but
+                is also essential for protecting and preserving the continuity of your business.
+            </infotext>
+        </question>
+        <!-- Priority 2 -->
+        <question id="q2210" type="A" hidden="false" extRef="DPS-12">
+            <introduction>
+                Company's mobile devices have the potential to store large volumes of sensitive data whether that is about your
+                business in general (call records, contacts, images, etc.), employees, clients or suppliers; therefore, if that data is
+                compromised it could result in irreversible harm for your business.
+            </introduction>
+            <text>Is data on your company's mobile devices encrypted?</text>
+            <options>
+                <option id="q2210o1">
+                    <text>Yes, data is encrypted on all mobile devices.</text>
+                </option>
+                <option id="q2210o2">
+                    <text>Generally yes, but there are exceptions.</text>
+                    <comment>
+                        Consider encrypting all your mobile devices. Indeed, nowadays almost all modern devices have a built-in setting for this.
+                    </comment>
+                </option>
+                <option id="q2210o3">
+                    <text>No, we don't encrypt data on mobile devices.</text>
+                    <comment>
+                        Encryption protects your data and is a necessary part of safeguarding your business. Start encrypting all mobile
+                        devices of your company.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 2);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 2);
+                        };
+                        isSelected("q2210o1") : scoring : {
+                        addScore("strength", 2);
+                        addScore("knowhow", 1);
+                        addScore("uu", 2);
+                        };
+                        isSelected("q2210o2") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2210o3") : recEncryptMobileDevices : {
+                        addRecommendation("recEncryptMobileDevices", 200, "", "", tn("recEncryptMobileDevices-title"),
+                        tn("recEncryptMobileDevices-text"),
+                        "", "app/coach.jsp?fqcn=msesec-data-protection-and-security.default&amp;question=q2210");
+                        };
+                        TRUE : recEncryptMobileDevices : {
+                        revokeRecommendation("recEncryptMobileDevices");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Nowadays, companies and in particular micro and small business rely on mobile devices (e.g. tablets or phones) for
+                    day-to-day business. Some use them for taking customer's orders, make presentations, accept payments, get customer
+                    signatures or even track and manage their expenses via applications. Therefore, it is critical that these devices are
+                    properly configured as they contain valuable information/data about your business.&lt;/p&gt;
+                    &lt;p&gt;Most modern devices have some sort of feature to use
+                    &lt;a target="_blank" href="https://csrc.nist.gov/glossary/term/encrypt"&gt;encryption&lt;/a&gt;.
+                    If you have not activated encryption on your mobile devices yet, it is time to take action.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2202" type="A" hidden="false" extRef="DPS-1">
+            <introduction>
+                Most companies keep sensitive information in different places. This data, for example, contains information where
+                customers, employees or suppliers can be identified.
+            </introduction>
+            <text>Do you maintain an inventory of all sensitive information stored or processed by your organisation?</text>
+            <options>
+                <option id="q2202o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2202o2">
+                    <text>No</text>
+                    <comment>
+                        The first step in keeping sensitive information safe is to know where such data is stored. Therefore, you should
+                        create an inventory that shows where this information is stored or processed inside your organisation.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2202o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Sensitive data can take different forms. For example, according to the European Union
+                    (&lt;a target="_blank" href="https://ec.europa.eu/justice/smedataprotect/index_en.htm"&gt;EU, 2022&lt;/a&gt;), the following
+                    are considered as sensitive information which are subject to specific processing conditions:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Personal data, this includes racial or ethnic origin, political opinion, religious beliefs.&lt;/li&gt;
+                    &lt;li&gt;Genetic and biometric data.&lt;/li&gt;
+                    &lt;li&gt;Health related data.&lt;/li&gt;
+                    &lt;li&gt;Address and localisation&lt;/li&gt;
+                    &lt;li&gt;Income&lt;/li&gt;
+                    &lt;li&gt;Online identifier&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;In addition, these may also be trade secrets, financial information or intellectual property rights.&lt;/p&gt;
+                    &lt;p&gt;It is your company's task to check which of your services or products collect and process personal
+                    data. For more information consult the European Union
+                    &lt;a target="_blank" href="https://ec.europa.eu/justice/smedataprotect/index_en.htm"&gt;guideline for small businesses&lt;/a&gt;.
+                    &lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2225" type="A" hidden="false" extRef="DPS-5">
+            <introduction>
+                In order to avoid high fines and/or damage to your company's reputation. It is in your company's best interest to be aware
+                and keep yourself informed about the regulations that apply or may impact your business.
+            </introduction>
+            <text>Are you aware the applicable provisions, laws and requirements of processing personal data in your region and/or the region of your customers?</text>
+            <options>
+                <option id="q2225o1">
+                    <text>Yes</text>
+                    <comment>
+                        This is very good. Keep in mind that new regulations may materialize in other countries. Therefore, revise new
+                        applicable provisions that may apply to your business from time to time.
+                    </comment>
+                </option>
+                <option id="q2225o2">
+                    <text>No</text>
+                    <comment>Please inform yourself about the applicable law/regulations/requirements that may apply to your business.</comment>
+                </option>
+                <option id="q2225o3">
+                    <text>Partially</text>
+                    <comment>Please inform yourself about all the applicable law/regulations/requirements that may apply to your business.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2225o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or( isSelected("q2225o2"), isSelected("q2225o3") ): recApplicableProvisions : {
+                        addRecommendation("recApplicableProvisions", 200, "", "", tn("recApplicableProvisions-title"),
+                        tn("recApplicableProvisions-text"),
+                        "", "app/coach.jsp?fqcn=msesec-data-protection-and-security.default&amp;question=q2225");
+                        };
+                        TRUE : recApplicableProvisions : {
+                        revokeRecommendation("recApplicableProvisions");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;For more information about the different jurisdictions and their corresponding laws in regard to personal
+                    data, it is suggested that you consult the encompassing documentation provided by
+                    &lt;a target="_blank" href="https://www.dataguidance.com/laws"&gt;Data Guidance&lt;/a&gt;.&lt;/p&gt;
+                    &lt;p&gt;It is also highly recommended that you have recourse to an attorney or an expert in global privacy laws who
+                    you can provide guidance on how to apply these to your specific needs and circumstances if necessary.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2215" type="A" hidden="false" extRef="DPS-3">
+            <introduction>
+                If you are in contact with personal data, you are very likely processing it for some purpose, such as a storage, sharing,
+                deleting or collecting.
+            </introduction>
+            <text>Do you PROCESS personal data securely?</text>
+            <options>
+                <option id="q2215o1">
+                    <text>Yes, we process data securely.</text>
+                </option>
+                <option id="q2215o2">
+                    <text>No, we do not process data in a secure manner.</text>
+                    <comment>
+                        Not processing the data securely increases your exposure which could have very bad consequences. Review which
+                        data regulations apply to your business and implement the right process procedures as soon as possible.
+                    </comment>
+                </option>
+                <option id="q2215o3">
+                    <text>We don't know.</text>
+                    <comment>
+                        Not processing the data securely only increases your exposure which could have very bad consequences. Review which
+                        data regulations apply to your business and implement the right process procedures as soon as possible.
+                    </comment>
+                </option>
+                <option id="q2215o4">
+                    <text>We use a third party that process our data.</text>
+                    <comment>
+                        It is your duty to make sure that the third party processor provides the sufficient guarantees that they process
+                        the data in a secure manner. Do not forget to verify this.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q2215o4")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        or(isSelected("q2215o1")) : scoring : {
+                        addScore("strength", 1);
+                        addScore("uu", 1);
+                        };
+                        or( isSelected("q2215o2"), isSelected("q2215o3") ): recProcessDataSecurely : {
+                        addRecommendation("recProcessDataSecurely", 200, "", "", tn("recProcessDataSecurely-title"),
+                        tn("recProcessDataSecurely-text"),
+                        "", "app/coach.jsp?fqcn=msesec-data-protection-and-security.default&amp;question=q2215");
+                        };
+                        TRUE : recProcessDataSecurely : {
+                        revokeRecommendation("recProcessDataSecurely");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Processing concerns "any action performed on data whether automated or manual"
+                    (&lt;a target="_blank" href="https://gdpr.eu/what-is-gdpr/"&gt;GDPR EU, 2022&lt;/a&gt;). For example, if your business stores or
+                    processes personal information from EU citizens within EU states, you are concerned with the General Data Protection
+                    Regulation (GDPR).&lt;/p&gt;
+                    &lt;p&gt;In order to process data securely, it is highly recommended that your company:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Ensure that your company has the legal basis for processing of personal data.&lt;/li&gt;
+                    &lt;li&gt;Only collect necessary data, i.e. do not process data that is not vital. This is also known as data minimisation.&lt;/li&gt;
+                    &lt;li&gt;Establish appropriate technical and organizational measures’ to securely handle the data. This can be done for
+                    example by implementing end-to-end encryption.&lt;/li&gt;
+                    &lt;li&gt;Training your staff about how to securely handle the data. This also means limiting the access only to those
+                    employees that really need to process and/or handle this information.&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2217" type="A" hidden="false" extRef="DPS-3">
+            <introduction>
+                Handling and storing data go hand in hand. As a micro or small business you are also concerned with this. As it is the case
+                for nearly all companies, it is very likely your company holds sensitive data that needs to be kept safe from attacks,
+                theft or unwarranted access. Thus, it is important to store this information securely.
+            </introduction>
+            <text>Do you STORE personal data securely?</text>
+            <options>
+                <option id="q2217o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2217o2">
+                    <text>No</text>
+                    <comment>
+                        It is critical that you amend this and start to implement security practices and procedures to store sensitive
+                        data securely from external or internal threats.
+                    </comment>
+                </option>
+                <option id="q2217o3">
+                    <text>We don't know</text>
+                    <comment>
+                        It is critical that you amend this and start to implement security practices and procedures to store sensitive
+                        data securely from external or internal threats.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2217o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or( isSelected("q2217o2"), isSelected("q2217o3") ): recSaveDataSecurely : {
+                        addRecommendation("recSaveDataSecurely", 200, "", "", tn("recSaveDataSecurely-title"),
+                        tn("recSaveDataSecurely-text"),
+                        "", "app/coach.jsp?fqcn=msesec-data-protection-and-security.default&amp;question=q2217");
+                        };
+                        TRUE : recSaveDataSecurely : {
+                        revokeRecommendation("recSaveDataSecurely");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;If your company stores sensitive data, you need to make sure that this data is stored securely. It is critical
+                    that you check the legal requirements that concern your company. Keep in mind that nowadays governments outside Europe
+                    have also started to enact data-privacy regulations that may apply to you.&lt;/p&gt;
+                    &lt;p&gt;Therefore, make sure to you ask yourself whether there are laws that require your company to keep sensitive
+                    data secure? Consider the following aspects for storing data securely.&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Restrict confidential data to the office.&lt;/li&gt;
+                    &lt;li&gt;Don't transfer unencrypted data over the internet.&lt;/li&gt;
+                    &lt;li&gt;Delete sensitive data that is no longer needed.&lt;/li&gt;
+                    &lt;li&gt;Encrypt backups.&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;For more information please consult the proposed resources below:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://gdpr.eu/article-32-security-of-processing/"&gt;Article 32 of the EU General Data Protection Regulation&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a target="_blank" href="https://www.ncsc.gov.uk/collection/protecting-bulk-personal-data"&gt;Protecting bulk personal data by the UK National cyber security centre&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2220" type="A" hidden="false" extRef="DPS-6">
+            <introduction>
+                Compliance and implementation of the data protection regulations is key to the continuity of your business.
+            </introduction>
+            <text>Do you implement the current data protection regulations consistently and correctly?</text>
+            <options>
+                <option id="q2220o1">
+                    <text>Yes</text>
+                    <comment>That is great. Make sure to review the different requirements at least once per year.</comment>
+                </option>
+                <option id="q2220o2">
+                    <text>No or we don't know</text>
+                    <comment>
+                        It is critical that you comply with data regulations that may concern you. The cost of failing to comply with the
+                        rules can be high (varying from warnings to expensive fines) and burdensome. Get informed about these regulations
+                        and start implementing them.
+                    </comment>
+                </option>
+                <option id="q2220o3">
+                    <text>Partially</text>
+                    <comment>
+                        It is critical that you fully comply with data regulations that may concern you. The cost of failing to comply
+                        with the rules can be high (varying from warnings to expensive fines) and burdensome.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2220o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        or( isSelected("q2220o2"), isSelected("q2220o3") ): recRegulationsComplianceImplementation : {
+                        addRecommendation("recRegulationsComplianceImplementation", 200, "", "", tn("recRegulationsComplianceImplementation-title"),
+                        tn("recRegulationsComplianceImplementation-text"),
+                        "", "app/coach.jsp?fqcn=msesec-data-protection-and-security.default&amp;question=q2220");
+                        };
+                        TRUE : recRegulationsComplianceImplementation : {
+                        revokeRecommendation("recRegulationsComplianceImplementation");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Compliance and implementation of the data protection regulations is key to the continuity of your business.
+                    It will enable your company to maintain their reputation and increase internal as well as external confidence.
+                    Moreover, by complying with the regulations it ensures that the data is safe from harm that otherwise could result
+                    in a very costly and time-consuming undertaking.&lt;/p&gt;
+                    &lt;p&gt;Failing to implement the regulations consistently and correctly results in a failure of law compliance. Hence,
+                    it is critical that your company's enacts guidelines and employs technology that will and can align with the different
+                    regulations that may concern your business.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 3 -->
+        <question id="q2230" type="A" hidden="false" extRef="DPS-10">
+            <introduction>
+                Data breaches are undesirable and need to be avoided at all costs. Indeed, micro and small business are also targets of
+                malicious actors, and thus need to be prepared and invest time and resources to prevent these type of incidents.
+            </introduction>
+            <text>Do you take appropriate measures against data breach?</text>
+            <options>
+                <option id="q2230o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2230o2">
+                    <text>No</text>
+                    <comment>
+                        Data breaches can have serious consequences. Consider putting into place the right measures as proposed in the
+                        instruction text.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2230o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;A data breach "occurs when information held by an organisation is stolen or accessed without authorisation"
+                    (&lt;a target="_blank" href="https://www.ncsc.gov.uk/guidance/data-breaches#section_1"&gt;NCSC, 2022&lt;/a&gt;) resulting a
+                    breach of confidentiality, availability or integrity. Thus, it is in your company's best interest to prevent and also
+                    be prepared in case such a scenario would happen. Keep in mind the following aspects:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Train your staff regularly in cybersecurity topics. Indeed, a lot of data breaches happen by
+                    tricking employees into revealing their company's credentials (whether they are aware or unaware of it).&lt;/li&gt;
+                    &lt;li&gt;Follow cybersecurity guidelines that tackle the processing, handling and storing of personal data.&lt;/li&gt;
+                    &lt;li&gt;Enable antivirus protections to help guard against malware that could steal or damage credentials.&lt;/li&gt;
+                    &lt;li&gt;If a data breach happens, notify the affected parties whether it is your customers, employers, suppliers or
+                    other data.&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;For more information consult
+                    &lt;a target="_blank" href="https://www.oaic.gov.au/privacy/notifiable-data-breaches/preventing-data-breaches-advice-from-the-australian-cyber-security-centre"&gt;this advice&lt;/a&gt;
+                    from the Australian Cyber Security Centre.&lt;/p&gt;
+                </text><!--- Source: https://www.fcc.gov/general/cybersecurity-small-business -->
+            </instruction>
+        </question>
+        <question id="q2235" type="Astar" hidden="false" extRef="DPS-2">
+            <introduction>
+                The CIA triad (confidentiality, integrity and availability) is a security concept that all enterprises regardless of their
+                size need to be familiar with as it highlights the three key elements of information security. These will be helpful to
+                ensure that your company's data and/or the data that is processed can be protected.
+            </introduction>
+            <text>The data stored in your company's systems is protected against violations of ...</text>
+            <options>
+                <option id="q2235o1">
+                    <text>confidentiality</text>
+                </option>
+                <option id="q2235o2">
+                    <text>integrity</text>
+                </option>
+                <option id="q2235o3">
+                    <text>availability</text>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 3);
+                        addScore("knowhowMax", 3);
+                        addScore("uuMax", 3);
+                        };
+                        isSelected("q2235o1") : scoringCon : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2235o2") : scoringInt : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2235o3") : scoringAva : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;&lt;strong&gt;Confidentiality&lt;/strong&gt; refers to the measures that your company implements to restrict
+                    the access to information should be restricted to only those who need access to it. It is basically about privacy.
+                    Said differently, it is about "preserving authorized restrictions on information access and disclosure, including means
+                    for protecting personal privacy and proprietary information"
+                    (&lt;a target="_blank" href="https://csrc.nist.gov/glossary/term/confidentiality"&gt;NIST, 2022&lt;/a&gt;).&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Integrity&lt;/strong&gt; it is the assurance that information is accurate, and reliable. In other
+                    words, the protected data or information has not been altered, destroyed or lost in an unauthorized manner. For example,
+                    it is about making sure that no web or email address was changed, or making sure that unauthorized people cannot change
+                    your data.&lt;/p&gt;
+                    &lt;p&gt;&lt;strong&gt;Availability&lt;/strong&gt; guarantees the access to information by/to authorized users and when
+                    necessary, i.e. ensure timely and reliable access to and use of data. For instance, it means that things such as
+                    keeping your systems up to date, backing up your data or documenting changes are done to ensure your data is available
+                    for the continuity of your business.&lt;/p&gt;
+                    &lt;p&gt;For more information you can consult
+                    &lt;a target="_blank" href="https://www.qgcio.qld.gov.au/documents/information-security-classification-framework-qgiscf"&gt;this&lt;/a&gt;
+                    guideline from the Australian government.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <question id="q2240" type="A" hidden="false" extRef="DPS-7">
+            <introduction>
+                Data in transit refers to data that is sent from a device to another over a network, whether that is cellular, W-LAN or
+                other networks. It is important to protect these channels from attackers that seek to compromise data in transit.
+            </introduction>
+            <text>Is data in transit protected against violations of confidentiality, integrity and availability?</text>
+            <options>
+                <option id="q2240o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2240o2">
+                    <text>No</text>
+                    <comment>It is important that your company implements the right security measures to protect data in transit.</comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        TRUE : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2240o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                        isSelected("q2240o2") : recProtectDataTransit : {
+                        addRecommendation("recProtectDataTransit", 300, "", "", tn("recProtectDataTransit-title"),
+                        tn("recProtectDataTransit-text"),
+                        "", "app/coach.jsp?fqcn=msesec-data-protection-and-security.default&amp;question=q2240");
+                        };
+                        TRUE : recProtectDataTransit : {
+                        revokeRecommendation("recProtectDataTransit");
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;When you encrypt data in transit, your company is providing a tangible protection against third party that may
+                    try to intercept it for malicious purposes. Consider the following aspects to maintain and/or improve data security:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;Use HTTPS to encrypt the traffic between your browser and websites.&lt;/li&gt;
+                    &lt;li&gt;Keep your company's systems and network components updated.&lt;/li&gt;
+                    &lt;li&gt;Use encrypted communication when transmitting data over the wireless (e.g. use a Transport Layer Security
+                    (TLS) or a Virtual Private Network (VPN)).&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;Additional helpful information by the United Kingdom National Cyber Security Centre (NCSC) can be found
+                    &lt;a target="_blank" href="https://www.ncsc.gov.uk/collection/cloud-security/implementing-the-cloud-security-principles/data-in-transit-protection"&gt;here&lt;/a&gt;
+                    and &lt;a target="_blank" href="https://www.ncsc.gov.uk/collection/10-steps/data-security"&gt;here&lt;/a&gt;.&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 4 -->
+        <question id="q2245" type="A" hidden="false" extRef="DPS-8">
+            <introduction>
+                Employees will fail to do the right data sanitization on company's devices when it comes to data decommissioning if there are
+                no clear requirements that they should follow. This in return can have devastating results for your business if not addressed.
+            </introduction>
+            <text>Is data is destroyed according to the requirements?</text>
+            <options>
+                <option id="q2245o1">
+                    <text>Yes, we delete data from computers and electronic devices according to the requirements.</text>
+                </option>
+                <option id="q2245o2">
+                    <text>No, we haven't set out any requirements for data deletion.</text>
+                    <comment>
+                        You need to be aware data might be accessible even after deleting it from your devices. Please make sure that you
+                        set company requirements for deleting/destroying data, where it is clearly defined and stated how to do this securely.
+                    </comment>
+                </option>
+                <option id="q2245o3">
+                    <text>A third party does this on our behalf.</text>
+                    <comment>
+                        This is a good solution. However, for security purposes it is important to always make sure that your contractor has
+                        the right credentials before handing over your data for them to be deleted.
+                    </comment>
+                </option>
+            </options>
+            <metadata key="_cysec.logic">
+                <mvalue key="default">
+                    <stringValue>
+                        not(isSelected("q2245o3")) : default : {
+                        addScore("strengthMax", 1);
+                        addScore("knowhowMax", 1);
+                        addScore("uuMax", 1);
+                        };
+                        isSelected("q2245o1") : scoring : {
+                        addScore("strength", 1);
+                        addScore("knowhow", 1);
+                        addScore("uu", 1);
+                        };
+                    </stringValue>
+                </mvalue>
+            </metadata>
+            <instruction>
+                <text>
+                    &lt;p&gt;Micro and small businesses are also concerned with data deletion. Therefore, you will need to plan for how your
+                    company intends to get rid of data in a secure manner. For example, when the contract with a customer, supplier or
+                    employee terminates, they may ask you to delete their data. The following aspects should be considered in your
+                    company's data destruction requirements:&lt;/p&gt;
+                    &lt;ul&gt;
+                    &lt;li&gt;When deleting data electronically it is imperative to make sure that it is no longer usable by anyone.&lt;/li&gt;
+                    &lt;li&gt;Consider getting a secure deletion software to wipe your company devices (e.g. UBS sticks, computers, flash
+                    drives, laptops, tablets or phones) by overwriting data once or several times.&lt;/li&gt;
+                    &lt;li&gt;Make sure that the data you wished to erase does not remain in your back-ups.&lt;/li&gt;
+                    &lt;/ul&gt;
+                    &lt;p&gt;For more information consult
+                    &lt;a target="_blank" href="https://www.ncsc.gov.uk/collection/cloud-security/implementing-the-cloud-security-principles/asset-protection-and-resilience#sanitisation"&gt;these guidelines&lt;/a&gt;
+                    by the British National Cyber Security Centre.&lt;/p&gt;
+                    &lt;p&gt;Data destruction is the "process of erasing or otherwise destroying data stored on virtual/electronic or physical
+                    mediums such as, but not limited to, printed copies, tapes and hard disks in order to completely render data irretrievable
+                    and inaccessible and otherwise void"
+                    (&lt;a target="_blank" href="https://security-guidance.service.justice.gov.uk/data-destruction/#data-destruction"&gt;Ministry of Justice UK, 2022&lt;/a&gt;).&lt;/p&gt;
+                </text>
+            </instruction>
+        </question>
+        <!-- Priority 5 -->
+        <!--<question id="q2250" type="A" hidden="false" extRef="DPS-13">
+            <text>Do you have procedures to temporarily remove sensitive data or systems from the network if they are not regularly accessed?</text>
+            <options>
+                <option id="q2250o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2250o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q2255" type="A" hidden="false" extRef="DPS-4">
+            <text>Is there an authorisation process in place that safeguards the flow of information to the outside of the organisation?</text>
+            <options>
+                <option id="q2255o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2255o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>
+        <question id="q2260" type="A" hidden="false" extRef="DPS-9">
+            <text>Do you have sufficient capacity on your ITC assets to ensure data availability?</text>
+            <options>
+                <option id="q2260o1">
+                    <text>Yes</text>
+                </option>
+                <option id="q2260o2">
+                    <text>No</text>
+                </option>
+            </options>
+        </question>-->
+        <question id="q2298" type="info" hidden="false">
+            <introduction>Data Protection and Security</introduction>
+            <text>Coach completed</text>
+            <infotext>
+                &lt;p&gt;&lt;strong&gt;Congratulations, you have completed this coach.&lt;/strong&gt;&lt;/p&gt;
+                &lt;p&gt;Click on «Next» to go back to the overview page.&lt;/p&gt;
+            </infotext>
+        </question>
+    </questions>
+
+    <library id="eu.smesec.cysec.coach.msesec.dpas.MseDpasLib"/>
+
+    <dictionary>
+        <entry key="recEncryptMobileDevices-title">Encrypt mobile devices</entry>
+        <entry key="recEncryptMobileDevices-text">Encrypt all mobile devices of your company to protect the stored data.</entry>
+        <entry key="recApplicableProvisions-title">Get to know regulatory requirements</entry>
+        <entry key="recApplicableProvisions-text">Please inform yourself about the applicable law/regulations/requirements that may apply to your business and review them from time to time.</entry>
+        <entry key="recProcessDataSecurely-title">Process data securely</entry>
+        <entry key="recProcessDataSecurely-text">Your company should process sensitive data securely and according to the appropriate data regulations.</entry>
+        <entry key="recSaveDataSecurely-title">Store data securely</entry>
+        <entry key="recSaveDataSecurely-text">Your company should meet the applicable data security storing requirements. Make sure to implement technical and organizational measures to protect personal data in your company's possession.</entry>
+        <entry key="recRegulationsComplianceImplementation-title">Comply with data protection regulations</entry>
+        <entry key="recRegulationsComplianceImplementation-text">Implement the data protection regulations that apply to your business in order to be compliant with them.</entry>
+        <entry key="recProtectDataTransit-title">Protect data in transit</entry>
+        <entry key="recProtectDataTransit-text">Implement measures to protect your company's data against violations of confidentiality, integrity and availability while it is in transit.</entry>
+    </dictionary>
+
+</questionnaire>
